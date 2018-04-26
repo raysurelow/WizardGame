@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000010239801538}
   m_Layer: 0
-  m_Name: SpellFirePosition
+  m_Name: HorizontalSpellFirePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
