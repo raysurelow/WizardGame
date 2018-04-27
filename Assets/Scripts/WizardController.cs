@@ -7,17 +7,18 @@ public class WizardController : MonoBehaviour {
     public float jumpSpeed;
     public float groundCheckRadius;
     public LayerMask jumpableLayerMask;
-    public Transform groundCheck; 
+    public Transform groundCheck;
+    public Spell[] availableSpells;
 
     private Rigidbody2D rigidBody;
     private Animator animator;
     private bool canJump;
-    private GameObject activeSpell;
+    private Spell activeSpell;
     private Transform horizontalSpellTransform;
-    public float projectileSpeed;
-    private Transform activeSpellTransform;
     private Transform upSpellTransform;
     private Transform downSpellTransform;
+    public float projectileSpeed;
+    private Transform activeSpellTransform;
 
     // Use this for initialization
     void Start () {
@@ -26,6 +27,7 @@ public class WizardController : MonoBehaviour {
         horizontalSpellTransform = transform.Find("HorizontalSpellFirePosition");
         upSpellTransform = transform.Find("UpSpellFirePosition");
         downSpellTransform = transform.Find("DownSpellFirePosition");
+        activeSpell = availableSpells.Length > 0 ? availableSpells[0] : null;
     }
 
     // Update is called once per frame
@@ -85,9 +87,8 @@ public class WizardController : MonoBehaviour {
 
     public void FireSpell()
     {
-        GameObject spell = null;
-        spell = Instantiate(activeSpell, activeSpellTransform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as GameObject;
-        Rigidbody2D spellRigidBody = spell.GetComponent<Rigidbody2D>();
-        spellRigidBody.velocity = new Vector2(projectileSpeed, 0);
+        Rigidbody2D spell = null;
+        spell = Instantiate(activeSpell.spellRigidBody, activeSpellTransform.position, activeSpellTransform.rotation) as Rigidbody2D;
+        spell.velocity = activeSpellTransform.transform.right * projectileSpeed;
     }
 }
