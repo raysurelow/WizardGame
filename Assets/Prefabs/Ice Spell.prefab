@@ -9,47 +9,47 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1674258799124962}
+  m_RootGameObject: {fileID: 1223118567620848}
   m_IsPrefabParent: 1
---- !u!1 &1674258799124962
+--- !u!1 &1223118567620848
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4846816343623152}
-  - component: {fileID: 212519257857908856}
-  - component: {fileID: 50384483447644414}
-  - component: {fileID: 58563722096091606}
-  - component: {fileID: 114235046367258774}
+  - component: {fileID: 4244140935986480}
+  - component: {fileID: 212049406656517214}
+  - component: {fileID: 50401813871272474}
+  - component: {fileID: 58429148483209920}
+  - component: {fileID: 114991632970857730}
   m_Layer: 0
-  m_Name: Fire Spell
+  m_Name: Ice Spell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4846816343623152
+--- !u!4 &4244140935986480
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674258799124962}
+  m_GameObject: {fileID: 1223118567620848}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.315, y: -2.404, z: 0}
+  m_LocalPosition: {x: -5.616, y: -2.834, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50384483447644414
+--- !u!50 &50401813871272474
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674258799124962}
+  m_GameObject: {fileID: 1223118567620848}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -63,12 +63,12 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &58563722096091606
+--- !u!58 &58429148483209920
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674258799124962}
+  m_GameObject: {fileID: 1223118567620848}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -78,23 +78,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.09
---- !u!114 &114235046367258774
+--- !u!114 &114991632970857730
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674258799124962}
+  m_GameObject: {fileID: 1223118567620848}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca66a71dabf997a4ebdde7a52f1019f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &212519257857908856
+--- !u!212 &212049406656517214
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674258799124962}
+  m_GameObject: {fileID: 1223118567620848}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -123,7 +123,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300046, guid: 1057cf29db371c647a436de1671b60ed, type: 3}
+  m_Sprite: {fileID: 21300048, guid: 1057cf29db371c647a436de1671b60ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

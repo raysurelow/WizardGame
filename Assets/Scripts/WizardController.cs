@@ -13,6 +13,7 @@ public class WizardController : MonoBehaviour {
     private Rigidbody2D rigidBody;
     private Animator animator;
     private bool canJump;
+    private int activeSpellPosition;
     private Spell activeSpell;
     private Transform horizontalSpellTransform;
     private Transform upSpellTransform;
@@ -27,14 +28,18 @@ public class WizardController : MonoBehaviour {
         horizontalSpellTransform = transform.Find("HorizontalSpellFirePosition");
         upSpellTransform = transform.Find("UpSpellFirePosition");
         downSpellTransform = transform.Find("DownSpellFirePosition");
-        activeSpell = availableSpells.Length > 0 ? availableSpells[0] : null;
+        activeSpellPosition = 0;
+        activeSpell = availableSpells.Length > 0 ? availableSpells[activeSpellPosition] : null;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Check if grounded
         canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
 
+
+        // Handle movement inputs
         if (Input.GetAxisRaw("Horizontal") > 0f)
         {
             rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
@@ -50,23 +55,33 @@ public class WizardController : MonoBehaviour {
             rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y);
         }
 
+
+        // Handle jumping input
         if (Input.GetButtonDown("Jump") && canJump)
         {
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
         }
 
-        animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
 
-        UpdateActiveTransform();
-
-        // Fire spell
-        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Return))
+        // Handle change spell input
+        if (Input.GetButtonDown("Fire3"))
         {
-            FireSpell();
+            activeSpellPosition = (activeSpellPosition + 1) % availableSpells.Length;
+            activeSpell = availableSpells[activeSpellPosition];
         }
 
 
+        // Handle aiming input
+        UpdateActiveTransform();
 
+
+        // Handle shooting spell input
+        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Return))
+        {
+            ShootSpell();
+        }
+
+        animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
     }
 
     private void UpdateActiveTransform()
@@ -85,10 +100,11 @@ public class WizardController : MonoBehaviour {
         }
     }
 
-    public void FireSpell()
+    private void ShootSpell()
     {
         Rigidbody2D spell = null;
         spell = Instantiate(activeSpell.spellRigidBody, activeSpellTransform.position, activeSpellTransform.rotation) as Rigidbody2D;
-        spell.velocity = activeSpellTransform.transform.right * projectileSpeed;
+        spell.GetComponent<SpellController>().Initialize(activeSpell);
+        spell.GetComponent<Rigidbody2D>().velocity = activeSpellTransform.transform.right * projectileSpeed;
     }
 }

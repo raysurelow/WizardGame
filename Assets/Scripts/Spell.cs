@@ -7,5 +7,6 @@ public class Spell : ScriptableObject {
 
     public string spellName;
     public Rigidbody2D spellRigidBody;
+    public LayerMask impactedLayers;
 
 }

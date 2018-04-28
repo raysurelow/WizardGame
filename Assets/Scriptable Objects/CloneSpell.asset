@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a358cfebdb25e81409025b0b4f59e692, type: 3}
-  m_Name: FireSpell
+  m_Name: CloneSpell
   m_EditorClassIdentifier: 
-  spellName: Fire
-  spellRigidBody: {fileID: 50384483447644414, guid: 4053154ece4c069449834cfba5f482e6,
+  spellName: Clone
+  spellRigidBody: {fileID: 50465557955586288, guid: 43277926bb69c1b45994cb9548caaefe,
     type: 2}
   impactedLayers:
     serializedVersion: 2
