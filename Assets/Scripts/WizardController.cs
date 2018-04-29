@@ -43,12 +43,12 @@ public class WizardController : MonoBehaviour {
         if (Input.GetAxisRaw("Horizontal") > 0f)
         {
             rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
-            transform.localScale = new Vector3(1f, 1f);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
         else if (Input.GetAxisRaw("Horizontal") < 0f)
         {
             rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
-            transform.localScale = new Vector3(-1f, 1f);
+            transform.rotation = Quaternion.Euler(0, 180f, 0);
         }
         else
         {
@@ -78,7 +78,7 @@ public class WizardController : MonoBehaviour {
         // Handle shooting spell input
         if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Return))
         {
-            ShootSpell();
+            animator.SetTrigger(string.Format("Shoot{0}Spell", activeSpell.spellName));
         }
 
         animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
