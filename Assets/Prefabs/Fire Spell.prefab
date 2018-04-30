@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 50384483447644414}
   - component: {fileID: 58563722096091606}
   - component: {fileID: 114235046367258774}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fire Spell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
