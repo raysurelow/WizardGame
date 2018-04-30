@@ -25,7 +25,7 @@ public class SpellController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(spellName + " hit something");
+        //Debug.Log(spellName + " hit something");
     }
 
 }

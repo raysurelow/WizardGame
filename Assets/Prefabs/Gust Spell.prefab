@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 50564320303874322}
   - component: {fileID: 58985000573036636}
   - component: {fileID: 114343218691762350}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Gust Spell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
