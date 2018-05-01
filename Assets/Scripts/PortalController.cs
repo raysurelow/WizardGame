@@ -19,26 +19,26 @@ public class PortalController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject colliderObject = collision.GetComponent<Collider2D>().gameObject;
+        GameObject colliderObject = collision.gameObject;
         if (colliderObject.layer == LayerMask.NameToLayer("Spell"))
         {
-            Destroy(colliderObject);
             if (outputPortal)
             {
-                Rigidbody2D originalSpell = colliderObject.GetComponent<Rigidbody2D>();
                 PortalController outputPortalController = outputPortal.GetComponent<PortalController>();
                 if (outputPortalController)
                 {
-                    outputPortalController.ShootSpell(originalSpell);
+                    outputPortalController.ShootSpell(colliderObject);
                 }
+                Destroy(colliderObject);
             }
             
         }
     }
 
-    public void ShootSpell(Rigidbody2D spell)
+    public void ShootSpell(GameObject spell)
     {
-        Rigidbody2D clonedSpell = Instantiate(spell, outputTransform.position, outputTransform.rotation) as Rigidbody2D;
-        clonedSpell.velocity = spell.velocity.magnitude * outputTransform.right;
+        GameObject clonedSpell = Instantiate(spell, outputTransform.position, outputTransform.rotation) as GameObject;
+        clonedSpell.GetComponent<SpellController>().Spell = spell.GetComponent<SpellController>().Spell;
+        clonedSpell.GetComponent<Rigidbody2D>().velocity = spell.GetComponent<Rigidbody2D>().velocity.magnitude * outputTransform.right;
     }
 }

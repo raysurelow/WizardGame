@@ -104,7 +104,7 @@ public class WizardController : MonoBehaviour {
     {
         Rigidbody2D spell = null;
         spell = Instantiate(activeSpell.spellRigidBody, activeSpellTransform.position, activeSpellTransform.rotation) as Rigidbody2D;
-        spell.GetComponent<SpellController>().Initialize(activeSpell);
+        spell.GetComponent<SpellController>().Spell = activeSpell;
         spell.GetComponent<Rigidbody2D>().velocity = activeSpellTransform.right * projectileSpeed;
     }
 }
