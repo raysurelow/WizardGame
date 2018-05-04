@@ -113,6 +113,28 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &126160208 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1852961741504746, guid: 76f6ad0c0697b854ab53324f29fb457a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1857467870}
+--- !u!95 &126160209
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 126160208}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b60312717efe2c441971b413e968a8f4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &174374345
 Prefab:
   m_ObjectHideFlags: 0
@@ -783,6 +805,48 @@ GameObject:
   m_PrefabParentObject: {fileID: 1000012827098836, guid: 3a24826c16080454e82f9fc4bb79d6bb,
     type: 2}
   m_PrefabInternal: {fileID: 794015375}
+--- !u!1001 &1857467870
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4556104394857350, guid: 76f6ad0c0697b854ab53324f29fb457a, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.535
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556104394857350, guid: 76f6ad0c0697b854ab53324f29fb457a, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.286
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556104394857350, guid: 76f6ad0c0697b854ab53324f29fb457a, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556104394857350, guid: 76f6ad0c0697b854ab53324f29fb457a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556104394857350, guid: 76f6ad0c0697b854ab53324f29fb457a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556104394857350, guid: 76f6ad0c0697b854ab53324f29fb457a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556104394857350, guid: 76f6ad0c0697b854ab53324f29fb457a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556104394857350, guid: 76f6ad0c0697b854ab53324f29fb457a, type: 2}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 76f6ad0c0697b854ab53324f29fb457a, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &2113262165
 GameObject:
   m_ObjectHideFlags: 0
