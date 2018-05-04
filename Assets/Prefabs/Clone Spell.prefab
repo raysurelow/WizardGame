@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 50465557955586288}
   - component: {fileID: 58559100501112026}
   - component: {fileID: 114905234049974298}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Clone Spell
   m_TagString: Untagged
   m_Icon: {fileID: 0}

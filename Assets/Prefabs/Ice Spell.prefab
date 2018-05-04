@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 50401813871272474}
   - component: {fileID: 58429148483209920}
   - component: {fileID: 114991632970857730}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Ice Spell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
