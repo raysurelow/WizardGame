@@ -39,6 +39,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Wizard
+    uniqueID: 4075767145
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
