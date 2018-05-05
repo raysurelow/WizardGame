@@ -39,6 +39,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Ladder
+    uniqueID: 2551340105
+    locked: 0
   - name: Wizard
     uniqueID: 4075767145
     locked: 0

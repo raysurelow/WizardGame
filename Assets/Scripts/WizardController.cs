@@ -11,6 +11,7 @@ public class WizardController : MonoBehaviour {
     public Spell[] availableSpells;
     public bool onLadder;
     public float climbSpeed;
+    public float climbJumpSpeed;
     public float climbVelocity;
     public float gravityStore;
 
@@ -95,6 +96,7 @@ public class WizardController : MonoBehaviour {
         {
             if (!climbInitialized)
             {
+                //dont want to cancel gravity until climbing is initialized by hitting up or down
                 if(Input.GetAxisRaw("Vertical") == -1 || Input.GetAxisRaw("Vertical") == 1)
                 {
                     climbInitialized = true;
@@ -111,10 +113,12 @@ public class WizardController : MonoBehaviour {
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbVelocity);
             }
 
+            //Jumping cancels climbing so gravity is restored 
             if (Input.GetButtonDown("Jump"))
             {
                 climbInitialized = false;
                 rigidBody.gravityScale = gravityStore;
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbJumpSpeed);
             }
             
         }
