@@ -9,6 +9,10 @@ public class WizardController : MonoBehaviour {
     public LayerMask jumpableLayerMask;
     public Transform groundCheck;
     public Spell[] availableSpells;
+    public bool onLadder;
+    public float climbSpeed;
+    public float climbVelocity;
+    public float gravityStore;
 
     private Rigidbody2D rigidBody;
     private Animator animator;
@@ -20,6 +24,8 @@ public class WizardController : MonoBehaviour {
     private Transform downSpellTransform;
     public float projectileSpeed;
     private Transform activeSpellTransform;
+    private bool climbInitialized;
+    
 
     // Use this for initialization
     void Start () {
@@ -30,6 +36,7 @@ public class WizardController : MonoBehaviour {
         downSpellTransform = transform.Find("DownSpellFirePosition");
         activeSpellPosition = 0;
         activeSpell = availableSpells.Length > 0 ? availableSpells[activeSpellPosition] : null;
+        gravityStore = rigidBody.gravityScale;
     }
 
     // Update is called once per frame
@@ -57,7 +64,7 @@ public class WizardController : MonoBehaviour {
 
 
         // Handle jumping input
-        if (Input.GetButtonDown("Jump") && canJump)
+        if (Input.GetButtonDown("Jump") && canJump && !climbInitialized)
         {
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
         }
@@ -82,6 +89,41 @@ public class WizardController : MonoBehaviour {
         }
 
         animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
+
+        //Handle onLadder climbing
+        if (onLadder)
+        {
+            if (!climbInitialized)
+            {
+                if(Input.GetAxisRaw("Vertical") == -1 || Input.GetAxisRaw("Vertical") == 1)
+                {
+                    climbInitialized = true;
+                    rigidBody.gravityScale = 0f;
+                    climbVelocity = climbSpeed * Input.GetAxisRaw("Vertical");
+                    rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbVelocity);
+                }
+            }
+
+            if (climbInitialized)
+            {
+                rigidBody.gravityScale = 0f;
+                climbVelocity = climbSpeed * Input.GetAxisRaw("Vertical");
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbVelocity);
+            }
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                climbInitialized = false;
+                rigidBody.gravityScale = gravityStore;
+            }
+            
+        }
+
+        if (!onLadder)
+        {
+            climbInitialized = false;
+            rigidBody.gravityScale = gravityStore;
+        }
     }
 
     private void UpdateActiveTransform()
