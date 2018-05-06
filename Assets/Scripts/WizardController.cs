@@ -26,6 +26,7 @@ public class WizardController : MonoBehaviour {
     public float projectileSpeed;
     private Transform activeSpellTransform;
     private bool climbInitialized;
+    private LadderController ladder;
     
 
     // Use this for initialization
@@ -38,6 +39,7 @@ public class WizardController : MonoBehaviour {
         activeSpellPosition = 0;
         activeSpell = availableSpells.Length > 0 ? availableSpells[activeSpellPosition] : null;
         gravityStore = rigidBody.gravityScale;
+        ladder = FindObjectOfType<LadderController>();
     }
 
     // Update is called once per frame
@@ -100,6 +102,7 @@ public class WizardController : MonoBehaviour {
                 if(Input.GetAxisRaw("Vertical") == -1 || Input.GetAxisRaw("Vertical") == 1)
                 {
                     climbInitialized = true;
+                    ladder.someoneClimbing = true;
                     rigidBody.gravityScale = 0f;
                     climbVelocity = climbSpeed * Input.GetAxisRaw("Vertical");
                     rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbVelocity);
@@ -115,11 +118,13 @@ public class WizardController : MonoBehaviour {
             }
 
             //Jumping cancels climbing so gravity is restored 
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump") && climbInitialized)
             {
                 climbInitialized = false;
+                ladder.someoneClimbing = false;
                 rigidBody.gravityScale = gravityStore;
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbJumpSpeed);
+                animator.SetBool("IsClimbing", false);
             }
 
             animator.SetFloat("ClimbingSpeed", Mathf.Abs(rigidBody.velocity.y));
@@ -129,6 +134,7 @@ public class WizardController : MonoBehaviour {
         if (!onLadder)
         {
             climbInitialized = false;
+            ladder.someoneClimbing = false;
             rigidBody.gravityScale = gravityStore;
             animator.SetBool("IsClimbing", false);
         }
