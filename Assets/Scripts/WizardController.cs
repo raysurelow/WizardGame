@@ -103,6 +103,7 @@ public class WizardController : MonoBehaviour {
                     rigidBody.gravityScale = 0f;
                     climbVelocity = climbSpeed * Input.GetAxisRaw("Vertical");
                     rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbVelocity);
+                    animator.SetBool("IsClimbing", true);
                 }
             }
 
@@ -120,13 +121,16 @@ public class WizardController : MonoBehaviour {
                 rigidBody.gravityScale = gravityStore;
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbJumpSpeed);
             }
-            
+
+            animator.SetFloat("ClimbingSpeed", Mathf.Abs(rigidBody.velocity.y));
+
         }
 
         if (!onLadder)
         {
             climbInitialized = false;
             rigidBody.gravityScale = gravityStore;
+            animator.SetBool("IsClimbing", false);
         }
     }
 
