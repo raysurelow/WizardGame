@@ -6,17 +6,16 @@ public class LadderController : MonoBehaviour {
 
     private WizardController player;
     private EdgeCollider2D topCollider;
-    public bool someoneClimbing;
 
 	// Use this for initialization
 	void Start () {
-        player = FindObjectOfType<WizardController>();
+        //player = FindObjectOfType<WizardController>();
         topCollider= GetComponent<EdgeCollider2D>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (someoneClimbing)
+        if (player && player.climbInitialized)
         {
             topCollider.enabled = false;
         }
@@ -30,7 +29,11 @@ public class LadderController : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-            player.onLadder = true;
+            player = collision.gameObject.GetComponent<WizardController>();
+            if (player != null)
+            {
+                player.onLadder = true;
+            }
         }
     }
 
@@ -38,7 +41,10 @@ public class LadderController : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-            player.onLadder = false;
+            if (player != null)
+            {
+                player.onLadder = false;
+            }
         }
     }
 }

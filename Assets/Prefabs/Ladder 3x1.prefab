@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 4271428447103454}
   - component: {fileID: 61929878901961454}
   - component: {fileID: 114708190229286226}
+  - component: {fileID: 68203767388041106}
   m_Layer: 13
   m_Name: Ladder 3x1
   m_TagString: Untagged
@@ -96,7 +97,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1092619732034138}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.65, y: 2.78, z: 0}
+  m_LocalPosition: {x: -0.89, y: 1.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4016889156548420}
@@ -156,6 +157,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 3}
   m_EdgeRadius: 0
+--- !u!68 &68203767388041106
+EdgeCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1092619732034138}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1.5}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.5, y: 0}
+  - {x: 0.5, y: 0}
 --- !u!114 &114708190229286226
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -167,6 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb1ef75e688cce478011994e881fd11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  someoneClimbing: 0
 --- !u!212 &212422669341081350
 SpriteRenderer:
   m_ObjectHideFlags: 1
