@@ -9,6 +9,12 @@ public class WizardController : MonoBehaviour {
     public LayerMask jumpableLayerMask;
     public Transform groundCheck;
     public Spell[] availableSpells;
+    public bool onLadder;
+    public bool climbInitialized;
+    public float climbSpeed;
+    public float climbJumpSpeed;
+    public float climbVelocity;
+    public float gravityStore;
 
     private Rigidbody2D rigidBody;
     private Animator animator;
@@ -20,6 +26,8 @@ public class WizardController : MonoBehaviour {
     private Transform downSpellTransform;
     public float projectileSpeed;
     private Transform activeSpellTransform;
+    private LadderController ladder;
+    
 
     // Use this for initialization
     void Start () {
@@ -30,6 +38,7 @@ public class WizardController : MonoBehaviour {
         downSpellTransform = transform.Find("DownSpellFirePosition");
         activeSpellPosition = 0;
         activeSpell = availableSpells.Length > 0 ? availableSpells[activeSpellPosition] : null;
+        gravityStore = rigidBody.gravityScale;
     }
 
     // Update is called once per frame
@@ -57,7 +66,7 @@ public class WizardController : MonoBehaviour {
 
 
         // Handle jumping input
-        if (Input.GetButtonDown("Jump") && canJump)
+        if (Input.GetButtonDown("Jump") && canJump && !climbInitialized)
         {
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
         }
@@ -82,6 +91,43 @@ public class WizardController : MonoBehaviour {
         }
 
         animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
+
+        //Handle onLadder climbing
+        if (onLadder)
+        {
+            if (!climbInitialized)
+            {
+                //dont want to cancel gravity until climbing is initialized by hitting up or down
+                if(Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1)
+                {
+                    climbInitialized = true;
+                }
+            }
+            
+            if (climbInitialized)
+            {
+                rigidBody.gravityScale = 0f;
+                climbVelocity = climbSpeed * Input.GetAxisRaw("Vertical");
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbVelocity);
+            }
+            
+            //Jumping cancels climbing so gravity is restored 
+            if (Input.GetButtonDown("Jump") && climbInitialized)
+            {
+                climbInitialized = false;
+                rigidBody.gravityScale = gravityStore;
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbJumpSpeed);
+            }
+
+            animator.SetFloat("ClimbingSpeed", Mathf.Abs(rigidBody.velocity.y));
+
+        }
+        else
+        {
+            climbInitialized = false;
+            rigidBody.gravityScale = gravityStore;
+        }
+        animator.SetBool("IsClimbing", climbInitialized);
     }
 
     private void UpdateActiveTransform()
