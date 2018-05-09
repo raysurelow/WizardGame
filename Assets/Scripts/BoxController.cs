@@ -50,7 +50,6 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable {
 
     private void ClonedMovements()
     {
-        print(rigidBody.velocity.y);
         // Handle movement inputs
         if (Input.GetAxisRaw("Horizontal") > 0f)
         {
