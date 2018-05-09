@@ -10,7 +10,7 @@ public class LadderController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //player = FindObjectOfType<WizardController>();
-        topCollider= GetComponent<EdgeCollider2D>();
+        topCollider= GetComponentInChildren<EdgeCollider2D>();
     }
 	
 	// Update is called once per frame
@@ -27,6 +27,13 @@ public class LadderController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        /*
+        print(collision.gameObject.GetComponent<Collider>().bounds.min.y < topCollider.bounds.min.y);
+        if (collision.gameObject.GetComponent<Collider>().bounds.min.y < topCollider.bounds.min.y)
+        {
+            Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), GetComponentInChildren<Collider>());
+        }
+        */
         if (collision.gameObject.tag == "Player")
         {
             player = collision.gameObject.GetComponent<WizardController>();
