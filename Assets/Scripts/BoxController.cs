@@ -43,13 +43,19 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable {
         animator.SetBool("IsCloned", isCloned);
         if (isCloned)
         {
-            canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
             ClonedMovements();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            isCloned = false;
         }
     }
 
     private void ClonedMovements()
     {
+        canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
+
         // Handle movement inputs
         if (Input.GetAxisRaw("Horizontal") > 0f)
         {
