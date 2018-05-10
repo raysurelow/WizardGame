@@ -100,7 +100,6 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable {
             Destroy(gameObject);
         }
         isFrozen = false;
-        frozenElapsedTime = 0;
-        
+        frozenElapsedTime = 0;  
     }
 }
