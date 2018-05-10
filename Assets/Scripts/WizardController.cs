@@ -5,33 +5,33 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     public float moveSpeed;
     public float jumpSpeed;
-    public float groundCheckRadius;
     public LayerMask jumpableLayerMask;
+    public float groundCheckRadius;
+    public float projectileSpeed;
     public Transform groundCheck;
     public Spell[] availableSpells;
     public bool onLadder;
     public bool climbInitialized;
     public float climbSpeed;
     public float climbJumpSpeed;
-    public float climbVelocity;
     public float gravityStore;
     public bool isCloneable;
+    public float frozenDuration = 5.0f;
 
     private Rigidbody2D rigidBody;
     private Animator animator;
     private bool canJump;
+    private float climbVelocity;
     private int activeSpellPosition;
     private Spell activeSpell;
     private Transform horizontalSpellTransform;
     private Transform upSpellTransform;
     private Transform downSpellTransform;
-    public float projectileSpeed;
     private Transform activeSpellTransform;
     private LadderController ladder;
     private bool isFrozen;
     private bool isCloned;
     private float frozenElapsedTime;
-    public float frozenDuration = 5.0f;
 
 
     // Use this for initialization

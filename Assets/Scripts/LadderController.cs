@@ -9,7 +9,6 @@ public class LadderController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //player = FindObjectOfType<WizardController>();
         topCollider= GetComponentInChildren<EdgeCollider2D>();
     }
 	
@@ -17,11 +16,11 @@ public class LadderController : MonoBehaviour {
 	void Update () {
         if (player && player.climbInitialized)
         {
-            topCollider.enabled = false;
+            //topCollider.enabled = false;
         }
         else
         {
-            topCollider.enabled = true;
+            //topCollider.enabled = true;
         }
 	}
 
