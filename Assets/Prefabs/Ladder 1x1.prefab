@@ -11,6 +11,22 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1836883906101584}
   m_IsPrefabParent: 1
+--- !u!1 &1167578650517504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4199628018984368}
+  - component: {fileID: 68090870141405262}
+  m_Layer: 14
+  m_Name: LadderTop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1836883906101584
 GameObject:
   m_ObjectHideFlags: 0
@@ -22,7 +38,6 @@ GameObject:
   - component: {fileID: 212613827912821476}
   - component: {fileID: 61382002930351886}
   - component: {fileID: 114167947729885272}
-  - component: {fileID: 68578855397247538}
   m_Layer: 13
   m_Name: Ladder 1x1
   m_TagString: Untagged
@@ -30,6 +45,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4199628018984368
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1167578650517504}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4985107265892470}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4985107265892470
 Transform:
   m_ObjectHideFlags: 1
@@ -37,9 +65,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1836883906101584}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.012578, y: 1.3637079, z: 0}
+  m_LocalPosition: {x: -2.61, y: 3.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4199628018984368}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -68,12 +97,12 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!68 &68578855397247538
+--- !u!68 &68090870141405262
 EdgeCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1836883906101584}
+  m_GameObject: {fileID: 1167578650517504}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -109,6 +138,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -127,8 +157,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1743627191
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300040, guid: 1057cf29db371c647a436de1671b60ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

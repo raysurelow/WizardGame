@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WizardController : MonoBehaviour {
+public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable, IGustable {
 
     public float moveSpeed;
     public float jumpSpeed;
@@ -15,6 +15,7 @@ public class WizardController : MonoBehaviour {
     public float climbJumpSpeed;
     public float climbVelocity;
     public float gravityStore;
+    public bool isCloneable;
 
     private Rigidbody2D rigidBody;
     private Animator animator;
@@ -27,7 +28,11 @@ public class WizardController : MonoBehaviour {
     public float projectileSpeed;
     private Transform activeSpellTransform;
     private LadderController ladder;
-    
+    private bool isFrozen;
+    private bool isCloned;
+    private float frozenElapsedTime;
+    public float frozenDuration = 5.0f;
+
 
     // Use this for initialization
     void Start () {
@@ -153,4 +158,35 @@ public class WizardController : MonoBehaviour {
         spell.GetComponent<SpellController>().Spell = activeSpell;
         spell.GetComponent<Rigidbody2D>().velocity = activeSpellTransform.right * projectileSpeed;
     }
+
+    public void Freeze()
+    {
+        isFrozen = true;
+        frozenElapsedTime = 0;
+    }
+
+    public void Clone()
+    {
+        if (isCloneable)
+        {
+            isCloned = true;
+        }
+    }
+
+    public void Burn()
+    {
+        if (!isFrozen)
+        {
+            Destroy(gameObject);
+        }
+        isFrozen = false;
+        frozenElapsedTime = 0;
+
+    }
+
+    public void Gust()
+    {
+        //todo
+    }
+
 }

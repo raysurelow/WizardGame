@@ -222,6 +222,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114000012397673842
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -238,13 +239,19 @@ MonoBehaviour:
   groundCheckRadius: 0.2
   jumpableLayerMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 8960
   groundCheck: {fileID: 4000010476568698}
   availableSpells:
   - {fileID: 11400000, guid: 291283210a3ffd34cb4ae0e0b95f3480, type: 2}
   - {fileID: 11400000, guid: 8bbb199cdb7d0314c9b96d5a5265e0c5, type: 2}
   - {fileID: 11400000, guid: 789a4339ecb60ca439f81b7e877b49d0, type: 2}
   - {fileID: 11400000, guid: 3de923c11eee31a41a77ea391b59ca90, type: 2}
+  onLadder: 0
+  climbInitialized: 0
+  climbSpeed: 0
+  climbJumpSpeed: 0
+  climbVelocity: 0
+  gravityStore: 0
   projectileSpeed: 4
 --- !u!212 &212000010481709792
 SpriteRenderer:
@@ -259,6 +266,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
