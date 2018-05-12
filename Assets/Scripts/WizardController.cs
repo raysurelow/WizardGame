@@ -5,17 +5,18 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     public float moveSpeed;
     public float jumpSpeed;
-    public float groundCheckRadius;
     public LayerMask jumpableLayerMask;
+    public float groundCheckRadius;
+    public float projectileSpeed;
     public Transform groundCheck;
     public Spell[] availableSpells;
     public bool onLadder;
-    public bool climbInitialized;
+    public bool climbInitiated;
     public float climbSpeed;
     public float climbJumpSpeed;
-    public float climbVelocity;
     public float gravityStore;
     public bool isCloneable;
+    public float frozenDuration = 5.0f;
 
     private Rigidbody2D rigidBody;
     private Animator animator;
@@ -25,13 +26,11 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     private Transform horizontalSpellTransform;
     private Transform upSpellTransform;
     private Transform downSpellTransform;
-    public float projectileSpeed;
     private Transform activeSpellTransform;
     private LadderController ladder;
     private bool isFrozen;
     private bool isCloned;
     private float frozenElapsedTime;
-    public float frozenDuration = 5.0f;
 
 
     // Use this for initialization
@@ -71,7 +70,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
 
         // Handle jumping input
-        if (Input.GetButtonDown("Jump") && canJump && !climbInitialized)
+        if (Input.GetButtonDown("Jump") && canJump && !climbInitiated)
         {
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
         }
@@ -100,26 +99,25 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         //Handle onLadder climbing
         if (onLadder)
         {
-            if (!climbInitialized)
+            if (!climbInitiated)
             {
-                //dont want to cancel gravity until climbing is initialized by hitting up or down
+                //dont want to cancel gravity until climbing is initiated by hitting up or down
                 if(Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1)
                 {
-                    climbInitialized = true;
+                    climbInitiated = true;
                 }
             }
-            
-            if (climbInitialized)
+
+            if (climbInitiated)
             {
-                rigidBody.gravityScale = 0f;
-                climbVelocity = climbSpeed * Input.GetAxisRaw("Vertical");
-                rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbVelocity);
+                rigidBody.gravityScale = 0;
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbSpeed * Input.GetAxisRaw("Vertical"));
             }
             
             //Jumping cancels climbing so gravity is restored 
-            if (Input.GetButtonDown("Jump") && climbInitialized)
+            if (Input.GetButtonDown("Jump") && climbInitiated)
             {
-                climbInitialized = false;
+                climbInitiated = false;
                 rigidBody.gravityScale = gravityStore;
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbJumpSpeed);
             }
@@ -129,10 +127,10 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         }
         else
         {
-            climbInitialized = false;
+            climbInitiated = false;
             rigidBody.gravityScale = gravityStore;
         }
-        animator.SetBool("IsClimbing", climbInitialized);
+        animator.SetBool("IsClimbing", climbInitiated);
     }
 
     private void UpdateActiveTransform()

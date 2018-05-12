@@ -124,7 +124,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013262772440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.35, y: 2.67, z: 0}
+  m_LocalPosition: {x: -3.33, y: 3.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4000010476568698}
@@ -239,7 +239,7 @@ MonoBehaviour:
   groundCheckRadius: 0.2
   jumpableLayerMask:
     serializedVersion: 2
-    m_Bits: 8960
+    m_Bits: 17152
   groundCheck: {fileID: 4000010476568698}
   availableSpells:
   - {fileID: 11400000, guid: 291283210a3ffd34cb4ae0e0b95f3480, type: 2}
@@ -248,11 +248,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3de923c11eee31a41a77ea391b59ca90, type: 2}
   onLadder: 0
   climbInitialized: 0
-  climbSpeed: 0
-  climbJumpSpeed: 0
+  climbSpeed: 2
+  climbJumpSpeed: 4
   climbVelocity: 0
   gravityStore: 0
+  isCloneable: 0
   projectileSpeed: 4
+  frozenDuration: 5
 --- !u!212 &212000010481709792
 SpriteRenderer:
   m_ObjectHideFlags: 1
