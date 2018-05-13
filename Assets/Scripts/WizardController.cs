@@ -56,12 +56,14 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         if (Input.GetAxisRaw("Horizontal") > 0f)
         {
             rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            //transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.localScale = new Vector3(1, transform.localScale.y);
         }
         else if (Input.GetAxisRaw("Horizontal") < 0f)
         {
             rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
-            transform.rotation = Quaternion.Euler(0, 180f, 0);
+            //transform.rotation = Quaternion.Euler(0, 180f, 0);
+            transform.localScale = new Vector3(-1, transform.localScale.y);
         }
         else
         {
@@ -153,7 +155,9 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         Rigidbody2D spell = null;
         spell = Instantiate(activeSpell.spellRigidBody, activeSpellTransform.position, activeSpellTransform.rotation) as Rigidbody2D;
         spell.GetComponent<SpellController>().Spell = activeSpell;
-        spell.GetComponent<Rigidbody2D>().velocity = activeSpellTransform.right * projectileSpeed;
+        Vector3 spellVelocity = activeSpellTransform.right * projectileSpeed;
+        spell.velocity = transform.localScale.x > 0 ? spellVelocity : -spellVelocity;
+        spell.transform.localScale = transform.localScale;
     }
 
     public void Freeze()
