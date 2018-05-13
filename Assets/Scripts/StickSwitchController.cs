@@ -26,7 +26,7 @@ public class StickSwitchController : AbstractSwitch {
                 elapsedTime = 0;
             }
         }
-        if (playerInProximity && Input.GetButtonDown("Fire1"))
+        if (playerInProximity && Input.GetButtonDown("Fire2"))
         {
             IsSwitchedOn = !IsSwitchedOn;
         }

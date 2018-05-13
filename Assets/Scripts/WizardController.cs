@@ -87,9 +87,8 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         // Handle aiming input
         UpdateActiveTransform();
 
-
         // Handle shooting spell input
-        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.Return))
         {
             animator.SetTrigger(string.Format("Shoot{0}Spell", activeSpell.spellName));
         }
@@ -135,11 +134,11 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     private void UpdateActiveTransform()
     {
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        if (Input.GetAxisRaw("Vertical") > 0)
         {
             activeSpellTransform = upSpellTransform;
         }
-        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        else if (Input.GetAxisRaw("Vertical") < 0)
         {
             activeSpellTransform = downSpellTransform;
         }
