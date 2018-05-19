@@ -5,13 +5,8 @@ using UnityEngine;
 public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable {
 
     public float frozenDuration = 5.0f;
-    
+
     public bool isCloneable;
-    public float moveSpeed;
-    public float jumpSpeed;
-    public float groundCheckRadius;
-    public LayerMask jumpableLayerMask;
-    public Transform groundCheck;
     private bool canJump;
     private Rigidbody2D rigidBody;
 
@@ -19,13 +14,31 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable {
     private float frozenElapsedTime;
     private bool isFrozen;
     private bool isCloned;
-
+    private float massStore;
+    private float gravityStore;
+    private GameObject player;
+    private float jumpSpeed;
+    private float moveSpeed;
+    private Transform groundCheck;
+    private float groundCheckRadius;
+    private LayerMask jumpableLayerMask;
 
 
 	// Use this for initialization
 	void Start () {
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
+        massStore = rigidBody.mass;
+        gravityStore = rigidBody.gravityScale;
+        player = GameObject.FindGameObjectWithTag("Player");
+        if(player != null)
+        {
+            jumpSpeed = player.GetComponent<WizardController>().jumpSpeed;
+            moveSpeed = player.GetComponent<WizardController>().moveSpeed;
+            groundCheck = player.GetComponent<WizardController>().groundCheck;
+            groundCheckRadius = player.GetComponent<WizardController>().groundCheckRadius;
+            jumpableLayerMask = player.GetComponent<WizardController>().jumpableLayerMask;
+        }
     }
 	
 	// Update is called once per frame
@@ -48,7 +61,12 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable {
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            isCloned = false;
+            if (isCloned)
+            {
+                rigidBody.mass = massStore;
+                rigidBody.gravityScale = gravityStore;
+                isCloned = false;
+            }
         }
     }
 
@@ -90,6 +108,11 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable {
         if (isCloneable)
         {
             isCloned = true;
+            if (player != null)
+            {
+                rigidBody.mass = player.GetComponent<Rigidbody2D>().mass;
+                rigidBody.gravityScale = player.GetComponent<Rigidbody2D>().gravityScale;
+            }
         }
     }
 

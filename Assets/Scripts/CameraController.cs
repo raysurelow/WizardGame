@@ -20,18 +20,20 @@ public class CameraController : MonoBehaviour {
         {
             findActivePlayer();
         }*/
-
-        float playerDistanceFromCamera = player.transform.position.x - transform.position.x;
-        if (playerDistanceFromCamera > cameraHorizontalGive)
+        if (player != null)
         {
-            targetPosition = new Vector3(player.transform.position.x - cameraHorizontalGive, transform.position.y, transform.position.z);
-        }
-        if (playerDistanceFromCamera < -cameraHorizontalGive)
-        {
-            targetPosition = new Vector3(player.transform.position.x + cameraHorizontalGive, transform.position.y, transform.position.z);
-        }
+            float playerDistanceFromCamera = player.transform.position.x - transform.position.x;
+            if (playerDistanceFromCamera > cameraHorizontalGive)
+            {
+                targetPosition = new Vector3(player.transform.position.x - cameraHorizontalGive, transform.position.y, transform.position.z);
+            }
+            if (playerDistanceFromCamera < -cameraHorizontalGive)
+            {
+                targetPosition = new Vector3(player.transform.position.x + cameraHorizontalGive, transform.position.y, transform.position.z);
+            }
 
-        transform.position = Vector3.Lerp(transform.position, targetPosition, smoothing * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, targetPosition, smoothing * Time.deltaTime);
+        }
     }
 
     /*public void findActivePlayer()
