@@ -5,7 +5,7 @@ using UnityEngine;
 public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable {
 
     public float frozenDuration = 5.0f;
-
+    public Transform groundCheck;
     public bool isCloneable;
     private bool canJump;
     private Rigidbody2D rigidBody;
@@ -19,7 +19,6 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable {
     private GameObject player;
     private float jumpSpeed;
     private float moveSpeed;
-    private Transform groundCheck;
     private float groundCheckRadius;
     private LayerMask jumpableLayerMask;
 
@@ -59,7 +58,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable {
             ClonedMovements();
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) || !player.activeSelf)
         {
             if (isCloned)
             {
