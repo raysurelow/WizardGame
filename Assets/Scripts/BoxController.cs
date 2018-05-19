@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable {
+public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, IGustable {
 
     public float frozenDuration = 5.0f;
     public Transform groundCheck;
@@ -23,14 +23,14 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable {
     private LayerMask jumpableLayerMask;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         massStore = rigidBody.mass;
         gravityStore = rigidBody.gravityScale;
         player = GameObject.FindGameObjectWithTag("Player");
-        if(player != null)
+        if (player != null)
         {
             jumpSpeed = player.GetComponent<WizardController>().jumpSpeed;
             moveSpeed = player.GetComponent<WizardController>().moveSpeed;
@@ -39,9 +39,9 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable {
             jumpableLayerMask = player.GetComponent<WizardController>().jumpableLayerMask;
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         if (isFrozen)
         {
             frozenElapsedTime += Time.deltaTime;
@@ -122,6 +122,11 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable {
             Destroy(gameObject);
         }
         isFrozen = false;
-        frozenElapsedTime = 0;  
+        frozenElapsedTime = 0;
+    }
+
+    public void Gust()
+    {
+        rigidBody.AddForce(new Vector2(10, 0), ForceMode2D.Impulse);
     }
 }
