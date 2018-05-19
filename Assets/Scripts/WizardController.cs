@@ -190,4 +190,12 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         //todo
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "KillPlane")
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
 }
