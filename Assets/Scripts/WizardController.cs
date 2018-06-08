@@ -31,6 +31,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     private bool isFrozen;
     private bool isCloned;
     private float frozenElapsedTime;
+    private LevelManagerController levelManager;
 
 
     // Use this for initialization
@@ -43,6 +44,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         activeSpellPosition = 0;
         activeSpell = availableSpells.Length > 0 ? availableSpells[activeSpellPosition] : null;
         gravityStore = rigidBody.gravityScale;
+        levelManager = FindObjectOfType<LevelManagerController>();
     }
 
     // Update is called once per frame
@@ -83,6 +85,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         {
             activeSpellPosition = (activeSpellPosition + 1) % availableSpells.Length;
             activeSpell = availableSpells[activeSpellPosition];
+            levelManager.updateActiveSpellText(activeSpell);
         }
 
 
