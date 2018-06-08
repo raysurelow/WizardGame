@@ -48,4 +48,9 @@ public class LevelManagerController : MonoBehaviour {
                 break;
         }
     }
+
+    public void LoadLevel(string levelToLoad)
+    {
+        SceneManager.LoadScene(levelToLoad);
+    }
 }
