@@ -32,6 +32,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     private bool isCloned;
     private float frozenElapsedTime;
     private LevelManagerController levelManager;
+    private PauseMenuController pauseMenu;
 
 
     // Use this for initialization
@@ -45,96 +46,100 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         activeSpell = availableSpells.Length > 0 ? availableSpells[activeSpellPosition] : null;
         gravityStore = rigidBody.gravityScale;
         levelManager = FindObjectOfType<LevelManagerController>();
+        pauseMenu = FindObjectOfType<PauseMenuController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Check if grounded
-        canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
-
-
-        // Handle movement inputs
-        if (Input.GetAxisRaw("Horizontal") > 0f)
+        if (!pauseMenu.gamePaused)
         {
-            rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
-            //transform.rotation = Quaternion.Euler(0, 0, 0);
-            transform.localScale = new Vector3(1, transform.localScale.y);
-        }
-        else if (Input.GetAxisRaw("Horizontal") < 0f)
-        {
-            rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
-            //transform.rotation = Quaternion.Euler(0, 180f, 0);
-            transform.localScale = new Vector3(-1, transform.localScale.y);
-        }
-        else
-        {
-            rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y);
-        }
+            // Check if grounded
+            canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
 
 
-        // Handle jumping input
-        if (Input.GetButtonDown("Jump") && canJump && !climbInitiated)
-        {
-            rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
-        }
-
-
-        // Handle change spell input
-        if (Input.GetButtonDown("Fire3"))
-        {
-            activeSpellPosition = (activeSpellPosition + 1) % availableSpells.Length;
-            activeSpell = availableSpells[activeSpellPosition];
-            levelManager.updateActiveSpellText(activeSpell);
-        }
-
-
-        // Handle aiming input
-        UpdateActiveTransform();
-
-        // Handle shooting spell input
-        if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.Return))
-        {
-            animator.SetTrigger(string.Format("Shoot{0}Spell", activeSpell.spellName));
-        }
-
-        animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
-
-        //Handle onLadder climbing
-        if (onLadder)
-        {
-            if (!climbInitiated)
+            // Handle movement inputs
+            if (Input.GetAxisRaw("Horizontal") > 0f)
             {
-                //dont want to cancel gravity until climbing is initiated by hitting up or down
-                if(Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1)
+                rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
+                //transform.rotation = Quaternion.Euler(0, 0, 0);
+                transform.localScale = new Vector3(1, transform.localScale.y);
+            }
+            else if (Input.GetAxisRaw("Horizontal") < 0f)
+            {
+                rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
+                //transform.rotation = Quaternion.Euler(0, 180f, 0);
+                transform.localScale = new Vector3(-1, transform.localScale.y);
+            }
+            else
+            {
+                rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y);
+            }
+
+
+            // Handle jumping input
+            if (Input.GetButtonDown("Jump") && canJump && !climbInitiated)
+            {
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
+            }
+
+
+            // Handle change spell input
+            if (Input.GetButtonDown("Fire3"))
+            {
+                activeSpellPosition = (activeSpellPosition + 1) % availableSpells.Length;
+                activeSpell = availableSpells[activeSpellPosition];
+                levelManager.updateActiveSpellText(activeSpell);
+            }
+
+
+            // Handle aiming input
+            UpdateActiveTransform();
+
+            // Handle shooting spell input
+            if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.Return))
+            {
+                animator.SetTrigger(string.Format("Shoot{0}Spell", activeSpell.spellName));
+            }
+
+            animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
+
+            //Handle onLadder climbing
+            if (onLadder)
+            {
+                if (!climbInitiated)
                 {
-                    climbInitiated = true;
+                    //dont want to cancel gravity until climbing is initiated by hitting up or down
+                    if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1)
+                    {
+                        climbInitiated = true;
+                    }
                 }
-            }
 
-            if (climbInitiated)
-            {
-                rigidBody.gravityScale = 0;
-                rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbSpeed * Input.GetAxisRaw("Vertical"));
+                if (climbInitiated)
+                {
+                    rigidBody.gravityScale = 0;
+                    rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbSpeed * Input.GetAxisRaw("Vertical"));
+                }
+
+                //Jumping cancels climbing so gravity is restored 
+                if (Input.GetButtonDown("Jump") && climbInitiated)
+                {
+                    climbInitiated = false;
+                    rigidBody.gravityScale = gravityStore;
+                    rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbJumpSpeed);
+                }
+
+                animator.SetFloat("ClimbingSpeed", Mathf.Abs(rigidBody.velocity.y));
+
             }
-            
-            //Jumping cancels climbing so gravity is restored 
-            if (Input.GetButtonDown("Jump") && climbInitiated)
+            else
             {
                 climbInitiated = false;
                 rigidBody.gravityScale = gravityStore;
-                rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbJumpSpeed);
             }
-
-            animator.SetFloat("ClimbingSpeed", Mathf.Abs(rigidBody.velocity.y));
-
+            animator.SetBool("IsClimbing", climbInitiated);
         }
-        else
-        {
-            climbInitiated = false;
-            rigidBody.gravityScale = gravityStore;
-        }
-        animator.SetBool("IsClimbing", climbInitiated);
     }
 
     private void UpdateActiveTransform()
