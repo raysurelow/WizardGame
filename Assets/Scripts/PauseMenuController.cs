@@ -45,6 +45,7 @@ public class PauseMenuController : MonoBehaviour {
 
     public void LevelSelect()
     {
+        ResumeGame();
         SceneManager.LoadScene("MainMenu");
     }
 
