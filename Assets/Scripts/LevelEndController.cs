@@ -19,6 +19,10 @@ public class LevelEndController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        levelManager.LoadLevel(levelToLoad);
+        if(collision.gameObject.tag == "Player")
+        {
+            levelManager.LoadLevel(levelToLoad);
+        }
+        
     }
 }
