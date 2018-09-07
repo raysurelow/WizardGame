@@ -29,14 +29,12 @@ public class LevelManagerController : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(1))
         {
-            print("right click down");
             spellChooser.enabled = true;
             Time.timeScale = .05F;
         }
 
         if (Input.GetMouseButtonUp(1))
         {
-            print("right click up");
             spellChooser.enabled = false;
             Time.timeScale = 1F;
         }
