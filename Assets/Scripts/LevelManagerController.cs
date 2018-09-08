@@ -6,11 +6,12 @@ using UnityEngine.UI;
 
 public class LevelManagerController : MonoBehaviour {
     public Text activeSpellText;
+    public Canvas spellChooser;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    // Use this for initialization
+    void Start () {
+        spellChooser.enabled = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -18,15 +19,28 @@ public class LevelManagerController : MonoBehaviour {
         {
             Application.Quit();
         }
-        else if (Input.GetKeyDown(KeyCode.R))
+
+        if (Input.GetKeyDown(KeyCode.R))
         {
             //Restart level
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
         }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            spellChooser.enabled = true;
+            Time.timeScale = .05F;
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            spellChooser.enabled = false;
+            Time.timeScale = 1F;
+        }
     }
 
-    public void updateActiveSpellText(Spell spell)
+    public void UpdateActiveSpellText(Spell spell)
     {
         switch (spell.spellName)
         {

@@ -89,7 +89,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
             {
                 activeSpellPosition = (activeSpellPosition + 1) % availableSpells.Length;
                 activeSpell = availableSpells[activeSpellPosition];
-                levelManager.updateActiveSpellText(activeSpell);
+                levelManager.UpdateActiveSpellText(activeSpell);
             }
 
 
@@ -204,6 +204,26 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         {
             gameObject.SetActive(false);
         }
+    }
+
+    public void UpdateActiveSpell(string spellName)
+    {
+        switch (spellName)
+        {
+            case "Fire":
+                activeSpell = availableSpells[0];
+                break;
+            case "Ice":
+                activeSpell = availableSpells[1];
+                break;
+            case "Gust":
+                activeSpell = availableSpells[2];
+                break;
+            case "Clone":
+                activeSpell = availableSpells[3];
+                break;
+        }
+        levelManager.UpdateActiveSpellText(activeSpell);
     }
 
 }
