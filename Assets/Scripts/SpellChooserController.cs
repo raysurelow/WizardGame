@@ -17,7 +17,7 @@ public class SpellChooserController : MonoBehaviour {
 	void Update () {
         if (wizard != null)
         {
-            transform.localPosition = new Vector3(wizard.transform.position.x, wizard.transform.position.y, 0f);
+            transform.position = new Vector3(wizard.transform.position.x, wizard.transform.position.y, 0f);
         }
     }
 }

@@ -5,9 +5,16 @@ public class DoorController : AbstractSwitchable, IBurnable, IFreezable, IGustab
 
     private GameObject door;
 
-	// Use this for initialization
-	protected override void Start () {
-        door = transform.Find("Door").gameObject;
+    // Use this for initialization
+    protected override void Start() {
+        if (name == "Door")
+        {
+            door = gameObject;
+        }
+        else
+        {
+            door = transform.Find("Door").gameObject;
+        }
 	}
 	
 	// Update is called once per frame
