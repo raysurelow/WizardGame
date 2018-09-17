@@ -11,7 +11,8 @@ public class CameraController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
+        transform.position = new Vector3(0, player.transform.position.y, -10);
+        targetPosition = new Vector3(0, player.transform.position.y, -10);
 	}
 	
 	// Update is called once per frame
@@ -32,7 +33,12 @@ public class CameraController : MonoBehaviour {
                 targetPosition = new Vector3(player.transform.position.x + cameraHorizontalGive, transform.position.y, transform.position.z);
             }
 
-            transform.position = Vector3.Lerp(transform.position, targetPosition, smoothing * Time.deltaTime);
+            
+            if (playerDistanceFromCamera != 0)
+            {
+                transform.position = Vector3.Lerp(transform.position, targetPosition, smoothing * Time.deltaTime);
+            }
+            
         }
     }
 
