@@ -125,8 +125,14 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         frozenElapsedTime = 0;
     }
 
-    public void Gust()
+    public void Gust(Vector2 velocity)
     {
-        rigidBody.AddForce(new Vector2(10, 0), ForceMode2D.Impulse);
+        if (velocity.x > 0)
+        {
+            rigidBody.AddForce(new Vector2(10, 0), ForceMode2D.Impulse);
+        }else if (velocity.x < 0)
+        {
+            rigidBody.AddForce(new Vector2(-10, 0), ForceMode2D.Impulse);
+        }
     }
 }

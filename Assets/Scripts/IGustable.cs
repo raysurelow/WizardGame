@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IGustable {
 
-    void Gust();
+    void Gust(Vector2 velocity);
 
 }

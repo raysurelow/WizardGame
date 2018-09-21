@@ -40,7 +40,7 @@ public class DoorController : AbstractSwitchable, IBurnable, IFreezable, IGustab
         Debug.Log("freezing door");
     }
 
-    public void Gust()
+    public void Gust(Vector2 velocity)
     {
         Debug.Log("gusting door");
     }

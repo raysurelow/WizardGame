@@ -36,7 +36,7 @@ public class SpellController : MonoBehaviour {
             case "Gust":
                 if (go is IGustable)
                 {
-                    ((IGustable)go).Gust();
+                    ((IGustable)go).Gust(GetComponent<Rigidbody2D>().velocity);
                 }
                 break;
             case "Clone":
