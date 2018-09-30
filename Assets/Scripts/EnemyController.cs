@@ -20,7 +20,6 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable 
 	// Update is called once per frame
 	void Update () {
 		bool atEdge = !Physics2D.OverlapPoint(groundCheck.position, edgeLayerMask, 0);
-
         if (!isFrozen && !isCloned)
         {
             if (!atEdge)
@@ -39,8 +38,10 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable 
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.layer != LayerMask.NameToLayer("Spell"))
+        if ((col.gameObject.layer != LayerMask.NameToLayer("Spell")) && (col.gameObject.tag != "Switch"))
         {
+            print(col.gameObject.name);
+            print(col.gameObject.tag);
             Flip();
         }
     }

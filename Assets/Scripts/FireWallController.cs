@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireWallController : MonoBehaviour, IFreezable, IBurnable{
+public class FireWallController : AbstractSwitchable, IFreezable, IBurnable{
 
     public float frozenDuration;
     private float frozenElapsedTime;
     private bool isFrozen;
     private Animator animator;
+    private BoxCollider2D boxCollider;
 
     // Use this for initialization
-    void Start () {
-        animator = GetComponent<Animator>();   
+    protected override void Start () {
+        animator = GetComponent<Animator>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
         if (isFrozen)
         {
             frozenElapsedTime += Time.deltaTime;
@@ -26,23 +28,36 @@ public class FireWallController : MonoBehaviour, IFreezable, IBurnable{
             }
         }
         animator.SetBool("IsFrozen", isFrozen);
+        if (switches.Length > 0)
+        {
+            if (AllSwitchesAreOn())
+            {
+                transform.localScale = new Vector3(0, 0, 0);
+            }
+            else
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
     }
 
     public void Freeze()
     {
         isFrozen = true;
         frozenElapsedTime = 0;
+        boxCollider.enabled = true;
     }
 
     
     public void Burn()
     {
         isFrozen = false;
+        boxCollider.enabled = false;
         frozenElapsedTime = 0;
 
     }
     
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (!isFrozen)
         {
@@ -54,4 +69,16 @@ public class FireWallController : MonoBehaviour, IFreezable, IBurnable{
         }
     }
 
- }
+ /*   private void OnTriggerEnter2D(Collision2D collision)
+    {
+        if (!isFrozen)
+        {
+            MonoBehaviour go = collision.gameObject.GetComponent<MonoBehaviour>();
+            if (go is IBurnable)
+            {
+                ((IBurnable)go).Burn();
+            }
+        }
+    }*/
+
+}

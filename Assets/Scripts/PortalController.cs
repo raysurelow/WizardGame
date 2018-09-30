@@ -31,7 +31,6 @@ public class PortalController : MonoBehaviour {
                 }
                 Destroy(colliderObject);
             }
-            
         }
     }
 

@@ -20,13 +20,16 @@ public class DoorController : AbstractSwitchable, IBurnable, IFreezable, IGustab
 	// Update is called once per frame
 	protected override void Update () {
         //  door.SetActive(!AllSwitchesAreOn());
-        if (AllSwitchesAreOn())
+        if (switches.Length > 0)
         {
-            door.transform.localScale = new Vector3(0, 0, 0);
-        }
-        else
-        {
-            door.transform.localScale = new Vector3(1, 1, 1);
+            if (AllSwitchesAreOn())
+            {
+                door.transform.localScale = new Vector3(0, 0, 0);
+            }
+            else
+            {
+                door.transform.localScale = new Vector3(1, 1, 1);
+            }
         }
     }
 

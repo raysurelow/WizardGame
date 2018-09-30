@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 58000013001305404}
   m_Layer: 0
   m_Name: Stick Switch
-  m_TagString: Untagged
+  m_TagString: Switch
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,6 +75,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114000012382241918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -86,6 +87,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f93ae27a2cb45ae40be88882d46708d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTimedSwitch: 0
+  timedSwitchDuration: 0
 --- !u!212 &212000010356288882
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -99,6 +102,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
