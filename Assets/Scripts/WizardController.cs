@@ -193,7 +193,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     }
 
-    public void Gust()
+    public void Gust(Vector2 velocity)
     {
         //todo
     }

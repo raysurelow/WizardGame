@@ -22,17 +22,19 @@ public class LevelSelectController : MonoBehaviour {
 
     public void LoadLevel()
     {
-        switch (EventSystem.current.currentSelectedGameObject.name)
-        {
-            case "Level1_Button":
-                SceneManager.LoadScene("cloneLevelTest");
-                break;
-            case "Level2_Button":
-                SceneManager.LoadScene("Ray_Testing");
-                break;
-            case "Level3_Button":
-                SceneManager.LoadScene("testing");
-                break;
-        }
+        /* switch (EventSystem.current.currentSelectedGameObject.name)
+         {
+             case "Level1_Button":
+                 SceneManager.LoadScene("Level1");
+                 break;
+             case "Level2_Button":
+                 SceneManager.LoadScene("Level2");
+                 break;
+             case "Level3_Button":
+                 SceneManager.LoadScene("Level3");
+                 break;
+         } */
+
+        SceneManager.LoadScene(EventSystem.current.currentSelectedGameObject.name);
     }
 }

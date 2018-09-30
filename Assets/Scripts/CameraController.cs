@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour {
     private Vector3 targetPosition;
     public float smoothing;
     public float cameraHorizontalGive;
+    public float cameraVerticalGive;
 
     // Use this for initialization
     void Start () {
@@ -23,22 +24,39 @@ public class CameraController : MonoBehaviour {
         }*/
         if (player != null)
         {
-            float playerDistanceFromCamera = player.transform.position.x - transform.position.x;
-            if (playerDistanceFromCamera > cameraHorizontalGive)
+            //check if player is far enough from the camera to make it move
+            float playerDistanceFromCameraX = player.transform.position.x - transform.position.x;
+            float playerDistanceFromCameraY = player.transform.position.y - transform.position.y;
+            float targetPositionX;
+            float targetPositionY;
+
+            //account for horizontal adjustment
+            if (playerDistanceFromCameraX > cameraHorizontalGive)
             {
-                targetPosition = new Vector3(player.transform.position.x - cameraHorizontalGive, transform.position.y, transform.position.z);
-            }
-            if (playerDistanceFromCamera < -cameraHorizontalGive)
+                targetPositionX = player.transform.position.x - cameraHorizontalGive;
+            }else if(playerDistanceFromCameraX < -cameraHorizontalGive)
             {
-                targetPosition = new Vector3(player.transform.position.x + cameraHorizontalGive, transform.position.y, transform.position.z);
+                targetPositionX = player.transform.position.x + cameraHorizontalGive;
+            }else
+            {
+                targetPositionX = transform.position.x;
             }
 
-            
-            if (playerDistanceFromCamera != 0)
+            //account for vertical adjustment
+            if (playerDistanceFromCameraY > cameraVerticalGive)
             {
-                transform.position = Vector3.Lerp(transform.position, targetPosition, smoothing * Time.deltaTime);
+                targetPositionY = player.transform.position.y - cameraVerticalGive;
+            }else if (playerDistanceFromCameraY < -cameraVerticalGive)
+            {
+                targetPositionY = player.transform.position.y - cameraVerticalGive;
+            }else
+            {
+                targetPositionY = transform.position.y;
             }
-            
+
+            //update target position with adjusted horizontal/vertical positions and Lerp towards target
+            targetPosition = new Vector3(targetPositionX, targetPositionY, transform.position.z);
+            transform.position = Vector3.Lerp(transform.position, targetPosition, smoothing * Time.deltaTime);
         }
     }
 

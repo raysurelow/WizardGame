@@ -5,6 +5,7 @@ using UnityEngine;
 public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, IGustable {
 
     public float frozenDuration = 5.0f;
+    public float thawingDuration = 5.0f;
     public Transform groundCheck;
     public bool isCloneable;
     private bool canJump;
@@ -21,6 +22,9 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     private float moveSpeed;
     private float groundCheckRadius;
     private LayerMask jumpableLayerMask;
+    private bool isThawing;
+    private float thawingElapsedTime;
+    
 
 
     // Use this for initialization
@@ -42,13 +46,21 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
 
     // Update is called once per frame
     void Update() {
-        if (isFrozen)
+        if (isFrozen && !isThawing)
         {
             frozenElapsedTime += Time.deltaTime;
             if (frozenElapsedTime > frozenDuration)
             {
                 isFrozen = false;
                 frozenElapsedTime = 0;
+            }
+        }else if(isFrozen && isThawing)
+        {
+            thawingElapsedTime += Time.deltaTime;
+            if(thawingElapsedTime > thawingDuration)
+            {
+                isFrozen = false;
+                thawingElapsedTime = 0;
             }
         }
         animator.SetBool("IsFrozen", isFrozen);
@@ -121,12 +133,21 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         {
             Destroy(gameObject);
         }
-        isFrozen = false;
+        else
+        {
+            isThawing = true;
+        }
         frozenElapsedTime = 0;
     }
 
-    public void Gust()
+    public void Gust(Vector2 velocity)
     {
-        rigidBody.AddForce(new Vector2(10, 0), ForceMode2D.Impulse);
+        if (velocity.x > 0)
+        {
+            rigidBody.AddForce(new Vector2(10, 0), ForceMode2D.Impulse);
+        }else if (velocity.x < 0)
+        {
+            rigidBody.AddForce(new Vector2(-10, 0), ForceMode2D.Impulse);
+        }
     }
 }
