@@ -40,8 +40,6 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable 
     {
         if ((col.gameObject.layer != LayerMask.NameToLayer("Spell")) && (col.gameObject.tag != "Switch"))
         {
-            print(col.gameObject.name);
-            print(col.gameObject.tag);
             Flip();
         }
     }
