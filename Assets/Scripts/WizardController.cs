@@ -17,6 +17,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     public float gravityStore;
     public bool isCloneable;
     public float frozenDuration = 5.0f;
+    public float thawingDuration = 2.0f;
 
     private Rigidbody2D rigidBody;
     private Animator animator;
@@ -31,6 +32,8 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     private bool isFrozen;
     private bool isCloned;
     private float frozenElapsedTime;
+    private bool isThawing;
+    private float thawingElapsedTime;
     private LevelManagerController levelManager;
     private PauseMenuController pauseMenu;
 
@@ -47,12 +50,14 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         gravityStore = rigidBody.gravityScale;
         levelManager = FindObjectOfType<LevelManagerController>();
         pauseMenu = FindObjectOfType<PauseMenuController>();
+        activeSpell = availableSpells[activeSpellPosition];
+        levelManager.UpdateActiveSpellText(activeSpell);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!pauseMenu.gamePaused)
+        if (!pauseMenu.gamePaused && !isFrozen)
         {
             // Check if grounded
             canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
@@ -139,6 +144,26 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
                 rigidBody.gravityScale = gravityStore;
             }
             animator.SetBool("IsClimbing", climbInitiated);
+        }else if (isFrozen)
+        {
+            if (isFrozen && !isThawing)
+            {
+                frozenElapsedTime += Time.deltaTime;
+                if (frozenElapsedTime > frozenDuration)
+                {
+                    isFrozen = false;
+                    frozenElapsedTime = 0;
+                }
+            }
+            else if (isFrozen && isThawing)
+            {
+                thawingElapsedTime += Time.deltaTime;
+                if (thawingElapsedTime > thawingDuration)
+                {
+                    isFrozen = false;
+                    thawingElapsedTime = 0;
+                }
+            }
         }
     }
 
@@ -188,7 +213,10 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         {
             Destroy(gameObject);
         }
-        isFrozen = false;
+        else
+        {
+            isThawing = true;
+        }
         frozenElapsedTime = 0;
 
     }
