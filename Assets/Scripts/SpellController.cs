@@ -6,6 +6,7 @@ public class SpellController : MonoBehaviour {
 
     public Spell Spell { get; set; }
 
+
     // Use this for initialization
     void Start () {
 
@@ -47,7 +48,7 @@ public class SpellController : MonoBehaviour {
                 break;
         }
 
-        if ((collision.gameObject.layer != LayerMask.NameToLayer("Portal")) && (collision.gameObject.layer != LayerMask.NameToLayer("Ladder")))
+        if ((collision.gameObject.layer != LayerMask.NameToLayer("PortalFront")) && (collision.gameObject.layer != LayerMask.NameToLayer("Ladder")))
         {
             Destroy(gameObject);
         }
