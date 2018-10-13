@@ -24,6 +24,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     private LayerMask jumpableLayerMask;
     private bool isThawing;
     private float thawingElapsedTime;
+    private Vector3 startingPosition;
     
 
 
@@ -33,6 +34,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         rigidBody = GetComponent<Rigidbody2D>();
         massStore = rigidBody.mass;
         gravityStore = rigidBody.gravityScale;
+        startingPosition = rigidBody.transform.position;
         player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
@@ -131,7 +133,10 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     {
         if (!isFrozen)
         {
-            Destroy(gameObject);
+            rigidBody.velocity = Vector2.zero;
+            rigidBody.angularVelocity = 0f;
+            transform.position = startingPosition;
+            isCloned = false;
         }
         else
         {
