@@ -213,8 +213,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frozenDuration: 5
+  thawingDuration: 5
   groundCheck: {fileID: 4232735968615954}
   isCloneable: 1
+  box: {fileID: 1852961741504746}
 --- !u!212 &212659874785584992
 SpriteRenderer:
   m_ObjectHideFlags: 1
