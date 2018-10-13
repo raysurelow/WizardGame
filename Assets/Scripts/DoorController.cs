@@ -4,6 +4,7 @@ using System.Collections;
 public class DoorController : AbstractSwitchable, IBurnable, IFreezable, IGustable, ICloneable {
 
     private GameObject door;
+    public bool startHidden = false;
 
     // Use this for initialization
     protected override void Start() {
@@ -24,11 +25,25 @@ public class DoorController : AbstractSwitchable, IBurnable, IFreezable, IGustab
         {
             if (AllSwitchesAreOn())
             {
-                transform.localScale = new Vector3(0, 0, 0);
+                if (startHidden)
+                {
+                    transform.localScale = new Vector3(1, 1, 1);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(0, 0, 0);
+                }
             }
             else
             {
-                transform.localScale = new Vector3(1, 1, 1);
+                if (startHidden)
+                {
+                    transform.localScale = new Vector3(0, 0, 0);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(1, 1, 1);
+                }
             }
         }
     }
