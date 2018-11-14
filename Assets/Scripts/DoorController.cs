@@ -5,9 +5,12 @@ public class DoorController : AbstractSwitchable, IBurnable, IFreezable, IGustab
 
     private GameObject door;
     public bool startHidden = false;
+    private bool isFrozen = false;
+    private Animator animator;
 
     // Use this for initialization
     protected override void Start() {
+        animator = GetComponent<Animator>();
         /*if (name == "Door")
         {
             door = gameObject;
@@ -16,14 +19,15 @@ public class DoorController : AbstractSwitchable, IBurnable, IFreezable, IGustab
         {
             door = transform.Find("Door").gameObject;
         }*/
-	}
+    }
 	
 	// Update is called once per frame
 	protected override void Update () {
         //  door.SetActive(!AllSwitchesAreOn());
+        animator.SetBool("IsFrozen", isFrozen);
         if (switches.Length > 0)
         {
-            if (AllSwitchesAreOn())
+            if (AllSwitchesAreOn() && !isFrozen)
             {
                 if (startHidden)
                 {
@@ -51,11 +55,16 @@ public class DoorController : AbstractSwitchable, IBurnable, IFreezable, IGustab
     public void Burn()
     {
         Debug.Log("burning door");
+        if (isFrozen)
+        {
+            isFrozen = false;
+        }
     }
 
     public void Freeze()
     {
         Debug.Log("freezing door");
+        isFrozen = true;
     }
 
     public void Gust(Vector2 velocity)
