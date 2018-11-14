@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable, IGustable {
 
@@ -212,7 +213,8 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     {
         if (!isFrozen)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            LevelReset();
         }
         else
         {
@@ -231,7 +233,8 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     {
         if (col.gameObject.tag == "KillPlane")
         {
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
+            LevelReset();            
         }
     }
 
@@ -253,6 +256,12 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
                 break;
         }
         levelManager.UpdateActiveSpellText(activeSpell);
+    }
+
+    public void LevelReset()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //Destroy(gameObject);
     }
 
 }

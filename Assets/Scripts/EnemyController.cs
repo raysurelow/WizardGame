@@ -18,12 +18,14 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     private float thawingElapsedTime;
     public float frozenDuration = 5.0f;
     public float thawingDuration = 2.0f;
+    private Vector3 startingPosition;
 
 
     // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
+        startingPosition = rigidBody.transform.position;
     }
 	
 	// Update is called once per frame
@@ -95,7 +97,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     {
         if (!isFrozen)
         {
-            Destroy(gameObject);
+            ResetEnemy();
         }
         else
         {
@@ -119,6 +121,13 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         {
             rigidBody.AddForce(new Vector2(-10, 0), ForceMode2D.Impulse);
         }
+    }
+
+    public void ResetEnemy()
+    {
+        rigidBody.velocity = Vector2.zero;
+        rigidBody.angularVelocity = 0f;
+        transform.position = startingPosition;
     }
 
 }
