@@ -24,6 +24,8 @@ GameObject:
   - component: {fileID: 50000011615437726}
   - component: {fileID: 114000012397673842}
   - component: {fileID: 95000013508911290}
+  - component: {fileID: 70538517067259482}
+  - component: {fileID: 61924659708035336}
   m_Layer: 0
   m_Name: Wizard
   m_TagString: Player
@@ -98,7 +100,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013402180408}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.429, y: -0.147, z: 0}
+  m_LocalPosition: {x: 0.481, y: -0.147, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4000010728965016}
@@ -124,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013262772440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.33, y: 3.72, z: 0}
+  m_LocalPosition: {x: -3.365, y: 3.737, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4000010476568698}
@@ -192,7 +194,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.16}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -203,8 +205,48 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.4, y: 0.95}
+  m_Size: {x: 0.31, y: 0.69}
   m_EdgeRadius: 0
+--- !u!61 &61924659708035336
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013262772440}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.14}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.875, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.65, y: 0.43}
+  m_EdgeRadius: 0
+--- !u!70 &70538517067259482
+CapsuleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013262772440}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.35}
+  m_Size: {x: 0.82, y: 0.25}
+  m_Direction: 1
 --- !u!95 &95000013508911290
 Animator:
   serializedVersion: 3
@@ -236,10 +278,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   jumpSpeed: 8
-  groundCheckRadius: 0.2
   jumpableLayerMask:
     serializedVersion: 2
     m_Bits: 17152
+  groundCheckRadius: 0.2
+  projectileSpeed: 4
   groundCheck: {fileID: 4000010476568698}
   availableSpells:
   - {fileID: 11400000, guid: 291283210a3ffd34cb4ae0e0b95f3480, type: 2}
@@ -247,14 +290,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 789a4339ecb60ca439f81b7e877b49d0, type: 2}
   - {fileID: 11400000, guid: 3de923c11eee31a41a77ea391b59ca90, type: 2}
   onLadder: 0
-  climbInitialized: 0
+  climbInitiated: 0
   climbSpeed: 2
   climbJumpSpeed: 4
-  climbVelocity: 0
   gravityStore: 0
   isCloneable: 0
-  projectileSpeed: 4
   frozenDuration: 5
+  thawingDuration: 2
 --- !u!212 &212000010481709792
 SpriteRenderer:
   m_ObjectHideFlags: 1

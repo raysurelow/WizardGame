@@ -19,6 +19,9 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     public float frozenDuration = 5.0f;
     public float thawingDuration = 2.0f;
     private Vector3 startingPosition;
+    private bool hasVelocity;
+    private bool inAir;
+    private bool atEdge;
 
 
     // Use this for initialization
@@ -30,9 +33,10 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
 	
 	// Update is called once per frame
 	void Update () {
-		bool atEdge = !Physics2D.OverlapPoint(flipcheck.position, edgeLayerMask, 0);
-        bool inAir = !Physics2D.OverlapPoint(groundCheck.position, edgeLayerMask, 0);
-        if (!isFrozen && !isCloned && !inAir)
+		atEdge = !Physics2D.OverlapPoint(flipcheck.position, edgeLayerMask, 0);
+        inAir = !Physics2D.OverlapPoint(groundCheck.position, edgeLayerMask, 0);
+        hasVelocity = (rigidBody.velocity.x != 0) || (rigidBody.velocity.y != 0);
+        if (!isFrozen && !isCloned && !inAir && !hasVelocity)
         {
             if (!atEdge)
             {
@@ -40,6 +44,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
             }
             else
             {
+                print("at edge");
                 Flip();
             }
         }else if (isFrozen)
@@ -70,8 +75,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        bool inAir = !Physics2D.OverlapPoint(groundCheck.position, edgeLayerMask, 0);
-        if (!inAir)
+        if (!inAir && !hasVelocity)
         {
             if ((col.gameObject.layer != LayerMask.NameToLayer("Spell")) && (col.gameObject.tag != "Switch"))
             {
@@ -80,11 +84,24 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         }
     }
 
+    /*void OnTriggerStay2D(Collider2D col)
+    {
+        
+        if (!inAir && !hasVelocity)
+        {
+            if ((col.gameObject.layer != LayerMask.NameToLayer("Spell")) && (col.gameObject.tag != "Switch"))
+            {
+                print("trigger stay");
+                Flip();
+            }
+        }
+    }*/
+
     private void Flip()
     {
         transform.localScale = new Vector3(-transform.localScale.x, 1f);
         horizontal *= -1;
-        transform.Translate(speed * horizontal * Time.deltaTime, 0f, 0f);
+        transform.Translate(speed * horizontal * 2 * Time.deltaTime, 0f, 0f);
     }
 
     public void Freeze()

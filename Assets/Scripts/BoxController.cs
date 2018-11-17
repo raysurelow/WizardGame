@@ -134,6 +134,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         if (!isFrozen)
         {
             isCloned = false;
+            ResetBox();
         }
         else
         {
