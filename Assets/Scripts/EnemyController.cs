@@ -44,7 +44,6 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
             }
             else
             {
-                print("at edge");
                 Flip();
             }
         }else if (isFrozen)
