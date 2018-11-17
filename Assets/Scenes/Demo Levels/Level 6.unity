@@ -164,6 +164,11 @@ GameObject:
   m_PrefabParentObject: {fileID: 1346440666455930, guid: d4a6ca050cccf1f45a445ef8a4a2d24b,
     type: 2}
   m_PrefabInternal: {fileID: 2099386754}
+--- !u!1 &198236347 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1241950482902018, guid: bdb25cc16841d03428c526e123c9ff03,
+    type: 2}
+  m_PrefabInternal: {fileID: 1436093633}
 --- !u!1001 &251122380
 Prefab:
   m_ObjectHideFlags: 0
@@ -826,7 +831,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a85d33df2554ff648925c143cd7343bd, type: 2}
   m_IsPrefabParent: 0
---- !u!1001 &1628116014
+--- !u!1001 &1436093633
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -865,18 +870,31 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114071652673502272, guid: bdb25cc16841d03428c526e123c9ff03,
+    - target: {fileID: 114869178286717420, guid: bdb25cc16841d03428c526e123c9ff03,
         type: 2}
-      propertyPath: levelToLoad
-      value: Level 7
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 198236347}
+    - target: {fileID: 114303478060346960, guid: bdb25cc16841d03428c526e123c9ff03,
+        type: 2}
+      propertyPath: player
+      value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 4752441008188210, guid: bdb25cc16841d03428c526e123c9ff03, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 4752441008188210, guid: bdb25cc16841d03428c526e123c9ff03, type: 2}
+    - target: {fileID: 4871806417093800, guid: bdb25cc16841d03428c526e123c9ff03, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -5.45
+      value: -15.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871806417093800, guid: bdb25cc16841d03428c526e123c9ff03, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4979707869467454, guid: bdb25cc16841d03428c526e123c9ff03, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4979707869467454, guid: bdb25cc16841d03428c526e123c9ff03, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bdb25cc16841d03428c526e123c9ff03, type: 2}

@@ -133,10 +133,8 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     {
         if (!isFrozen)
         {
-            rigidBody.velocity = Vector2.zero;
-            rigidBody.angularVelocity = 0f;
-            transform.position = startingPosition;
             isCloned = false;
+            ResetBox();
         }
         else
         {
@@ -154,5 +152,12 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         {
             rigidBody.AddForce(new Vector2(-10, 0), ForceMode2D.Impulse);
         }
+    }
+
+    public void ResetBox()
+    {
+        rigidBody.velocity = Vector2.zero;
+        rigidBody.angularVelocity = 0f;
+        transform.position = startingPosition;
     }
 }
