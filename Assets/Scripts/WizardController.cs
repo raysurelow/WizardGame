@@ -186,7 +186,6 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     private void ShootSpell()
     {
-        print("shootSpell");
         Rigidbody2D spell = null;
         spell = Instantiate(activeSpell.spellRigidBody, activeSpellTransform.position, activeSpellTransform.rotation) as Rigidbody2D;
         spell.GetComponent<SpellController>().Spell = activeSpell;
