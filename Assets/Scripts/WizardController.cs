@@ -10,6 +10,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     public float groundCheckRadius;
     public float projectileSpeed;
     public Transform groundCheck;
+    public Transform groundCheck2;
     public Spell[] availableSpells;
     public bool onLadder;
     public bool climbInitiated;
@@ -61,7 +62,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         if (!pauseMenu.gamePaused && !isFrozen)
         {
             // Check if grounded
-            canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
+            canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask) || Physics2D.OverlapCircle(groundCheck2.position, groundCheckRadius, jumpableLayerMask);
 
 
             // Handle movement inputs
