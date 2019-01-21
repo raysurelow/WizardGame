@@ -588,7 +588,7 @@ Prefab:
     - target: {fileID: 114323219073828930, guid: 76f6ad0c0697b854ab53324f29fb457a,
         type: 2}
       propertyPath: isCloneable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 76f6ad0c0697b854ab53324f29fb457a, type: 2}
