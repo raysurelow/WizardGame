@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BalloonTopScript : MonoBehaviour {
 
+    private bool isColliding = false;
+
 	// Use this for initialization
 	void Start () {
     }
@@ -15,10 +17,18 @@ public class BalloonTopScript : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        if (isColliding) return;
+        isColliding = true;
         if (col.gameObject.GetComponent<Rigidbody2D>().velocity.y < -2)
         {
+            print("shooting code hit");
             BalloonController balloon = GetComponentInParent<BalloonController>();
             balloon.TopTriggerShoot();
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        isColliding = false;
     }
 }
