@@ -7,10 +7,12 @@ public class DoorController : AbstractSwitchable, IBurnable, IFreezable, IGustab
     public bool startHidden = false;
     private bool isFrozen = false;
     private Animator animator;
+    private Vector3 startingScale;
 
     // Use this for initialization
     protected override void Start() {
         animator = GetComponent<Animator>();
+        startingScale = transform.localScale;
         /*if (name == "Door")
         {
             door = gameObject;
@@ -31,7 +33,7 @@ public class DoorController : AbstractSwitchable, IBurnable, IFreezable, IGustab
             {
                 if (startHidden)
                 {
-                    transform.localScale = new Vector3(1, 1, 1);
+                    transform.localScale = startingScale;
                 }
                 else
                 {
@@ -46,7 +48,7 @@ public class DoorController : AbstractSwitchable, IBurnable, IFreezable, IGustab
                 }
                 else
                 {
-                    transform.localScale = new Vector3(1, 1, 1);
+                    transform.localScale = startingScale;
                 }
             }
         }

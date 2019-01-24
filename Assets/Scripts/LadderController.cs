@@ -16,7 +16,10 @@ public class LadderController : MonoBehaviour {
 	void Update () {
         if (player)
         {
-            Physics2D.IgnoreCollision(player.gameObject.GetComponent<BoxCollider2D>(), topCollider, Input.GetAxisRaw("Vertical") == -1);
+            foreach(Collider2D collider in player.gameObject.GetComponents<Collider2D>())
+            {
+                Physics2D.IgnoreCollision(collider, topCollider, Input.GetAxisRaw("Vertical") == -1);
+            }
         }
 	}
 
@@ -34,7 +37,7 @@ public class LadderController : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && (collision is CapsuleCollider2D))
         {
             if (player != null)
             {

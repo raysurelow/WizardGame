@@ -1105,6 +1105,16 @@ Prefab:
       propertyPath: switches.Array.data[0]
       value: 
       objectReference: {fileID: 23048868}
+    - target: {fileID: 114947384546923358, guid: e8a649e4b83745f4b9e1837e47bde5df,
+        type: 2}
+      propertyPath: onSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114947384546923358, guid: e8a649e4b83745f4b9e1837e47bde5df,
+        type: 2}
+      propertyPath: offSpeed
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e8a649e4b83745f4b9e1837e47bde5df, type: 2}
   m_IsPrefabParent: 0
