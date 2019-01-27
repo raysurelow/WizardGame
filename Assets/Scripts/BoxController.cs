@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
 public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, IGustable {
 
@@ -15,35 +16,50 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     private float frozenElapsedTime;
     private bool isFrozen;
     private bool isCloned;
-    private float massStore;
-    private float gravityStore;
-    private GameObject player;
+    private bool isThawing;
+    private float thawingElapsedTime;
+    private Vector3 startingPosition;
+
+    //rewired parametres
+    public int playerId = 0; // The Rewired player id of this character
+    private Player player; // The Rewired Player
+
+    //inputs from Wizard when cloned
+    private GameObject wizard;
     private float jumpSpeed;
     private float moveSpeed;
     private float groundCheckRadius;
     private LayerMask jumpableLayerMask;
-    private bool isThawing;
-    private float thawingElapsedTime;
-    private Vector3 startingPosition;
-    
+
+    //initial parameters for box when not cloned
+    private float massStore;
+    private float gravityStore;
+    private float dragStore;
 
 
     // Use this for initialization
     void Start() {
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
+        startingPosition = rigidBody.transform.position;
+        // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
+        player = ReInput.players.GetPlayer(playerId);
+
+        //get Wizard physics for cloned box 
+        wizard = GameObject.FindGameObjectWithTag("Player");
+        if (wizard != null)
+        {
+            jumpSpeed = wizard.GetComponent<WizardController>().jumpSpeed;
+            moveSpeed = wizard.GetComponent<WizardController>().moveSpeed;
+            groundCheck = wizard.GetComponent<WizardController>().groundCheck;
+            groundCheckRadius = wizard.GetComponent<WizardController>().groundCheckRadius;
+            jumpableLayerMask = wizard.GetComponent<WizardController>().jumpableLayerMask;
+
+        }
+        //store box physics for resetting after clone
         massStore = rigidBody.mass;
         gravityStore = rigidBody.gravityScale;
-        startingPosition = rigidBody.transform.position;
-        player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            jumpSpeed = player.GetComponent<WizardController>().jumpSpeed;
-            moveSpeed = player.GetComponent<WizardController>().moveSpeed;
-            groundCheck = player.GetComponent<WizardController>().groundCheck;
-            groundCheckRadius = player.GetComponent<WizardController>().groundCheckRadius;
-            jumpableLayerMask = player.GetComponent<WizardController>().jumpableLayerMask;
-        }
+        dragStore = rigidBody.drag;
     }
 
     // Update is called once per frame
@@ -72,12 +88,13 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
             ClonedMovements();
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) || !player.activeSelf)
+        if (player.GetButtonDown("Quit") || !wizard.activeSelf)
         {
             if (isCloned)
             {
                 rigidBody.mass = massStore;
                 rigidBody.gravityScale = gravityStore;
+                rigidBody.drag = dragStore;
                 isCloned = false;
             }
         }
@@ -88,12 +105,12 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
 
         // Handle movement inputs
-        if (Input.GetAxisRaw("Horizontal") > 0f)
+        if (player.GetAxisRaw("Horizontal") > 0f)
         {
             rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        else if (Input.GetAxisRaw("Horizontal") < 0f)
+        else if (player.GetAxisRaw("Horizontal") < 0f)
         {
             rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
             transform.rotation = Quaternion.Euler(0, 180f, 0);
@@ -104,7 +121,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         }
 
         // Handle jumping input
-        if (Input.GetButtonDown("Jump") && canJump)
+        if (player.GetButtonDown("Jump") && canJump)
         {
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
         }
@@ -123,8 +140,9 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
             isCloned = true;
             if (player != null)
             {
-                rigidBody.mass = player.GetComponent<Rigidbody2D>().mass;
-                rigidBody.gravityScale = player.GetComponent<Rigidbody2D>().gravityScale;
+                rigidBody.mass = wizard.GetComponent<Rigidbody2D>().mass;
+                rigidBody.gravityScale = wizard.GetComponent<Rigidbody2D>().gravityScale;
+                rigidBody.drag = wizard.GetComponent<Rigidbody2D>().drag;
             }
         }
     }
