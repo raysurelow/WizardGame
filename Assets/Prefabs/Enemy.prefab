@@ -201,6 +201,7 @@ MonoBehaviour:
     m_Bits: 256
   speed: 1
   horizontal: 1
+  isCloneable: 1
   frozenDuration: 2
   thawingDuration: 2
 --- !u!212 &212949186796983118

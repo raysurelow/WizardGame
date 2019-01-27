@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     public LayerMask edgeLayerMask;
     public float speed;
     public float horizontal;
+    public bool isCloneable = true;
     private bool isFrozen;
     private bool isCloned;
     private Animator animator;
@@ -124,7 +125,10 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
 
     public void Clone()
     {
-        isCloned = true;
+        if (isCloneable)
+        {
+            isCloned = true;
+        }
     }
 
     public void Gust(Vector2 velocity)
