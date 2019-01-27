@@ -13,7 +13,6 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
     private bool isThawing;
     public float inflateSpeed;
     public float deflateSpeed;
-    private bool wasFrozen = false;
     public Spell gust;
     private Transform gustTransform;
     public float gustSpeed;
@@ -30,11 +29,6 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
         UpdateFrozenEffects();
         if (!isFrozen && (transform.localScale.x > startingScale.x))
         {
-            if (wasFrozen)
-            {
-                ShootGust();
-                wasFrozen = false;
-            }
             transform.localScale = new Vector3(transform.localScale.x * .999f, transform.localScale.y * .999f, transform.localScale.z);
         }
 	}
@@ -64,7 +58,6 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
     public void Freeze()
     {
         isFrozen = true;
-        wasFrozen = true;
         frozenElapsedTime = 0;
     }
 

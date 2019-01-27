@@ -698,6 +698,26 @@ Prefab:
       propertyPath: m_Name
       value: LevelSkeleton
       objectReference: {fileID: 0}
+    - target: {fileID: 61484493553230378, guid: bdb25cc16841d03428c526e123c9ff03,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50022338525076642, guid: bdb25cc16841d03428c526e123c9ff03,
+        type: 2}
+      propertyPath: m_AngularDrag
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 50022338525076642, guid: bdb25cc16841d03428c526e123c9ff03,
+        type: 2}
+      propertyPath: m_LinearDrag
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 50022338525076642, guid: bdb25cc16841d03428c526e123c9ff03,
+        type: 2}
+      propertyPath: m_GravityScale
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bdb25cc16841d03428c526e123c9ff03, type: 2}
   m_IsPrefabParent: 0

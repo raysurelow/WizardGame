@@ -56,7 +56,6 @@ public class DoorController : AbstractSwitchable, IBurnable, IFreezable, IGustab
 
     public void Burn()
     {
-        Debug.Log("burning door");
         if (isFrozen)
         {
             isFrozen = false;
@@ -65,17 +64,14 @@ public class DoorController : AbstractSwitchable, IBurnable, IFreezable, IGustab
 
     public void Freeze()
     {
-        Debug.Log("freezing door");
         isFrozen = true;
     }
 
     public void Gust(Vector2 velocity)
     {
-        Debug.Log("gusting door");
     }
 
     public void Clone()
     {
-        Debug.Log("cloning door");
     }
 }
