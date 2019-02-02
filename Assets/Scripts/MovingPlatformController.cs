@@ -13,6 +13,8 @@ public class MovingPlatformController : AbstractSwitchable , IFreezable, IBurnab
     public float frozenDuration = 5.0f;
     public float thawingDuration = 5.0f;
     private bool isThawing;
+    public bool pacing = false;
+    private bool movingForwards = true;
 
 
     // Use this for initialization
@@ -29,17 +31,56 @@ public class MovingPlatformController : AbstractSwitchable , IFreezable, IBurnab
         UpdateFrozenEffects();
 
         if (!isFrozen)
-        { 
-            if (AllSwitchesAreOn())
+        {
+            if (!pacing)
             {
-                transform.position = Vector3.MoveTowards(transform.position, endingPointPosition, onSpeed * Time.deltaTime);
+                if (AllSwitchesAreOn())
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, endingPointPosition, onSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, startingPointPosition, offSpeed * Time.deltaTime);
+                }
+            }
+            else
+            {
+                if (AllSwitchesAreOn())
+                {
+                    Pace();
+                }
+                else
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, startingPointPosition, offSpeed * Time.deltaTime);
+                }
+            }
+        }
+	}
+
+    private void Pace()
+    {
+        if(movingForwards)
+        {
+            if(transform.position == endingPointPosition)
+            {
+                movingForwards = false;
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, endingPointPosition, offSpeed * Time.deltaTime);
+            }
+        }else
+        { 
+            if ((transform.position == startingPointPosition))
+            {
+                movingForwards = true;
             }
             else
             {
                 transform.position = Vector3.MoveTowards(transform.position, startingPointPosition, offSpeed * Time.deltaTime);
             }
         }
-	}
+    }
 
     public void Freeze()
     {

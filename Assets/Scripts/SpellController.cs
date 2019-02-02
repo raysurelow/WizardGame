@@ -5,11 +5,15 @@ using UnityEngine;
 public class SpellController : MonoBehaviour {
 
     public Spell Spell { get; set; }
+    private List<int> layersToIgnore;
 
 
     // Use this for initialization
     void Start () {
-
+        layersToIgnore = new List<int>();
+        layersToIgnore.Add(LayerMask.NameToLayer("PortalFront"));
+        layersToIgnore.Add(LayerMask.NameToLayer("Ladder"));
+        layersToIgnore.Add(LayerMask.NameToLayer("LevelEnd"));
 	}
 
     // Update is called once per frame
@@ -48,11 +52,11 @@ public class SpellController : MonoBehaviour {
                 break;
         }
 
-        if ((collision.gameObject.layer != LayerMask.NameToLayer("PortalFront")) && (collision.gameObject.layer != LayerMask.NameToLayer("Ladder")))
+        
+        if (layersToIgnore.IndexOf(collision.gameObject.layer) == -1)
         {
             Destroy(gameObject);
         }
-
     }
 
 }
