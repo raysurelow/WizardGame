@@ -16,11 +16,14 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
     public Spell gust;
     private Transform gustTransform;
     public float gustSpeed;
+    private bool deflating;
 
     // Use this for initialization
     void Start () {
         startingScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
         gustTransform = transform.Find("GustExitPoint");
+        isThawing = false;
+        isFrozen = false;
 
     }
 	
@@ -29,7 +32,12 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
         UpdateFrozenEffects();
         if (!isFrozen && (transform.localScale.x > startingScale.x))
         {
+            deflating = true;
             transform.localScale = new Vector3(transform.localScale.x * .999f, transform.localScale.y * .999f, transform.localScale.z);
+        }
+        else
+        {
+            deflating = false;
         }
 	}
 
@@ -57,6 +65,7 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
 
     public void Freeze()
     {
+        print("frozen");
         isFrozen = true;
         frozenElapsedTime = 0;
     }
@@ -79,9 +88,10 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
 
     public void TopTriggerShoot()
     {
-        if (!isFrozen && (transform.localScale.x > 1))
+        if (!isFrozen && deflating)
         {
-            transform.localScale = new Vector3(transform.localScale.x * .9f, transform.localScale.y * .9f, transform.localScale.z);
+            print("gust initiate called");
+            transform.localScale = new Vector3(transform.localScale.x * .95f, transform.localScale.y * .95f, transform.localScale.z);
             ShootGust();
         }
     }

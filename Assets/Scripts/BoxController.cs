@@ -88,7 +88,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
             ClonedMovements();
         }
 
-        if (player.GetButtonDown("Quit") || !wizard.activeSelf)
+        if (player.GetButtonDown("Quit Clone") || !wizard.activeSelf)
         {
             if (isCloned)
             {
@@ -105,12 +105,12 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
 
         // Handle movement inputs
-        if (player.GetAxisRaw("Horizontal") > 0f)
+        if (player.GetAxisRaw("Move Horizontal") > 0f)
         {
             rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        else if (player.GetAxisRaw("Horizontal") < 0f)
+        else if (player.GetAxisRaw("Move Horizontal") < 0f)
         {
             rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
             transform.rotation = Quaternion.Euler(0, 180f, 0);
