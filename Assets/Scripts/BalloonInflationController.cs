@@ -23,6 +23,7 @@ public class BalloonInflationController : MonoBehaviour, IGustable, IFreezable, 
 
     public void Freeze()
     {
+        print("balloon inflation freeze called");
         balloonController.Freeze();
     }
 
