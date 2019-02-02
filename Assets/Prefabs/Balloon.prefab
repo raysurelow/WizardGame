@@ -270,6 +270,7 @@ MonoBehaviour:
   deflateSpeed: 0
   gust: {fileID: 11400000, guid: 789a4339ecb60ca439f81b7e877b49d0, type: 2}
   gustSpeed: 4
+  maxScale: 6
 --- !u!114 &114772283609868246
 MonoBehaviour:
   m_ObjectHideFlags: 1

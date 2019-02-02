@@ -17,6 +17,7 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
     private Transform gustTransform;
     public float gustSpeed;
     private bool deflating;
+    public float maxScale = 6;
 
     // Use this for initialization
     void Start () {
@@ -94,5 +95,15 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
             transform.localScale = new Vector3(transform.localScale.x * .95f, transform.localScale.y * .95f, transform.localScale.z);
             ShootGust();
         }
+    }
+
+    public bool IsFrozen()
+    {
+        return isFrozen;
+    }
+
+    public Vector3 GetStartingScale()
+    {
+        return startingScale;
     }
 }
