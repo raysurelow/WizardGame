@@ -2312,10 +2312,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ace3833e60b626479dd2260152a99be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1241950482902018}
+  wizard: {fileID: 1241950482902018}
   smoothing: 15
   cameraHorizontalGive: 1
   cameraVerticalGive: 1
+  playerId: 0
+  cameraMaxLookDistance: 0
 --- !u!114 &114899224241620512
 MonoBehaviour:
   m_ObjectHideFlags: 1
