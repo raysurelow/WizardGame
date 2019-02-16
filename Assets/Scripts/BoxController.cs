@@ -19,6 +19,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     private bool isThawing;
     private float thawingElapsedTime;
     private Vector3 startingPosition;
+    private BoxCollider2D boxCollider;
 
     //rewired parametres
     public int playerId = 0; // The Rewired player id of this character
@@ -30,17 +31,20 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     private float moveSpeed;
     private float groundCheckRadius;
     private LayerMask jumpableLayerMask;
+    private PhysicsMaterial2D wizardMaterial;
 
     //initial parameters for box when not cloned
     private float massStore;
     private float gravityStore;
     private float dragStore;
+    private PhysicsMaterial2D boxMaterial;
 
 
     // Use this for initialization
     void Start() {
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
         startingPosition = rigidBody.transform.position;
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
@@ -54,12 +58,14 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
             groundCheck = wizard.GetComponent<WizardController>().groundCheck;
             groundCheckRadius = wizard.GetComponent<WizardController>().groundCheckRadius;
             jumpableLayerMask = wizard.GetComponent<WizardController>().jumpableLayerMask;
+            wizardMaterial = wizard.GetComponent<BoxCollider2D>().sharedMaterial;
 
         }
         //store box physics for resetting after clone
         massStore = rigidBody.mass;
         gravityStore = rigidBody.gravityScale;
         dragStore = rigidBody.drag;
+        boxMaterial = boxCollider.sharedMaterial;
     }
 
     // Update is called once per frame
@@ -96,6 +102,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
                 rigidBody.gravityScale = gravityStore;
                 rigidBody.drag = dragStore;
                 isCloned = false;
+                boxCollider.sharedMaterial = boxMaterial;
             }
         }
     }
@@ -143,6 +150,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
                 rigidBody.mass = wizard.GetComponent<Rigidbody2D>().mass;
                 rigidBody.gravityScale = wizard.GetComponent<Rigidbody2D>().gravityScale;
                 rigidBody.drag = wizard.GetComponent<Rigidbody2D>().drag;
+                boxCollider.sharedMaterial = wizardMaterial;
             }
         }
     }
