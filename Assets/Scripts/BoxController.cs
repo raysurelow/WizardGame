@@ -172,10 +172,20 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         }
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "KillPlane")
+        {
+            ResetBox();
+        }
+    }
+
     public void ResetBox()
     {
         rigidBody.velocity = Vector2.zero;
         rigidBody.angularVelocity = 0f;
         transform.position = startingPosition;
+        isCloned = false;
+        isFrozen = false;
     }
 }

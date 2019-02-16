@@ -40,6 +40,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     private LevelManagerController levelManager;
     private PauseMenuController pauseMenu;
     private Vector3 horizontalMovement;
+    private bool gusted;
 
     //rewired parametres
     public int playerId = 0; // The Rewired player id of this character
@@ -76,13 +77,19 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
             // Handle movement inputs
             if (horizontalMovement.x > 0f) 
             {
+                gusted = false;
                 rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
                 transform.localScale = new Vector3(1, transform.localScale.y);
             }
             else if (horizontalMovement.x < 0f)
             {
+                gusted = false;
                 rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
                 transform.localScale = new Vector3(-1, transform.localScale.y);
+            }
+            else if(gusted)
+            {
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
             }
             else
             {
@@ -231,7 +238,16 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     public void Gust(Vector2 velocity)
     {
-        //todo
+        if (velocity.x > 0)
+        {
+            rigidBody.AddForce(new Vector2(10, 0), ForceMode2D.Impulse);
+            gusted = true;
+        }
+        else if (velocity.x < 0)
+        {
+            rigidBody.AddForce(new Vector2(-10, 0), ForceMode2D.Impulse);
+            gusted = true;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
