@@ -19,7 +19,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     private bool isThawing;
     private float thawingElapsedTime;
     private Vector3 startingPosition;
-    private BoxCollider2D boxCollider;
+    private EdgeCollider2D boxEdgeCollider;
 
     //rewired parametres
     public int playerId = 0; // The Rewired player id of this character
@@ -44,7 +44,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     void Start() {
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        boxEdgeCollider = GetComponent<EdgeCollider2D>();
         startingPosition = rigidBody.transform.position;
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
@@ -65,7 +65,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         massStore = rigidBody.mass;
         gravityStore = rigidBody.gravityScale;
         dragStore = rigidBody.drag;
-        boxMaterial = boxCollider.sharedMaterial;
+        boxMaterial = boxEdgeCollider.sharedMaterial;
     }
 
     // Update is called once per frame
@@ -102,7 +102,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
                 rigidBody.gravityScale = gravityStore;
                 rigidBody.drag = dragStore;
                 isCloned = false;
-                boxCollider.sharedMaterial = boxMaterial;
+                boxEdgeCollider.sharedMaterial = boxMaterial;
             }
         }
     }
@@ -138,6 +138,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     {
         isFrozen = true;
         frozenElapsedTime = 0;
+        boxEdgeCollider.sharedMaterial = wizardMaterial;
     }
 
     public void Clone()
@@ -150,13 +151,16 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
                 rigidBody.mass = wizard.GetComponent<Rigidbody2D>().mass;
                 rigidBody.gravityScale = wizard.GetComponent<Rigidbody2D>().gravityScale;
                 rigidBody.drag = wizard.GetComponent<Rigidbody2D>().drag;
-                boxCollider.sharedMaterial = wizardMaterial;
+                boxEdgeCollider.sharedMaterial = wizardMaterial;
             }
         }
     }
 
     public void Burn()
     {
+        frozenElapsedTime = 0;
+        boxEdgeCollider.sharedMaterial = boxMaterial;
+
         if (!isFrozen)
         {
             isCloned = false;
@@ -166,7 +170,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         {
             isThawing = true;
         }
-        frozenElapsedTime = 0;
+        
     }
 
     public void Gust(Vector2 velocity)

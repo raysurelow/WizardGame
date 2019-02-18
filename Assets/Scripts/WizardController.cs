@@ -74,54 +74,36 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
             canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask) || Physics2D.OverlapCircle(groundCheck2.position, groundCheckRadius, jumpableLayerMask);
             horizontalMovement.x = player.GetAxis("Move Horizontal");
 
-            // Handle movement inputs
-            if (horizontalMovement.x > 0f) 
+            // Handle non-ladder movement inputs
+            if (!climbInitiated)
             {
-                gusted = false;
-                rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
-                transform.localScale = new Vector3(1, transform.localScale.y);
-            }
-            else if (horizontalMovement.x < 0f)
-            {
-                gusted = false;
-                rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
-                transform.localScale = new Vector3(-1, transform.localScale.y);
-            }
-            else if(gusted)
-            {
-                rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
-            }
-            else
-            {
-                rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y);
-            }
+                if (horizontalMovement.x > 0.5f)
+                {
+                    gusted = false;
+                    rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
+                    transform.localScale = new Vector3(1, transform.localScale.y);
+                }
+                else if (horizontalMovement.x < -0.5f)
+                {
+                    gusted = false;
+                    rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
+                    transform.localScale = new Vector3(-1, transform.localScale.y);
+                }
+                else if (gusted)
+                {
+                    rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
+                }
+                else
+                {
+                    rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y);
+                }
 
-            // Handle jumping input
-            if (player.GetButtonDown("Jump") && canJump && !climbInitiated)
-            {
-                rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
+                // Handle jumping input
+                if (player.GetButtonDown("Jump") && canJump)
+                {
+                    rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
+                }
             }
-
-
-            // Handle change spell input
-            if (player.GetButtonDown("Rotate Spell"))
-            {
-                activeSpellPosition = (activeSpellPosition + 1) % availableSpells.Length;
-                activeSpell = availableSpells[activeSpellPosition];
-                levelManager.UpdateActiveSpellText(activeSpell);
-            }
-
-
-            // Handle aiming input
-            UpdateActiveTransform();
-
-            // Handle shooting spell input
-            if (player.GetButtonDown("Fire"))
-            {
-                animator.SetTrigger(string.Format("Shoot{0}Spell", activeSpell.spellName));
-            }
-
-            animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
 
             //Handle onLadder climbing
             if (onLadder)
@@ -138,7 +120,15 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
                 if (climbInitiated)
                 {
                     rigidBody.gravityScale = 0;
-                    rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbSpeed * player.GetAxisRaw("Climb Ladder"));
+                    rigidBody.velocity = new Vector3(moveSpeed * horizontalMovement.x, climbSpeed * player.GetAxisRaw("Climb Ladder"));
+                    if (horizontalMovement.x > 0.5f)
+                    {
+                        transform.localScale = new Vector3(1, transform.localScale.y);
+                    }
+                    else if (horizontalMovement.x < -0.5f)
+                    {
+                        transform.localScale = new Vector3(-1, transform.localScale.y);
+                    }
                 }
 
                 //Jumping cancels climbing so gravity is restored 
@@ -158,6 +148,30 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
                 rigidBody.gravityScale = gravityStore;
             }
             animator.SetBool("IsClimbing", climbInitiated);
+
+
+            // Handle change spell input
+            if (player.GetButtonDown("Rotate Spell"))
+            {
+                activeSpellPosition = (activeSpellPosition + 1) % availableSpells.Length;
+                activeSpell = availableSpells[activeSpellPosition];
+                levelManager.UpdateActiveSpellText(activeSpell);
+            }
+
+
+            // Handle aiming input
+            UpdateActiveTransform();
+
+            // Handle shooting spell input
+            if (player.GetButtonDown("Fire"))
+            {
+                if (!(climbInitiated && (Mathf.Abs(rigidBody.velocity.y) > .3)))
+                {
+                    animator.SetTrigger(string.Format("Shoot{0}Spell", activeSpell.spellName));
+                }      
+            }
+
+            animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
         }else if (isFrozen)
         {
             if (isFrozen && !isThawing)
@@ -183,11 +197,11 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     private void UpdateActiveTransform()
     {
-        if (Input.GetAxisRaw("Vertical") > 0)
+        if (Input.GetAxis("Vertical") > 0.8f)
         {
             activeSpellTransform = upSpellTransform;
         }
-        else if (Input.GetAxisRaw("Vertical") < 0)
+        else if (Input.GetAxis("Vertical") < -0.8f)
         {
             activeSpellTransform = downSpellTransform;
         }
@@ -199,6 +213,11 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     private void ShootSpell()
     {
+        if(climbInitiated && (Mathf.Abs(rigidBody.velocity.y) > .3))
+        {
+            return;
+        }
+
         Rigidbody2D spell = null;
         spell = Instantiate(activeSpell.spellRigidBody, activeSpellTransform.position, activeSpellTransform.rotation) as Rigidbody2D;
         spell.GetComponent<SpellController>().Spell = activeSpell;
@@ -238,6 +257,12 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     public void Gust(Vector2 velocity)
     {
+        if (climbInitiated)
+        {
+            climbInitiated = false;
+            rigidBody.gravityScale = gravityStore;
+        }
+
         if (velocity.x > 0)
         {
             rigidBody.AddForce(new Vector2(10, 0), ForceMode2D.Impulse);
