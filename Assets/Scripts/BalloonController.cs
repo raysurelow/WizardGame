@@ -91,7 +91,6 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
     {
         if (!isFrozen && deflating)
         {
-            print("gust initiate called");
             transform.localScale = new Vector3(transform.localScale.x * .95f, transform.localScale.y * .95f, transform.localScale.z);
             ShootGust();
         }

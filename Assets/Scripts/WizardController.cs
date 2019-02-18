@@ -49,6 +49,13 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     // Use this for initialization
     void Start () {
+        if(CrossSceneInformation.CheckpointReached == false)
+        {
+            CrossSceneInformation.LoadPosition = transform.position;
+        }
+
+        transform.position = CrossSceneInformation.LoadPosition;
+
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         horizontalSpellTransform = transform.Find("HorizontalSpellFirePosition");
@@ -281,6 +288,12 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         {
             //gameObject.SetActive(false);
             LevelReset();            
+        }
+
+        if(col.gameObject.tag == "Checkpoint")
+        {
+            CrossSceneInformation.LoadPosition = col.gameObject.transform.position;
+            CrossSceneInformation.CheckpointReached = true;
         }
     }
 

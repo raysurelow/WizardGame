@@ -8,6 +8,9 @@ using Rewired;
 public class LevelManagerController : MonoBehaviour {
     public Text activeSpellText;
     public Canvas spellChooser;
+    public static Vector3 PlayerLoadPosition { get; set; }
+    public static bool CheckpointReached { get; set; }
+
     //rewired parametres
     public int playerId = 0; // The Rewired player id of this character
     private Player player; // The Rewired Player
