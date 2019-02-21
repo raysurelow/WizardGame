@@ -192,6 +192,22 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         }
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = collision.gameObject.transform;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = null;
+        }
+    }
+
     public void ResetBox()
     {
         rigidBody.velocity = Vector2.zero;

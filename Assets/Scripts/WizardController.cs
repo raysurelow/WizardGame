@@ -40,6 +40,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     private LevelManagerController levelManager;
     private PauseMenuController pauseMenu;
     private Vector3 horizontalMovement;
+    private Vector3 horizontalMovementRaw;
     private bool gusted;
 
     //rewired parametres
@@ -80,17 +81,18 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
             // Check if grounded
             canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask) || Physics2D.OverlapCircle(groundCheck2.position, groundCheckRadius, jumpableLayerMask);
             horizontalMovement.x = player.GetAxis("Move Horizontal");
+            horizontalMovementRaw.x = player.GetAxisRaw("Move Horizontal");
 
             // Handle non-ladder movement inputs
             if (!climbInitiated)
             {
-                if (horizontalMovement.x > 0.5f)
+                if (horizontalMovementRaw.x == 1)
                 {
                     gusted = false;
                     rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
                     transform.localScale = new Vector3(1, transform.localScale.y);
                 }
-                else if (horizontalMovement.x < -0.5f)
+                else if (horizontalMovementRaw.x == -1)
                 {
                     gusted = false;
                     rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
@@ -247,8 +249,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         }
     }
 
-    public void Burn()
-    {
+    public void Burn(){
         if (!isFrozen)
         {
             //Destroy(gameObject);
@@ -294,6 +295,22 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         {
             CrossSceneInformation.LoadPosition = col.gameObject.transform.position;
             CrossSceneInformation.CheckpointReached = true;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = collision.gameObject.transform;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = null;
         }
     }
 
