@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 95398016522868672}
   m_Layer: 0
   m_Name: Moving Fire Platform
-  m_TagString: Untagged
+  m_TagString: MovingPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

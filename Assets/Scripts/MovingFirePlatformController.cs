@@ -11,7 +11,7 @@ public class MovingFirePlatformController : MovingPlatformController, IBurnable 
     {
         base.Start();
         freezeStopsMovement = false;
-        edgeCollider = GetComponent<EdgeCollider2D>();
+        edgeCollider = GetComponentInChildren<EdgeCollider2D>();
 
     }
 

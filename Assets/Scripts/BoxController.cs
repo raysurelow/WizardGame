@@ -110,7 +110,6 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     private void ClonedMovements()
     {
         canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
-
         // Handle movement inputs
         if (player.GetAxisRaw("Move Horizontal") > 0f)
         {
@@ -130,6 +129,8 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         // Handle jumping input
         if (player.GetButtonDown("Jump") && canJump)
         {
+            print("jumping");
+            print(jumpSpeed);
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
         }
     }
@@ -215,5 +216,6 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         transform.position = startingPosition;
         isCloned = false;
         isFrozen = false;
+        boxEdgeCollider.sharedMaterial = boxMaterial;
     }
 }

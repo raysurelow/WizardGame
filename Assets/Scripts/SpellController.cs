@@ -51,7 +51,6 @@ public class SpellController : MonoBehaviour {
                 }
                 break;
         }
-
         
         if (layersToIgnore.IndexOf(collision.gameObject.layer) == -1)
         {

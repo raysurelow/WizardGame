@@ -1637,7 +1637,7 @@ MonoBehaviour:
   jumpSpeed: 12
   jumpableLayerMask:
     serializedVersion: 2
-    m_Bits: 213760
+    m_Bits: 1262080
   groundCheckRadius: 0.2
   projectileSpeed: 7
   groundCheck: {fileID: 4938699521899510}

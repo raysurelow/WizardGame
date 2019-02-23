@@ -35,7 +35,10 @@ public class MovingPlatformController : AbstractSwitchable , IFreezable, IBurnab
     {
         UpdateFrozenEffects();
 
-        animator.SetBool("isFrozen", isFrozen);
+        if (animator != null)
+        {
+            animator.SetBool("isFrozen", isFrozen);
+        }
 
         if (!(isFrozen && freezeStopsMovement))
         {
