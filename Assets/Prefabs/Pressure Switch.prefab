@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 60995930815536516}
   - component: {fileID: 114308878162472788}
   - component: {fileID: 95231111070248662}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Pressure Switch
   m_TagString: Switch
   m_Icon: {fileID: 0}

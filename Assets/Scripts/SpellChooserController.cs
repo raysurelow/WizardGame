@@ -4,7 +4,6 @@ using UnityEngine;
 
 
 public class SpellChooserController : MonoBehaviour {
-    public GameObject player;
     private WizardController wizard;
 
 

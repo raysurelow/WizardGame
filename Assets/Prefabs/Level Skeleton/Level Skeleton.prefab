@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 68653751937628842}
   - component: {fileID: 114071652673502272}
   - component: {fileID: 212158651416769682}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Level End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -705,7 +705,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1378184195959390}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.12, y: 0.55, z: 0}
+  m_LocalPosition: {x: 0, y: 0.71, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4871806417093800}
@@ -757,7 +757,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1241950482902018}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15, y: 1.6, z: 0}
+  m_LocalPosition: {x: 24.8, y: 3.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4938699521899510}
@@ -775,7 +775,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1117647167332132}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.02, y: -0.58, z: 0}
+  m_LocalPosition: {x: 0, y: -0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4871806417093800}
@@ -814,7 +814,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1028485894280110}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.16, y: 1.13, z: 0}
+  m_LocalPosition: {x: 32.03, y: 1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4461963069115608}
@@ -1255,6 +1255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thePauseScreen: {fileID: 1866610817335450}
   gamePaused: 0
+  playerId: 0
 --- !u!114 &114241316095538260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1334,7 +1335,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63de09e1d3cc4164c84ecd13bbf0fb35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!114 &114328195616654234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1419,6 +1419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeSpellText: {fileID: 114459023429245484}
   spellChooser: {fileID: 223960691755709940}
+  playerId: 0
 --- !u!114 &114383138736809728
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1636,7 +1637,7 @@ MonoBehaviour:
   jumpSpeed: 12
   jumpableLayerMask:
     serializedVersion: 2
-    m_Bits: 213760
+    m_Bits: 1262080
   groundCheckRadius: 0.2
   projectileSpeed: 7
   groundCheck: {fileID: 4938699521899510}
@@ -1654,6 +1655,7 @@ MonoBehaviour:
   isCloneable: 0
   frozenDuration: 5
   thawingDuration: 2
+  playerId: 0
 --- !u!114 &114483433904396146
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2310,10 +2312,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ace3833e60b626479dd2260152a99be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1241950482902018}
+  wizard: {fileID: 1241950482902018}
   smoothing: 15
   cameraHorizontalGive: 1
   cameraVerticalGive: 1
+  playerId: 0
+  cameraMaxLookDistance: 0
 --- !u!114 &114899224241620512
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4603383189999630}
   - component: {fileID: 61363627205150268}
-  m_Layer: 8
+  m_Layer: 17
   m_Name: Wall Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,6 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   switches: []
   frozenDuration: 100
+  startHidden: 0
 --- !u!212 &212788534627980694
 SpriteRenderer:
   m_ObjectHideFlags: 1

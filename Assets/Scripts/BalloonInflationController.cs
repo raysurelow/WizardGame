@@ -18,11 +18,22 @@ public class BalloonInflationController : MonoBehaviour, IGustable, IFreezable, 
 
     public void Gust(Vector2 velocity)
     {
-        transform.parent.localScale = new Vector3(transform.parent.localScale.x * 1.1f, transform.parent.localScale.y * 1.1f, transform.parent.localScale.z);
+        if (!balloonController.IsFrozen())
+        { 
+            if (transform.parent.localScale.x < balloonController.maxScale)
+            {
+                transform.parent.localScale = new Vector3(transform.parent.localScale.x * 1.1f, transform.parent.localScale.y * 1.1f, transform.parent.localScale.z);
+            }
+            else
+            {
+                transform.parent.localScale = balloonController.GetStartingScale();
+            }
+        }
     }
 
     public void Freeze()
     {
+        print("balloon inflation freeze called");
         balloonController.Freeze();
     }
 

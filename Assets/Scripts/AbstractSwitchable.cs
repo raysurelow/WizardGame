@@ -13,13 +13,16 @@ public abstract class AbstractSwitchable : MonoBehaviour {
     {
         bool allSwitchesAreOn = true;
 
-        foreach (GameObject switchObject in switches)
+        if (switches.Length > 0)
         {
-            AbstractSwitch switchController = switchObject.GetComponent<AbstractSwitch>();
-            if (!switchController.IsSwitchedOn)
+            foreach (GameObject switchObject in switches)
             {
-                allSwitchesAreOn = false;
-                break;
+                AbstractSwitch switchController = switchObject.GetComponent<AbstractSwitch>();
+                if (!switchController.IsSwitchedOn)
+                {
+                    allSwitchesAreOn = false;
+                    break;
+                }
             }
         }
 

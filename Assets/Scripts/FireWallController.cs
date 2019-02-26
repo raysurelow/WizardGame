@@ -7,13 +7,16 @@ public class FireWallController : AbstractSwitchable, IFreezable, IBurnable{
     public float frozenDuration;
     private float frozenElapsedTime;
     private bool isFrozen;
+    public bool startHidden = false;
     private Animator animator;
     private BoxCollider2D boxCollider;
+    private Vector3 startingScale;
 
     // Use this for initialization
     protected override void Start () {
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
+        startingScale = transform.localScale;
     }
 	
 	// Update is called once per frame
@@ -30,13 +33,30 @@ public class FireWallController : AbstractSwitchable, IFreezable, IBurnable{
         animator.SetBool("IsFrozen", isFrozen);
         if (switches.Length > 0)
         {
-            if (AllSwitchesAreOn())
+            if (!isFrozen)
             {
-                transform.localScale = new Vector3(0, 0, 0);
-            }
-            else
-            {
-                transform.localScale = new Vector3(1, 1, 1);
+                if (AllSwitchesAreOn())
+                {
+                    if (startHidden)
+                    {
+                        transform.localScale = startingScale;
+                    }
+                    else
+                    {
+                        transform.localScale = new Vector3(0, 0, 0);
+                    }
+                }
+                else
+                {
+                    if (startHidden)
+                    {
+                        transform.localScale = new Vector3(0, 0, 0);
+                    }
+                    else
+                    {
+                        transform.localScale = startingScale;
+                    }
+                }
             }
         }
     }

@@ -21,6 +21,7 @@ public class LevelEndController : MonoBehaviour {
     {
         if(collision.gameObject.tag == "Player")
         {
+            CrossSceneInformation.CheckpointReached = false;
             levelManager.LoadLevel(levelToLoad);
         }
         
