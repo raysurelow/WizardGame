@@ -86,13 +86,13 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
             // Handle non-ladder movement inputs
             if (!climbInitiated)
             {
-                if (horizontalMovementRaw.x == 1)
+                if (horizontalMovementRaw.x == 1 || horizontalMovement.x > .6)
                 {
                     gusted = false;
                     rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
                     transform.localScale = new Vector3(1, transform.localScale.y);
                 }
-                else if (horizontalMovementRaw.x == -1)
+                else if (horizontalMovementRaw.x == -1 || horizontalMovement.x < -.6)
                 {
                     gusted = false;
                     rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);

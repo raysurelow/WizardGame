@@ -23,6 +23,9 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     private bool hasVelocity;
     private bool inAir;
     private bool atEdge;
+    private List<int> layersToIgnore;
+    private bool isStuck;
+
 
 
     // Use this for initialization
@@ -30,6 +33,11 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         startingPosition = rigidBody.transform.position;
+        layersToIgnore = new List<int>();
+        layersToIgnore.Add(LayerMask.NameToLayer("Ladder"));
+        layersToIgnore.Add(LayerMask.NameToLayer("LevelEnd"));
+        layersToIgnore.Add(LayerMask.NameToLayer("Spell"));
+        layersToIgnore.Add(LayerMask.NameToLayer("Switch"));
     }
 	
 	// Update is called once per frame
@@ -75,27 +83,41 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        
         if (!inAir && !hasVelocity)
         {
-            if ((col.gameObject.layer != LayerMask.NameToLayer("Spell")) && (col.gameObject.tag != "Switch"))
+            if (layersToIgnore.IndexOf(col.gameObject.layer) == -1)
             {
                 Flip();
+                
             }
         }
     }
 
-    /*void OnTriggerStay2D(Collider2D col)
+    void OnTriggerStay2D(Collider2D col)
     {
         
         if (!inAir && !hasVelocity)
         {
-            if ((col.gameObject.layer != LayerMask.NameToLayer("Spell")) && (col.gameObject.tag != "Switch"))
+            if (layersToIgnore.IndexOf(col.gameObject.layer) == -1)
             {
-                print("trigger stay");
-                Flip();
+                if (!isStuck)
+                {
+                    isStuck = true;
+                }
+                else
+                {
+                    Flip();
+                    isStuck = false;
+                }              
             }
         }
-    }*/
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        isStuck = false;
+    }
 
     private void Flip()
     {
@@ -125,10 +147,11 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
 
     public void Clone()
     {
-        if (isCloneable)
-        {
-            isCloned = true;
-        }
+        /*    if (isCloneable)
+            {
+                isCloned = true;
+            }
+        */
     }
 
     public void Gust(Vector2 velocity)
@@ -148,6 +171,9 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         rigidBody.velocity = Vector2.zero;
         rigidBody.angularVelocity = 0f;
         transform.position = startingPosition;
+        isFrozen = false;
+        isCloned = false;
+        isCloned = false;
     }
 
 }
