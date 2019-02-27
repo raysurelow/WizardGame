@@ -25,7 +25,6 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
         gustTransform = transform.Find("GustExitPoint");
         isThawing = false;
         isFrozen = false;
-
     }
 	
 	// Update is called once per frame
@@ -66,7 +65,6 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
 
     public void Freeze()
     {
-        print("frozen");
         isFrozen = true;
         frozenElapsedTime = 0;
     }

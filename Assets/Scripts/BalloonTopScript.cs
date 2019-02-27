@@ -5,10 +5,12 @@ using UnityEngine;
 public class BalloonTopScript : MonoBehaviour {
 
     private float timer;
+    private BalloonController balloonController;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         timer = 0f;
+        balloonController = GetComponentInParent<BalloonController>();
     }
 	
 	// Update is called once per frame
@@ -35,5 +37,15 @@ public class BalloonTopScript : MonoBehaviour {
                 timer = 0f;
             }
         }
+    }
+
+    public void Freeze()
+    {
+        balloonController.Freeze();
+    }
+
+    public void Burn()
+    {
+        balloonController.Burn();
     }
 }
