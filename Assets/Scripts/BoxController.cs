@@ -180,10 +180,10 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     {
         if (velocity.x > 0)
         {
-            rigidBody.AddForce(new Vector2(10, 0), ForceMode2D.Impulse);
+            rigidBody.AddForce(new Vector2(1000, 0), ForceMode2D.Impulse);
         }else if (velocity.x < 0)
         {
-            rigidBody.AddForce(new Vector2(-10, 0), ForceMode2D.Impulse);
+            rigidBody.AddForce(new Vector2(-1000, 0), ForceMode2D.Impulse);
         }
     }
 
