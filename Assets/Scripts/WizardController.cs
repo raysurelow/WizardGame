@@ -214,14 +214,18 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         if (Input.GetAxis("Vertical") > 0.8f)
         {
             activeSpellTransform = upSpellTransform;
+            animator.SetInteger("VerticalPosition", 1);
+
         }
         else if (Input.GetAxis("Vertical") < -0.8f)
         {
             activeSpellTransform = downSpellTransform;
+            animator.SetInteger("VerticalPosition", -1);
         }
         else
         {
             activeSpellTransform = horizontalSpellTransform;
+            animator.SetInteger("VerticalPosition", 0);
         }
     }
 

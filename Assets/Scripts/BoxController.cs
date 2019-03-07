@@ -43,6 +43,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     // Use this for initialization
     void Start() {
         animator = GetComponent<Animator>();
+        animator.SetBool("Cloneable", isCloneable);
         rigidBody = GetComponent<Rigidbody2D>();
         boxEdgeCollider = GetComponent<EdgeCollider2D>();
         startingPosition = rigidBody.transform.position;
@@ -165,7 +166,8 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         if (!isFrozen)
         {
             isCloned = false;
-            ResetBox();
+            animator.SetTrigger("Burn");
+            //ResetBox();
         }
         else
         {
