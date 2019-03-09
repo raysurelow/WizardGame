@@ -130,8 +130,6 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         // Handle jumping input
         if (player.GetButtonDown("Jump") && canJump)
         {
-            print("jumping");
-            print(jumpSpeed);
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
         }
     }

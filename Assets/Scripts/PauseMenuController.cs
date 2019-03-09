@@ -17,7 +17,6 @@ public class PauseMenuController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         gamePaused = false;
-        thePauseScreen.SetActive(false);
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
         levelManager = FindObjectOfType<LevelManagerController>();
@@ -25,7 +24,7 @@ public class PauseMenuController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (player.GetButtonDown("Pause")) 
+        if (player.GetButtonDown("Pause") && !player.GetButtonDown("Open Spell Chooser")) 
         {
             if (!gamePaused)
             {
@@ -48,6 +47,8 @@ public class PauseMenuController : MonoBehaviour {
     {
         Time.timeScale = 1f;
         thePauseScreen.SetActive(false);
+        EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+        es.SetSelectedGameObject(null);
         gamePaused = false;
     }
 

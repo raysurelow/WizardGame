@@ -3,20 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SpellChooserButtonController : MonoBehaviour, IPointerEnterHandler{
+
+public class SpellChooserButtonController : MonoBehaviour{
     private WizardController wizard;
     // Use this for initialization
     void Start () {
-        wizard = FindObjectOfType<WizardController>();
-}
+       
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void UpdateActiveSpell()
+    {
+        FindObjectOfType<WizardController>().UpdateActiveSpell(name);
+    }
+
+    /*public void OnPointerEnter(PointerEventData eventData)
     {
         wizard.UpdateActiveSpell(name);
-    }
+    }*/
 }
