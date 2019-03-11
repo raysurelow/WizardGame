@@ -26,7 +26,7 @@ public class BalloonInflationController : MonoBehaviour, IGustable, IFreezable, 
             }
             else
             {
-                transform.parent.localScale = balloonController.GetStartingScale();
+                balloonController.popping = true;
             }
         }
     }

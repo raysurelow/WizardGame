@@ -25,6 +25,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     private bool atEdge;
     private List<int> layersToIgnore;
     private bool isStuck;
+    private bool burning;
 
 
 
@@ -45,7 +46,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
 		atEdge = !Physics2D.OverlapPoint(flipcheck.position, edgeLayerMask, 0);
         inAir = !Physics2D.OverlapPoint(groundCheck.position, edgeLayerMask, 0);
         hasVelocity = (rigidBody.velocity.x != 0) || (rigidBody.velocity.y != 0);
-        if (!isFrozen && !isCloned && !inAir && !hasVelocity)
+        if (!isFrozen && !isCloned && !inAir && !hasVelocity && !burning)
         {
             if (!atEdge)
             {
@@ -136,7 +137,9 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     {
         if (!isFrozen)
         {
-            ResetEnemy();
+            burning = true;
+            animator.SetTrigger("Burn");
+            //ResetEnemy();
         }
         else
         {
@@ -174,6 +177,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         isFrozen = false;
         isCloned = false;
         isCloned = false;
+        burning = false;
     }
 
 }
