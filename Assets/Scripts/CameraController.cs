@@ -80,7 +80,7 @@ public class CameraController : MonoBehaviour {
         }
         else if (playerDistanceFromCameraY < -cameraVerticalGive)
         {
-            targetPositionY = wizard.transform.position.y - cameraVerticalGive;
+            targetPositionY = wizard.transform.position.y + cameraVerticalGive;
         }
         else
         {

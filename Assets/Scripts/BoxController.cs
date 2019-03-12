@@ -38,6 +38,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     private float gravityStore;
     private float dragStore;
     private PhysicsMaterial2D boxMaterial;
+   
 
 
     // Use this for initialization
@@ -201,10 +202,19 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         }
     }
 
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = collision.gameObject.transform;
+        }
+    }
+
     void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "MovingPlatform")
         {
+            print("collision exit");
             transform.parent = null;
         }
     }

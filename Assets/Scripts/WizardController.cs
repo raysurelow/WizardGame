@@ -51,7 +51,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     // Use this for initialization
     void Start () {
-        if(CrossSceneInformation.CheckpointReached == false)
+        if(CrossSceneInformation.CheckpointsReached.Count == 0)
         {
             CrossSceneInformation.LoadPosition = transform.position;
         }
@@ -304,7 +304,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         if(col.gameObject.tag == "Checkpoint")
         {
             CrossSceneInformation.LoadPosition = col.gameObject.transform.position;
-            CrossSceneInformation.CheckpointReached = true;
+            CrossSceneInformation.CheckpointsReached.Add(col.gameObject.GetComponent<CheckpointController>().checkpointNumber);
         }
     }
 
