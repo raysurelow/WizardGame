@@ -6,6 +6,7 @@ public class CheckpointController : MonoBehaviour {
 
     public Sprite checkpointDisabled;
     public Sprite checkpointEnabled;
+    public int checkpointNumber;
 
     private SpriteRenderer spriteRenderer;
 

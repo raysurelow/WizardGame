@@ -8,7 +8,7 @@ public class BalloonInflationController : MonoBehaviour, IGustable, IFreezable, 
 
 	// Use this for initialization
 	void Start () {
-        balloonController = FindObjectOfType<BalloonController>();
+        balloonController = GetComponentInParent<BalloonController>();
 	}
 	
 	// Update is called once per frame
@@ -26,14 +26,13 @@ public class BalloonInflationController : MonoBehaviour, IGustable, IFreezable, 
             }
             else
             {
-                transform.parent.localScale = balloonController.GetStartingScale();
+                balloonController.popping = true;
             }
         }
     }
 
     public void Freeze()
     {
-        print("balloon inflation freeze called");
         balloonController.Freeze();
     }
 

@@ -18,6 +18,8 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
     public float gustSpeed;
     private bool deflating;
     public float maxScale = 6;
+    private Animator animator;
+    public bool popping;
 
     // Use this for initialization
     void Start () {
@@ -25,13 +27,14 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
         gustTransform = transform.Find("GustExitPoint");
         isThawing = false;
         isFrozen = false;
-
+        animator = GetComponent<Animator>();
+        popping = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
         UpdateFrozenEffects();
-        if (!isFrozen && (transform.localScale.x > startingScale.x))
+        if (!isFrozen && !popping && (transform.localScale.x > startingScale.x))
         {
             deflating = true;
             transform.localScale = new Vector3(transform.localScale.x * .999f, transform.localScale.y * .999f, transform.localScale.z);
@@ -40,7 +43,22 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
         {
             deflating = false;
         }
-	}
+
+        //check if Balloon is near popping or popping and update animator accordingly
+        if(transform.localScale.x > (.8 * maxScale) && !popping)
+        {
+            animator.SetBool("NearPopping", true);
+        }else if(transform.localScale.x < (.8 * maxScale) && !popping)
+        {
+            animator.SetBool("NearPopping", false);
+        }else if(popping)
+        {
+            animator.SetBool("Popping", true);
+            animator.SetBool("NearPopping", false);
+        }
+
+        animator.SetBool("isFrozen", isFrozen);
+    }
 
     public void UpdateFrozenEffects()
     {
@@ -66,7 +84,6 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
 
     public void Freeze()
     {
-        print("frozen");
         isFrozen = true;
         frozenElapsedTime = 0;
     }
@@ -104,5 +121,13 @@ public class BalloonController : MonoBehaviour, IFreezable, IBurnable
     public Vector3 GetStartingScale()
     {
         return startingScale;
+    }
+
+    public void PopBalloon()
+    {
+        popping = false;
+        transform.localScale = startingScale;
+        animator.SetBool("NearPopping", false);
+        animator.SetBool("Popping", false);
     }
 }

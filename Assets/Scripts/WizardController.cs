@@ -42,6 +42,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     private Vector3 horizontalMovement;
     private Vector3 horizontalMovementRaw;
     private bool gusted;
+    private bool burning;
 
     //rewired parametres
     public int playerId = 0; // The Rewired player id of this character
@@ -50,13 +51,13 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     // Use this for initialization
     void Start () {
-        if(CrossSceneInformation.CheckpointReached == false)
+        if(CrossSceneInformation.CheckpointsReached.Count == 0)
         {
             CrossSceneInformation.LoadPosition = transform.position;
         }
 
         transform.position = CrossSceneInformation.LoadPosition;
-
+        burning = false;
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         horizontalSpellTransform = transform.Find("HorizontalSpellFirePosition");
@@ -69,6 +70,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         pauseMenu = FindObjectOfType<PauseMenuController>();
         activeSpell = availableSpells[activeSpellPosition];
         levelManager.UpdateActiveSpellText(activeSpell);
+        SendAninamotrActiveSpell(activeSpell.spellName);
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
     }
@@ -76,7 +78,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     // Update is called once per frame
     void Update()
     {
-        if (!pauseMenu.gamePaused && !isFrozen)
+        if (!pauseMenu.gamePaused && !isFrozen && !burning)
         {
             // Check if grounded
             canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask) || Physics2D.OverlapCircle(groundCheck2.position, groundCheckRadius, jumpableLayerMask);
@@ -162,9 +164,11 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
             // Handle change spell input
             if (player.GetButtonDown("Rotate Spell"))
             {
+
                 activeSpellPosition = (activeSpellPosition + 1) % availableSpells.Length;
                 activeSpell = availableSpells[activeSpellPosition];
                 levelManager.UpdateActiveSpellText(activeSpell);
+                SendAninamotrActiveSpell(activeSpell.spellName);
             }
 
 
@@ -188,7 +192,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
                 frozenElapsedTime += Time.deltaTime;
                 if (frozenElapsedTime > frozenDuration)
                 {
-                    isFrozen = false;
+                    IsFrozen(false);
                     frozenElapsedTime = 0;
                 }
             }
@@ -197,8 +201,9 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
                 thawingElapsedTime += Time.deltaTime;
                 if (thawingElapsedTime > thawingDuration)
                 {
-                    isFrozen = false;
+                    IsFrozen(false);
                     thawingElapsedTime = 0;
+                    isThawing = false;
                 }
             }
         }
@@ -209,14 +214,18 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         if (Input.GetAxis("Vertical") > 0.8f)
         {
             activeSpellTransform = upSpellTransform;
+            animator.SetInteger("VerticalPosition", 1);
+
         }
         else if (Input.GetAxis("Vertical") < -0.8f)
         {
             activeSpellTransform = downSpellTransform;
+            animator.SetInteger("VerticalPosition", -1);
         }
         else
         {
             activeSpellTransform = horizontalSpellTransform;
+            animator.SetInteger("VerticalPosition", 0);
         }
     }
 
@@ -237,7 +246,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     public void Freeze()
     {
-        isFrozen = true;
+        IsFrozen(true);
         frozenElapsedTime = 0;
     }
 
@@ -250,10 +259,11 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     }
 
     public void Burn(){
-        if (!isFrozen)
+        if (!isFrozen && !isThawing && !burning)
         {
+            burning = true;
+            animator.SetTrigger("Burn");
             //Destroy(gameObject);
-            LevelReset();
         }
         else
         {
@@ -294,7 +304,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         if(col.gameObject.tag == "Checkpoint")
         {
             CrossSceneInformation.LoadPosition = col.gameObject.transform.position;
-            CrossSceneInformation.CheckpointReached = true;
+            CrossSceneInformation.CheckpointsReached.Add(col.gameObject.GetComponent<CheckpointController>().checkpointNumber);
         }
     }
 
@@ -331,7 +341,39 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
                 activeSpell = availableSpells[3];
                 break;
         }
+        SendAninamotrActiveSpell(spellName);
         levelManager.UpdateActiveSpellText(activeSpell);
+    }
+
+    public void SendAninamotrActiveSpell(string spellName)
+    {
+        switch (spellName)
+        {
+            case "Fire":
+                animator.SetBool("IceActive", false);
+                animator.SetBool("GustActive", false);
+                animator.SetBool("CloneActive", false);
+                animator.SetBool("FireActive", true);
+                break;
+            case "Ice":
+                animator.SetBool("FireActive", false);
+                animator.SetBool("GustActive", false);
+                animator.SetBool("CloneActive", false);
+                animator.SetBool("IceActive", true);
+                break;
+            case "Gust":
+                animator.SetBool("FireActive", false);
+                animator.SetBool("IceActive", false);
+                animator.SetBool("CloneActive", false);
+                animator.SetBool("GustActive", true);
+                break;
+            case "Clone":
+                animator.SetBool("FireActive", false);
+                animator.SetBool("IceActive", false);
+                animator.SetBool("GustActive", false);
+                animator.SetBool("CloneActive", true);
+                break;
+        }
     }
 
     public void LevelReset()
@@ -340,4 +382,17 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         //Destroy(gameObject);
     }
 
+    private void IsFrozen(bool frozen)
+    {
+        if (frozen)
+        {
+            isFrozen = true;
+            animator.SetBool("IsFrozen", true);            
+        }
+        else
+        {
+            isFrozen = false;
+            animator.SetBool("IsFrozen", false);
+        }
+    }
 }

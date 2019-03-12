@@ -4,12 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Rewired;
+using UnityEngine.EventSystems;
 
 public class LevelManagerController : MonoBehaviour {
     public Text activeSpellText;
-    public Canvas spellChooser;
+    private GameObject activeSpellButton;
+    public GameObject fireButton;
+    public GameObject iceButton;
+    public GameObject cloneButton;
+    public GameObject gustButton;
+    public GameObject spellChooser;
     public static Vector3 PlayerLoadPosition { get; set; }
     public static bool CheckpointReached { get; set; }
+    
 
     //rewired parametres
     public int playerId = 0; // The Rewired player id of this character
@@ -17,7 +24,7 @@ public class LevelManagerController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        spellChooser.enabled = false;
+        spellChooser.SetActive(false);
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
     }
@@ -38,13 +45,18 @@ public class LevelManagerController : MonoBehaviour {
 
         if (player.GetButtonDown("Open Spell Chooser"))
         {
-            spellChooser.enabled = true;
+            spellChooser.SetActive(true);
+            EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+            es.SetSelectedGameObject(null);
+            es.SetSelectedGameObject(activeSpellButton);
             Time.timeScale = .01F;
         }
 
         if (player.GetButtonUp("Open Spell Chooser"))
         {
-            spellChooser.enabled = false;
+            EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+            es.SetSelectedGameObject(null);
+            spellChooser.SetActive(false);
             Time.timeScale = 1F;
         }
     }
@@ -56,18 +68,22 @@ public class LevelManagerController : MonoBehaviour {
             case "Fire":
                 activeSpellText.text = "Fire";
                 activeSpellText.color = Color.red;
+                activeSpellButton = fireButton;
                 break;
             case "Ice":
                 activeSpellText.text = "Ice";
                 activeSpellText.color = Color.blue;
+                activeSpellButton = iceButton;
                 break;
             case "Gust":
                 activeSpellText.text = "Gust";
                 activeSpellText.color = Color.white;
+                activeSpellButton = gustButton;
                 break;
             case "Clone":
                 activeSpellText.text = "Clone";
                 activeSpellText.color = Color.green;
+                activeSpellButton = cloneButton;
                 break;
         }
     }

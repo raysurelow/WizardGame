@@ -38,11 +38,13 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     private float gravityStore;
     private float dragStore;
     private PhysicsMaterial2D boxMaterial;
+   
 
 
     // Use this for initialization
     void Start() {
         animator = GetComponent<Animator>();
+        animator.SetBool("Cloneable", isCloneable);
         rigidBody = GetComponent<Rigidbody2D>();
         boxEdgeCollider = GetComponent<EdgeCollider2D>();
         startingPosition = rigidBody.transform.position;
@@ -129,8 +131,6 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         // Handle jumping input
         if (player.GetButtonDown("Jump") && canJump)
         {
-            print("jumping");
-            print(jumpSpeed);
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
         }
     }
@@ -165,7 +165,8 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         if (!isFrozen)
         {
             isCloned = false;
-            ResetBox();
+            animator.SetTrigger("Burn");
+            //ResetBox();
         }
         else
         {
@@ -178,10 +179,10 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     {
         if (velocity.x > 0)
         {
-            rigidBody.AddForce(new Vector2(10, 0), ForceMode2D.Impulse);
+            rigidBody.AddForce(new Vector2(1000, 0), ForceMode2D.Impulse);
         }else if (velocity.x < 0)
         {
-            rigidBody.AddForce(new Vector2(-10, 0), ForceMode2D.Impulse);
+            rigidBody.AddForce(new Vector2(-1000, 0), ForceMode2D.Impulse);
         }
     }
 
@@ -201,10 +202,19 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         }
     }
 
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = collision.gameObject.transform;
+        }
+    }
+
     void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "MovingPlatform")
         {
+            print("collision exit");
             transform.parent = null;
         }
     }

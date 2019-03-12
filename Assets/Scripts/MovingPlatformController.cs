@@ -35,11 +35,6 @@ public class MovingPlatformController : AbstractSwitchable , IFreezable, IBurnab
     {
         UpdateFrozenEffects();
 
-        if (animator != null)
-        {
-            animator.SetBool("isFrozen", isFrozen);
-        }
-
         if (!(isFrozen && freezeStopsMovement))
         {
             if (!pacing)
@@ -94,7 +89,7 @@ public class MovingPlatformController : AbstractSwitchable , IFreezable, IBurnab
 
     public virtual void Freeze()
     {
-        isFrozen = true;
+        IsFrozen(true);
         frozenElapsedTime = 0;
     }
 
@@ -111,7 +106,7 @@ public class MovingPlatformController : AbstractSwitchable , IFreezable, IBurnab
             frozenElapsedTime += Time.deltaTime;
             if (frozenElapsedTime > frozenDuration)
             {
-                isFrozen = false;
+                IsFrozen(false);
                 frozenElapsedTime = 0;
             }
         }
@@ -120,9 +115,23 @@ public class MovingPlatformController : AbstractSwitchable , IFreezable, IBurnab
             thawingElapsedTime += Time.deltaTime;
             if (thawingElapsedTime > thawingDuration)
             {
-                isFrozen = false;
+                IsFrozen(false);
                 thawingElapsedTime = 0;
             }
+        }
+    }
+
+    private void IsFrozen(bool frozen)
+    {
+        if (frozen)
+        {
+            isFrozen = true;
+            animator.SetBool("IsFrozen", true);
+        }
+        else
+        {
+            isFrozen = false;
+            animator.SetBool("IsFrozen", false);
         }
     }
 }
