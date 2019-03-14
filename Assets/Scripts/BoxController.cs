@@ -38,6 +38,8 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     private float gravityStore;
     private float dragStore;
     private PhysicsMaterial2D boxMaterial;
+
+    private bool burning;
    
 
 
@@ -137,14 +139,17 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
 
     public void Freeze()
     {
-        isFrozen = true;
-        frozenElapsedTime = 0;
-        boxEdgeCollider.sharedMaterial = wizardMaterial;
+        if (!burning)
+        {
+            isFrozen = true;
+            frozenElapsedTime = 0;
+            boxEdgeCollider.sharedMaterial = wizardMaterial;
+        }
     }
 
     public void Clone()
     {
-        if (isCloneable)
+        if (isCloneable && !isFrozen && !burning)
         {
             isCloned = true;
             if (player != null)
@@ -162,8 +167,9 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         frozenElapsedTime = 0;
         boxEdgeCollider.sharedMaterial = boxMaterial;
 
-        if (!isFrozen)
+        if (!isFrozen && !burning)
         {
+            burning = true;
             isCloned = false;
             animator.SetTrigger("Burn");
             //ResetBox();
@@ -226,6 +232,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         transform.position = startingPosition;
         isCloned = false;
         isFrozen = false;
+        burning = false;
         boxEdgeCollider.sharedMaterial = boxMaterial;
     }
 }
