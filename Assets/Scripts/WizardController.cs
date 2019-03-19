@@ -43,6 +43,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     private Vector3 horizontalMovementRaw;
     private bool gusted;
     private bool burning;
+    private bool timeScaleWas0;
 
     //rewired parametres
     public int playerId = 0; // The Rewired player id of this character
@@ -70,7 +71,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         pauseMenu = FindObjectOfType<PauseMenuController>();
         activeSpell = availableSpells[activeSpellPosition];
         levelManager.UpdateActiveSpellText(activeSpell);
-        SendAninamotrActiveSpell(activeSpell.spellName);
+        SendAnimatorActiveSpell(activeSpell.spellName);
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
     }
@@ -78,6 +79,13 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     // Update is called once per frame
     void Update()
     {
+        //don't call input for wizard when game is paused
+        if (Time.timeScale == 0)
+        {
+            timeScaleWas0 = true;
+            return;
+        }
+
         if (!pauseMenu.gamePaused && !isFrozen && !burning)
         {
             // Check if grounded
@@ -112,6 +120,12 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
                 // Handle jumping input
                 if (player.GetButtonDown("Jump") && canJump)
                 {
+                    //don't shoot spell when coming out of pause or paused
+                    if (Time.timeScale > 0 && timeScaleWas0)
+                    {
+                        timeScaleWas0 = false;
+                        return;
+                    }
                     rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
                 }
             }
@@ -168,7 +182,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
                 activeSpellPosition = (activeSpellPosition + 1) % availableSpells.Length;
                 activeSpell = availableSpells[activeSpellPosition];
                 levelManager.UpdateActiveSpellText(activeSpell);
-                SendAninamotrActiveSpell(activeSpell.spellName);
+                SendAnimatorActiveSpell(activeSpell.spellName);
             }
 
 
@@ -178,6 +192,13 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
             // Handle shooting spell input
             if (player.GetButtonDown("Fire"))
             {
+                //don't shoot spell when coming out of pause or paused
+                if (Time.timeScale > 0 && timeScaleWas0)
+                { 
+                    timeScaleWas0 = false;
+                    return;
+                }
+
                 if (!(climbInitiated && (Mathf.Abs(rigidBody.velocity.y) > .3)))
                 {
                     animator.SetTrigger(string.Format("Shoot{0}Spell", activeSpell.spellName));
@@ -341,11 +362,11 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
                 activeSpell = availableSpells[3];
                 break;
         }
-        SendAninamotrActiveSpell(spellName);
+        SendAnimatorActiveSpell(spellName);
         levelManager.UpdateActiveSpellText(activeSpell);
     }
 
-    public void SendAninamotrActiveSpell(string spellName)
+    public void SendAnimatorActiveSpell(string spellName)
     {
         switch (spellName)
         {

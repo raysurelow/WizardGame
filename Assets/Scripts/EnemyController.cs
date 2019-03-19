@@ -39,8 +39,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         layersToIgnore.Add(LayerMask.NameToLayer("LevelEnd"));
         layersToIgnore.Add(LayerMask.NameToLayer("Spell"));
         layersToIgnore.Add(LayerMask.NameToLayer("Switch"));
-
-        print("enemy starting position" + transform.position);
+        layersToIgnore.Add(LayerMask.NameToLayer("DialogueTrigger"));
     }
 	
 	// Update is called once per frame

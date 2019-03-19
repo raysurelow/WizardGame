@@ -13,6 +13,9 @@ public class PauseMenuController : MonoBehaviour {
     //rewired parametres
     public int playerId = 0; // The Rewired player id of this character
     private Player player; // The Rewired Player
+    public GameObject resumeButton;
+    public GameObject exitButton;
+    public Canvas controllerMap;
 
     // Use this for initialization
     void Start () {
@@ -26,7 +29,7 @@ public class PauseMenuController : MonoBehaviour {
 	void Update () {
         if (player.GetButtonDown("Pause") && !player.GetButtonDown("Open Spell Chooser")) 
         {
-            if (!gamePaused)
+            if (!gamePaused && (Time.timeScale != 0))
             {
                 PauseGame();
             }
@@ -40,7 +43,7 @@ public class PauseMenuController : MonoBehaviour {
         gamePaused = true;
         EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         es.SetSelectedGameObject(null);
-        es.SetSelectedGameObject(es.firstSelectedGameObject);
+        es.SetSelectedGameObject(resumeButton);
     }
 
     public void ResumeGame()
@@ -58,8 +61,30 @@ public class PauseMenuController : MonoBehaviour {
         levelManager.LoadLevel("MainMenu");
     }
 
+    public void RestartLevelFromCheckpoint()
+    {
+        Time.timeScale = 1f;
+        //Restart level
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
+    }
+
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenControlMap()
+    {
+        controllerMap.enabled = true;
+        EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+        es.SetSelectedGameObject(exitButton);
+    }
+
+    public void CloseControlMap()
+    {
+        controllerMap.enabled = false;
+        EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+        es.SetSelectedGameObject(resumeButton);
     }
 }

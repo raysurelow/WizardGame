@@ -43,21 +43,24 @@ public class LevelManagerController : MonoBehaviour {
             SceneManager.LoadScene(scene.name);
         }
 
-        if (player.GetButtonDown("Open Spell Chooser"))
+        if (Time.timeScale != 0)
         {
-            spellChooser.SetActive(true);
-            EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
-            es.SetSelectedGameObject(null);
-            es.SetSelectedGameObject(activeSpellButton);
-            Time.timeScale = .01F;
-        }
+            if (player.GetButtonDown("Open Spell Chooser"))
+            {
+                spellChooser.SetActive(true);
+                EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+                es.SetSelectedGameObject(null);
+                es.SetSelectedGameObject(activeSpellButton);
+                Time.timeScale = .01F;
+            }
 
-        if (player.GetButtonUp("Open Spell Chooser"))
-        {
-            EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
-            es.SetSelectedGameObject(null);
-            spellChooser.SetActive(false);
-            Time.timeScale = 1F;
+            if (player.GetButtonUp("Open Spell Chooser"))
+            {
+                EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+                es.SetSelectedGameObject(null);
+                spellChooser.SetActive(false);
+                Time.timeScale = 1F;
+            }
         }
     }
 
