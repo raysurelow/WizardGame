@@ -39,6 +39,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         layersToIgnore.Add(LayerMask.NameToLayer("LevelEnd"));
         layersToIgnore.Add(LayerMask.NameToLayer("Spell"));
         layersToIgnore.Add(LayerMask.NameToLayer("Switch"));
+        layersToIgnore.Add(LayerMask.NameToLayer("DialogueTrigger"));
     }
 	
 	// Update is called once per frame
@@ -129,13 +130,16 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
 
     public void Freeze()
     {
-        isFrozen = true;
-        frozenElapsedTime = 0;
+        if (!burning)
+        {
+            isFrozen = true;
+            frozenElapsedTime = 0;
+        }
     }
 
     public void Burn()
     {
-        if (!isFrozen)
+        if (!isFrozen && !burning)
         {
             burning = true;
             animator.SetTrigger("Burn");

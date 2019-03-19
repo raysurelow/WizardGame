@@ -25,8 +25,8 @@ public class CameraController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        transform.position = new Vector3(0, wizard.transform.position.y, -10);
-        targetPosition = new Vector3(0, wizard.transform.position.y, -10);
+        transform.position = new Vector3(wizard.transform.position.x, wizard.transform.position.y, -10);
+        targetPosition = new Vector3(wizard.transform.position.x, wizard.transform.position.y, -10);
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
     }
