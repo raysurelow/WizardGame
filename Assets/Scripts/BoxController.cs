@@ -113,6 +113,18 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
 
     private void ClonedMovements()
     {
+        Vector3 velocity = wizard.GetComponent<Rigidbody2D>().velocity;
+        canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
+        if (player.GetButtonDown("Jump") && canJump)
+        {
+            rigidBody.velocity = new Vector3(velocity.x, jumpSpeed);
+        }
+        else
+        {
+            rigidBody.velocity = new Vector3(velocity.x, rigidBody.velocity.y);
+        }
+
+        /*
         canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
         // Handle movement inputs
         if (player.GetAxisRaw("Move Horizontal") > 0f)
@@ -131,10 +143,8 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         }
 
         // Handle jumping input
-        if (player.GetButtonDown("Jump") && canJump)
-        {
-            rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
-        }
+        
+        */
     }
 
     public void Freeze()
