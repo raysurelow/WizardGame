@@ -115,14 +115,18 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     {
         Vector3 velocity = wizard.GetComponent<Rigidbody2D>().velocity;
         canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
-        if (player.GetButtonDown("Jump") && canJump)
+        if (!wizard.GetComponent<WizardController>().gusted)
         {
-            rigidBody.velocity = new Vector3(velocity.x, jumpSpeed);
+            if (player.GetButtonDown("Jump") && canJump)
+            {
+                rigidBody.velocity = new Vector3(velocity.x, jumpSpeed);
+            }
+            else
+            {
+                rigidBody.velocity = new Vector3(velocity.x, rigidBody.velocity.y);
+            }
         }
-        else
-        {
-            rigidBody.velocity = new Vector3(velocity.x, rigidBody.velocity.y);
-        }
+        
 
         /*
         canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);

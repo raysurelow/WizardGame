@@ -28,14 +28,11 @@ public class BalloonTopScript : MonoBehaviour {
          if (isColliding) return;
          isColliding = true;
          **/
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.GetComponent<Rigidbody2D>().velocity.y < -1 && timer > .8f)
         {
-            if (col.gameObject.GetComponent<Rigidbody2D>().velocity.y < -1 && timer > .8f)
-            {
-                BalloonController balloon = GetComponentInParent<BalloonController>();
-                balloon.TopTriggerShoot();
-                timer = 0f;
-            }
+            BalloonController balloon = GetComponentInParent<BalloonController>();
+            balloon.TopTriggerShoot();
+            timer = 0f;
         }
     }
 

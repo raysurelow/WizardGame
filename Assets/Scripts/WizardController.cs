@@ -41,7 +41,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     private PauseMenuController pauseMenu;
     private Vector3 horizontalMovement;
     private Vector3 horizontalMovementRaw;
-    private bool gusted;
+    public bool gusted;
     private bool burning;
     private bool timeScaleWas0;
 

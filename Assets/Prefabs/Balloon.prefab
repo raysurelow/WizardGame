@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212652767825340222}
   - component: {fileID: 58796008120393172}
   - component: {fileID: 114751324472257522}
+  - component: {fileID: 95560028570087134}
   m_Layer: 16
   m_Name: Balloon
   m_TagString: Untagged
@@ -242,6 +243,24 @@ EdgeCollider2D:
   m_Points:
   - {x: -0.11726097, y: -0.0067147017}
   - {x: 0.12397667, y: -0.0067147017}
+--- !u!95 &95560028570087134
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1131606726097244}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dd86d3630d90fe6408dd17c9c44e567e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114225980005948882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -271,6 +290,7 @@ MonoBehaviour:
   gust: {fileID: 11400000, guid: 789a4339ecb60ca439f81b7e877b49d0, type: 2}
   gustSpeed: 4
   maxScale: 6
+  popping: 0
 --- !u!114 &114772283609868246
 MonoBehaviour:
   m_ObjectHideFlags: 1
