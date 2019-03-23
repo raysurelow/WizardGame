@@ -9,6 +9,7 @@ TagManager:
   - Switch
   - Checkpoint
   - MovingPlatform
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -33,7 +34,7 @@ TagManager:
   - PlatformTop
   - Switch
   - DialogueTrigger
-  - 
+  - EnemyTrigger
   - 
   - 
   - 

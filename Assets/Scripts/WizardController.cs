@@ -324,8 +324,26 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
         if(col.gameObject.tag == "Checkpoint")
         {
-            CrossSceneInformation.LoadPosition = col.gameObject.transform.position;
-            CrossSceneInformation.CheckpointReached = col.gameObject.GetComponent<CheckpointController>().checkpointNumber;
+            col.gameObject.GetComponent<CheckpointController>().CheckpointReached();
+        }
+
+        if(col.gameObject.tag == "Enemy")
+        {
+            if (!col.gameObject.GetComponent<EnemyController>().IsFrozen())
+            {
+                LevelReset();
+            }
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Enemy")
+        {
+            if (!col.gameObject.GetComponent<EnemyController>().IsFrozen())
+            {
+                LevelReset();
+            }
         }
     }
 

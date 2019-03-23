@@ -25,8 +25,18 @@ public class CheckpointController : MonoBehaviour {
     {
         if(collision.tag == "Player")
         {
-            spriteRenderer.sprite = checkpointEnabled;
-            GetComponent<CircleCollider2D>().enabled = false;
+            CheckpointReached();
+            //GetComponent<CircleCollider2D>().enabled = false;
+        }
+    }
+
+    public void CheckpointReached()
+    {
+        spriteRenderer.sprite = checkpointEnabled;
+        if (CrossSceneInformation.CheckpointReached < checkpointNumber)
+        {
+            CrossSceneInformation.LoadPosition = transform.position;
+            CrossSceneInformation.CheckpointReached = checkpointNumber;
         }
     }
 }

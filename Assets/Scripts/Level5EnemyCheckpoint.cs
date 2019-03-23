@@ -18,7 +18,10 @@ public class Level5EnemyCheckpoint : MonoBehaviour {
     {
         if(collision.gameObject.name == "Enemy_1")
         {
-            CrossSceneInformation.Level5EnemyCheckpointHit = true;
+            if (!collision.gameObject.GetComponent<EnemyController>().IsBurning())
+            {
+                CrossSceneInformation.Level5EnemyCheckpointHit = true;
+            }
         }
     }
 }

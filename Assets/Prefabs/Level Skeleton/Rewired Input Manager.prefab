@@ -332,6 +332,15 @@ MonoBehaviour:
       _behaviorId: 0
       _userAssignable: 1
       _categoryId: 0
+    - _id: 16
+      _name: FlipSwitch
+      _type: 1
+      _descriptiveName: FlipSwitch
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 0
     actionCategories:
     - _name: Default
       _descriptiveName: Default
@@ -341,7 +350,7 @@ MonoBehaviour:
     actionCategoryMap:
       list:
       - categoryId: 0
-        actionIds: 0000000001000000020000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000
+        actionIds: 0000000001000000020000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000
     inputBehaviors:
     - _id: 0
       _name: Default
@@ -1041,7 +1050,7 @@ MonoBehaviour:
     customControllerMaps: []
     customControllers: []
     playerIdCounter: 2
-    actionIdCounter: 16
+    actionIdCounter: 17
     actionCategoryIdCounter: 1
     inputBehaviorIdCounter: 2
     mapCategoryIdCounter: 1

@@ -23,6 +23,7 @@ public class LevelEndController : MonoBehaviour {
         {
             CrossSceneInformation.CheckpointReached = 0;
             CrossSceneInformation.Level5EnemyCheckpointHit = false;
+            CrossSceneInformation.dialogueTriggered = false;
             levelManager.LoadLevel(levelToLoad);
         }
         

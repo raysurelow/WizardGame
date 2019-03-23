@@ -15,6 +15,7 @@ public class SpellController : MonoBehaviour {
         layersToIgnore.Add(LayerMask.NameToLayer("Ladder"));
         layersToIgnore.Add(LayerMask.NameToLayer("LevelEnd"));
         layersToIgnore.Add(LayerMask.NameToLayer("DialogueTrigger"));
+        layersToIgnore.Add(LayerMask.NameToLayer("EnemyTrigger"));
     }
 
     // Update is called once per frame

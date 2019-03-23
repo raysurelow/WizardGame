@@ -113,19 +113,46 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
 
     private void ClonedMovements()
     {
-        Vector3 velocity = wizard.GetComponent<Rigidbody2D>().velocity;
+        Vector3 wizardVelocity = wizard.GetComponent<Rigidbody2D>().velocity;
+        Vector3 targetVelocity = new Vector3();
         canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
+        float horizontalMovement = player.GetAxis("Move Horizontal");
+        float horizontalMovementRaw = player.GetAxisRaw("Move Horizontal");
+
+        //want the y velocity from the wizard for jumping but want the box to fall via gravity like normal 
+        //when wizard is still on platform and box isn't
         if (!wizard.GetComponent<WizardController>().gusted)
         {
             if (player.GetButtonDown("Jump") && canJump)
             {
-                rigidBody.velocity = new Vector3(velocity.x, jumpSpeed);
+                targetVelocity.y = jumpSpeed;
             }
             else
             {
-                rigidBody.velocity = new Vector3(velocity.x, rigidBody.velocity.y);
+                targetVelocity.y = rigidBody.velocity.y;
             }
         }
+
+        //handle situation where wizard is walking against a wall but box should walk free
+        if(wizardVelocity.x == 0 && horizontalMovementRaw != 0)
+        {
+            if (horizontalMovementRaw == 1 || horizontalMovement > .6)
+            {
+                targetVelocity.x = moveSpeed;
+                transform.localScale = new Vector3(1, transform.localScale.y);
+            }
+            else if (horizontalMovementRaw == -1 || horizontalMovement < -.6)
+            {
+                targetVelocity.x = -moveSpeed;
+                transform.localScale = new Vector3(-1, transform.localScale.y);
+            }
+        }
+        else
+        {
+            targetVelocity.x = wizardVelocity.x;
+        }
+
+        rigidBody.velocity = targetVelocity;
         
 
         /*
