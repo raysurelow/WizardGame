@@ -28,7 +28,7 @@ public class SceneLoadData : MonoBehaviour {
 
         if(scene == "Level 4")
         {
-            if (CrossSceneInformation.CheckpointReached > 0)
+            if (CrossSceneInformation.CheckpointReached == 4)
             {
                 SetStartingPosition("Box_1", new Vector3(-2.12f, -1.2f));
                 GameObject iceWall = GameObject.Find("Ice Wall");

@@ -149,7 +149,14 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         }
         else
         {
-            targetVelocity.x = wizardVelocity.x;
+            if (wizard.GetComponent<WizardController>().gusted)
+            {
+                targetVelocity.x = 0f;
+            }
+            else
+            {
+                targetVelocity.x = wizardVelocity.x;
+            }
         }
 
         rigidBody.velocity = targetVelocity;

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Rewired;
 
 public class StickSwitchController : AbstractSwitch {
 
@@ -9,11 +10,17 @@ public class StickSwitchController : AbstractSwitch {
     private bool playerInProximity;
     private float elapsedTime;
 
-	// Use this for initialization
-	protected override void Start () {
+    //rewired parametres
+    public int playerId = 0; // The Rewired player id of this character
+    private Player player; // The Rewired Player
+
+    // Use this for initialization
+    protected override void Start () {
         animator = GetComponent<Animator>();
         animator.SetBool("IsSwitchedOn", IsSwitchedOn);
-	}
+        // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
+        player = ReInput.players.GetPlayer(playerId);
+    }
 	
 	// Update is called once per frame
 	protected override void Update () {
@@ -26,7 +33,7 @@ public class StickSwitchController : AbstractSwitch {
                 elapsedTime = 0;
             }
         }
-        if (playerInProximity && Input.GetButtonDown("Fire2"))
+        if (playerInProximity && player.GetButtonDown("FlipSwitch"))
         {
             IsSwitchedOn = !IsSwitchedOn;
             elapsedTime = 0;
