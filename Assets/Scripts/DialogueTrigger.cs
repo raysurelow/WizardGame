@@ -9,6 +9,7 @@ public class DialogueTrigger : MonoBehaviour {
     public Dialogue dialogue;
     public Canvas canvas;
     public Button continueButton;
+    public int triggerNumber;
 
     public void TriggerDialogue()
     {
@@ -21,14 +22,14 @@ public class DialogueTrigger : MonoBehaviour {
         {
             
 
-            if (CrossSceneInformation.dialogueTriggered == false)
+            if (CrossSceneInformation.dialogueTriggered < triggerNumber)
             {
                 TriggerDialogue();
                 canvas.enabled = true;
                 EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
                 es.SetSelectedGameObject(continueButton.gameObject);
                 Time.timeScale = 0f;
-                CrossSceneInformation.dialogueTriggered = true;
+                CrossSceneInformation.dialogueTriggered = triggerNumber;
             }
         }
     }

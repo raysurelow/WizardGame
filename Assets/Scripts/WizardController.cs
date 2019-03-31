@@ -232,13 +232,13 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     private void UpdateActiveTransform()
     {
-        if (Input.GetAxis("Vertical") > 0.8f)
+        if (Input.GetAxis("Vertical") > 0.7f)
         {
             activeSpellTransform = upSpellTransform;
             animator.SetInteger("VerticalPosition", 1);
 
         }
-        else if (Input.GetAxis("Vertical") < -0.8f)
+        else if (Input.GetAxis("Vertical") < -0.7f)
         {
             activeSpellTransform = downSpellTransform;
             animator.SetInteger("VerticalPosition", -1);
@@ -267,8 +267,11 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     public void Freeze()
     {
-        IsFrozen(true);
-        frozenElapsedTime = 0;
+        if (!burning)
+        {
+            IsFrozen(true);
+            frozenElapsedTime = 0;
+        }
     }
 
     public void Clone()
@@ -350,6 +353,14 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = collision.gameObject.transform;
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "MovingPlatform")
         {
             transform.parent = collision.gameObject.transform;
         }

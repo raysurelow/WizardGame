@@ -87,3 +87,4 @@ MonoBehaviour:
       stuck, just give up and admin my intellectual dominance
   canvas: {fileID: 0}
   continueButton: {fileID: 0}
+  triggerNumber: 1
