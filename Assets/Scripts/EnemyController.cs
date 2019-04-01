@@ -10,6 +10,8 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     public float speed;
     public float horizontal;
     public bool isCloneable;
+    public bool limitedPacing;
+
     private bool isFrozen;
     private bool isCloned;
     private Animator animator;
@@ -27,6 +29,9 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     private bool burning;
     private bool gusted;
 
+    private Vector3 startingPointPosition;
+    private Vector3 endingPointPosition;
+
 
 
     // Use this for initialization
@@ -40,6 +45,12 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         layersToIgnore.Add(LayerMask.NameToLayer("Spell"));
         layersToIgnore.Add(LayerMask.NameToLayer("Switch"));
         layersToIgnore.Add(LayerMask.NameToLayer("DialogueTrigger"));
+        if (!limitedPacing)
+        {
+            layersToIgnore.Add(LayerMask.NameToLayer("EnemyEndpoint"));
+        }
+
+        //if its a limited pacing enemy need to find the starting and ending points for pacing
     }
 	
 	// Update is called once per frame
