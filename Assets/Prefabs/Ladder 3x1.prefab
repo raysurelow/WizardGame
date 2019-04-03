@@ -70,6 +70,7 @@ GameObject:
   - component: {fileID: 4749636665998620}
   - component: {fileID: 68001073723222568}
   - component: {fileID: 251641890811674562}
+  - component: {fileID: 61290715444241910}
   m_Layer: 14
   m_Name: LadderTop
   m_TagString: Untagged
@@ -113,7 +114,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1092619732034138}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.7168565, y: 1.6304784, z: 0}
+  m_LocalPosition: {x: 20.182919, y: 9.268057, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4016889156548420}
@@ -162,6 +163,31 @@ Transform:
   m_Father: {fileID: 4271428447103454}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61290715444241910
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1932626185140828}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1.3836861}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.226511}
+  m_EdgeRadius: 0
 --- !u!61 &61929878901961454
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -215,6 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb1ef75e688cce478011994e881fd11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
 --- !u!212 &212422669341081350
 SpriteRenderer:
   m_ObjectHideFlags: 1

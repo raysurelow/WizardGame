@@ -41,6 +41,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         startingPosition = rigidBody.transform.position;
         layersToIgnore = new List<int>();
         layersToIgnore.Add(LayerMask.NameToLayer("Ladder"));
+        layersToIgnore.Add(LayerMask.NameToLayer("LadderTop"));
         layersToIgnore.Add(LayerMask.NameToLayer("LevelEnd"));
         layersToIgnore.Add(LayerMask.NameToLayer("Spell"));
         layersToIgnore.Add(LayerMask.NameToLayer("Switch"));

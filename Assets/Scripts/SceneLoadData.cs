@@ -50,11 +50,11 @@ public class SceneLoadData : MonoBehaviour {
                     SetStartingPosition("Enemy_1", new Vector3(6f, -11f));
                 }
 
-                if (CrossSceneInformation.CheckpointReached == 1)
+                if (CrossSceneInformation.CheckpointReached == 3)
                 {
                     SetStartingPosition("Box_1", new Vector3(-6f, -4f));
                 }
-                else if (CrossSceneInformation.CheckpointReached == 2)
+                else if (CrossSceneInformation.CheckpointReached == 4)
                 {
                     SetStartingPosition("Box_1", new Vector3(7.68f, -14.28f));
                 }
