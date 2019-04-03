@@ -13,6 +13,7 @@ public class SpellController : MonoBehaviour {
         layersToIgnore = new List<int>();
         layersToIgnore.Add(LayerMask.NameToLayer("PortalFront"));
         layersToIgnore.Add(LayerMask.NameToLayer("Ladder"));
+        layersToIgnore.Add(LayerMask.NameToLayer("LadderTop"));
         layersToIgnore.Add(LayerMask.NameToLayer("LevelEnd"));
         layersToIgnore.Add(LayerMask.NameToLayer("DialogueTrigger"));
         layersToIgnore.Add(LayerMask.NameToLayer("EnemyTrigger"));

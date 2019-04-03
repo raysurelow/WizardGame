@@ -199,10 +199,12 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
                     return;
                 }
 
-                if (!(climbInitiated && (Mathf.Abs(rigidBody.velocity.y) > .3)))
+                /*if (!(climbInitiated && (Mathf.Abs(rigidBody.velocity.y) > .3)))
                 {
                     animator.SetTrigger(string.Format("Shoot{0}Spell", activeSpell.spellName));
-                }      
+                } */
+
+                animator.SetTrigger(string.Format("Shoot{0}Spell", activeSpell.spellName));
             }
 
             animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
@@ -252,10 +254,10 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     private void ShootSpell()
     {
-        if(climbInitiated && (Mathf.Abs(rigidBody.velocity.y) > .3))
+        /*if(climbInitiated && (Mathf.Abs(rigidBody.velocity.y) > .3))
         {
             return;
-        }
+        }*/
 
         Rigidbody2D spell = null;
         spell = Instantiate(activeSpell.spellRigidBody, activeSpellTransform.position, activeSpellTransform.rotation) as Rigidbody2D;
