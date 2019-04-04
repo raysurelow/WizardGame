@@ -264,10 +264,11 @@ MonoBehaviour:
     m_Bits: 16640
   speed: 1
   horizontal: 1
-  isCloneable: 1
+  isCloneable: 0
   limitedPacing: 0
   frozenDuration: 2
   thawingDuration: 2
+  frozenMaterial: {fileID: 6200000, guid: 30d37c0eeddff4849ae01fe8e5f48a43, type: 2}
 --- !u!212 &212949186796983118
 SpriteRenderer:
   m_ObjectHideFlags: 1

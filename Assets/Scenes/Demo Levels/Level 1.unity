@@ -466,6 +466,11 @@ Prefab:
       propertyPath: m_Name
       value: Fire Wall (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114185790552129432, guid: ef680bbaff31c3845bac38f6f9631d31,
+        type: 2}
+      propertyPath: frozenDuration
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ef680bbaff31c3845bac38f6f9631d31, type: 2}
   m_IsPrefabParent: 0
@@ -1154,6 +1159,21 @@ Prefab:
     - target: {fileID: 1018249781687446, guid: ef680bbaff31c3845bac38f6f9631d31, type: 2}
       propertyPath: m_Layer
       value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 114185790552129432, guid: ef680bbaff31c3845bac38f6f9631d31,
+        type: 2}
+      propertyPath: frozenDuration
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 61034788450465668, guid: ef680bbaff31c3845bac38f6f9631d31,
+        type: 2}
+      propertyPath: m_Offset.y
+      value: 0.00412488
+      objectReference: {fileID: 0}
+    - target: {fileID: 61034788450465668, guid: ef680bbaff31c3845bac38f6f9631d31,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 1.0082498
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ef680bbaff31c3845bac38f6f9631d31, type: 2}

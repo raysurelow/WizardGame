@@ -16,7 +16,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     private bool isCloned;
     private Animator animator;
     private Rigidbody2D rigidBody;
-    private float frozenElapsedTime;
+    public float frozenElapsedTime;
     private bool isThawing;
     private float thawingElapsedTime;
     public float frozenDuration = 5.0f;
@@ -26,11 +26,13 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     private bool atEdge;
     private List<int> layersToIgnore;
     private bool isStuck;
-    private bool burning;
+    public bool burning;
     private bool gusted;
 
     private Vector3 startingPointPosition;
     private Vector3 endingPointPosition;
+
+    public PhysicsMaterial2D frozenMaterial;
 
 
 
@@ -81,7 +83,9 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
                 if (frozenElapsedTime > frozenDuration)
                 {
                     isFrozen = false;
+                    GetComponent<CapsuleCollider2D>().sharedMaterial = null;
                     frozenElapsedTime = 0;
+                    thawingElapsedTime = 0;
                 }
             }
             else if (isFrozen && isThawing)
@@ -90,7 +94,10 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
                 if (thawingElapsedTime > thawingDuration)
                 {
                     isFrozen = false;
+                    isThawing = false;
+                    GetComponent<CapsuleCollider2D>().sharedMaterial = null;
                     thawingElapsedTime = 0;
+                    frozenElapsedTime = 0;
                 }
             }
         }
@@ -150,6 +157,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         {
             isFrozen = true;
             frozenElapsedTime = 0;
+            GetComponent<CapsuleCollider2D>().sharedMaterial = frozenMaterial;
         }
     }
 
@@ -181,11 +189,25 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     {
         if (velocity.x > 0)
         {
-            rigidBody.AddForce(new Vector2(1000, 0), ForceMode2D.Impulse);
+            if (isFrozen)
+            {
+                rigidBody.AddForce(new Vector2(200, 0), ForceMode2D.Impulse);
+            }
+            else
+            {
+                rigidBody.AddForce(new Vector2(1000, 0), ForceMode2D.Impulse);
+            }
         }
         else if (velocity.x < 0)
         {
-            rigidBody.AddForce(new Vector2(-1000, 0), ForceMode2D.Impulse);
+            if (isFrozen)
+            {
+                rigidBody.AddForce(new Vector2(-200, 0), ForceMode2D.Impulse);
+            }
+            else
+            {
+                rigidBody.AddForce(new Vector2(-1000, 0), ForceMode2D.Impulse);
+            }
         }
     }
 
