@@ -120,7 +120,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
                 // Handle jumping input
                 if (player.GetButtonDown("Jump") && canJump)
                 {
-                    //don't shoot spell when coming out of pause or paused
+                    //don't jump when coming out of pause or paused
                     if (Time.timeScale > 0 && timeScaleWas0)
                     {
                         timeScaleWas0 = false;
@@ -285,6 +285,7 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
     }
 
     public void Burn(){
+        print("burn called");
         if (!isFrozen && !isThawing && !burning)
         {
             burning = true;

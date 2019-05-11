@@ -44,6 +44,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
 
     private bool burning;
     private bool wizardOnTop;
+    private bool timeScaleWas0;
    
 
 
@@ -117,6 +118,11 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
 
     private void ClonedMovements()
     {
+        if (Time.timeScale == 0)
+        {
+            timeScaleWas0 = true;
+            return;
+        }
         Vector3 wizardVelocity = wizard.GetComponent<Rigidbody2D>().velocity;
         Vector3 targetVelocity = new Vector3();
         wizardCanJump = Physics2D.OverlapCircle(wizardGroundCheck.position, groundCheckRadius, jumpableLayerMask);
@@ -142,11 +148,21 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
 
         //want the y velocity from the wizard for jumping but want the box to fall via gravity like normal 
         //when wizard is still on platform and box isn't
+
         if (!wizard.GetComponent<WizardController>().gusted)
         {
             if (player.GetButtonDown("Jump") && canJump)
             {
-                targetVelocity.y = jumpSpeed;
+                //don't shoot spell when coming out of pause or paused
+                if (Time.timeScale > 0 && timeScaleWas0)
+                {
+                    timeScaleWas0 = false;
+                }
+                else
+                {
+                    targetVelocity.y = jumpSpeed;
+                }
+                
             }
             else
             {

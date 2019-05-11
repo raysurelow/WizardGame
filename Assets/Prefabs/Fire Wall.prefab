@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   switches: []
-  frozenDuration: 100
+  frozenDuration: 5
   startHidden: 0
 --- !u!212 &212788534627980694
 SpriteRenderer:

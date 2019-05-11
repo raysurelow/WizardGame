@@ -12,11 +12,19 @@ public class PortalController : MonoBehaviour {
     public GameObject iceSpell;
     public GameObject cloneSpell;
     public GameObject gustSpell;
+    private SpriteRenderer spriteRenderer;
+    public bool yellowPortal;
+    public Sprite yellowPortalSprite;
+
 
 	// Use this for initialization
 	void Start () {
         outputTransform = transform.Find("OutputPosition");
-
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (yellowPortal)
+        {
+            spriteRenderer.sprite = yellowPortalSprite;
+        }
     }
 	
 	// Update is called once per frame
