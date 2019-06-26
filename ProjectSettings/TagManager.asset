@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Door
+  - KillPlane
+  - Switch
+  - Checkpoint
+  - MovingPlatform
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Ground
+  - Platform
+  - Edge
+  - Spell
+  - Portal
+  - Ladder
+  - LadderTop
+  - LadderTopIgnorePlayer
+  - BoxTop
+  - WallTop
+  - PortalFront
+  - LevelEnd
+  - PlatformTop
+  - Switch
+  - DialogueTrigger
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background
+    uniqueID: 1449316999
+    locked: 0
+  - name: Ladder
+    uniqueID: 2551340105
+    locked: 0
+  - name: Wizard
+    uniqueID: 4075767145
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0

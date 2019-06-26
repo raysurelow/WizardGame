@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a358cfebdb25e81409025b0b4f59e692, type: 3}
+  m_Name: IceSpell
+  m_EditorClassIdentifier: 
+  spellName: Ice
+  spellRigidBody: {fileID: 50401813871272474, guid: 42b85d44eadc530479d9e568fdc29f19,
+    type: 2}
+  impactedLayers:
+    serializedVersion: 2
+    m_Bits: 0
