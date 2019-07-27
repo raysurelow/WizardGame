@@ -171,6 +171,8 @@ MonoBehaviour:
   iceSpell: {fileID: 1223118567620848, guid: 42b85d44eadc530479d9e568fdc29f19, type: 2}
   cloneSpell: {fileID: 1651598135139802, guid: 43277926bb69c1b45994cb9548caaefe, type: 2}
   gustSpell: {fileID: 1564640393646938, guid: 50ed31b3afe38824cbd8658847188fc9, type: 2}
+  yellowPortal: 0
+  yellowPortalSprite: {fileID: 21300000, guid: 99bd7f0c54779fc40bedc5e5263536ac, type: 3}
 --- !u!212 &212347601464638796
 SpriteRenderer:
   m_ObjectHideFlags: 1

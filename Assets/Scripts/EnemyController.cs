@@ -9,23 +9,30 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     public LayerMask edgeLayerMask;
     public float speed;
     public float horizontal;
-    public bool isCloneable = true;
+    public bool isCloneable;
+    public bool limitedPacing;
+
     private bool isFrozen;
     private bool isCloned;
     private Animator animator;
     private Rigidbody2D rigidBody;
-    private float frozenElapsedTime;
+    public float frozenElapsedTime;
     private bool isThawing;
     private float thawingElapsedTime;
     public float frozenDuration = 5.0f;
     public float thawingDuration = 2.0f;
     private Vector3 startingPosition;
-    private bool hasVelocity;
     private bool inAir;
     private bool atEdge;
     private List<int> layersToIgnore;
     private bool isStuck;
-    private bool burning;
+    public bool burning;
+    private bool gusted;
+
+    private Vector3 startingPointPosition;
+    private Vector3 endingPointPosition;
+
+    public PhysicsMaterial2D frozenMaterial;
 
 
 
@@ -36,18 +43,29 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         startingPosition = rigidBody.transform.position;
         layersToIgnore = new List<int>();
         layersToIgnore.Add(LayerMask.NameToLayer("Ladder"));
+        layersToIgnore.Add(LayerMask.NameToLayer("LadderTop"));
         layersToIgnore.Add(LayerMask.NameToLayer("LevelEnd"));
         layersToIgnore.Add(LayerMask.NameToLayer("Spell"));
         layersToIgnore.Add(LayerMask.NameToLayer("Switch"));
         layersToIgnore.Add(LayerMask.NameToLayer("DialogueTrigger"));
+        if (!limitedPacing)
+        {
+            layersToIgnore.Add(LayerMask.NameToLayer("EnemyEndpoint"));
+        }
+
+        //if its a limited pacing enemy need to find the starting and ending points for pacing
     }
 	
 	// Update is called once per frame
 	void Update () {
 		atEdge = !Physics2D.OverlapPoint(flipcheck.position, edgeLayerMask, 0);
         inAir = !Physics2D.OverlapPoint(groundCheck.position, edgeLayerMask, 0);
-        hasVelocity = (rigidBody.velocity.x != 0) || (rigidBody.velocity.y != 0);
-        if (!isFrozen && !isCloned && !inAir && !hasVelocity && !burning)
+        //hasVelocity = (rigidBody.velocity.x == 0) || (rigidBody.velocity.y != 0);
+        if(rigidBody.velocity.x == 0 && gusted)
+        {
+            gusted = false;
+        }
+        if (!isFrozen && !isCloned && !inAir && !gusted && !burning)
         {
             if (!atEdge)
             {
@@ -65,7 +83,9 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
                 if (frozenElapsedTime > frozenDuration)
                 {
                     isFrozen = false;
+                    GetComponent<CapsuleCollider2D>().sharedMaterial = null;
                     frozenElapsedTime = 0;
+                    thawingElapsedTime = 0;
                 }
             }
             else if (isFrozen && isThawing)
@@ -74,7 +94,10 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
                 if (thawingElapsedTime > thawingDuration)
                 {
                     isFrozen = false;
+                    isThawing = false;
+                    GetComponent<CapsuleCollider2D>().sharedMaterial = null;
                     thawingElapsedTime = 0;
+                    frozenElapsedTime = 0;
                 }
             }
         }
@@ -86,7 +109,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     void OnTriggerEnter2D(Collider2D col)
     {
         
-        if (!inAir && !hasVelocity)
+        if (!inAir && !gusted && !isFrozen)
         {
             if (layersToIgnore.IndexOf(col.gameObject.layer) == -1)
             {
@@ -99,7 +122,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     void OnTriggerStay2D(Collider2D col)
     {
         
-        if (!inAir && !hasVelocity)
+        if (!inAir && !gusted && !isFrozen)
         {
             if (layersToIgnore.IndexOf(col.gameObject.layer) == -1)
             {
@@ -134,6 +157,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         {
             isFrozen = true;
             frozenElapsedTime = 0;
+            GetComponent<CapsuleCollider2D>().sharedMaterial = frozenMaterial;
         }
     }
 
@@ -165,11 +189,25 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     {
         if (velocity.x > 0)
         {
-            rigidBody.AddForce(new Vector2(1000, 0), ForceMode2D.Impulse);
+            if (isFrozen)
+            {
+                rigidBody.AddForce(new Vector2(200, 0), ForceMode2D.Impulse);
+            }
+            else
+            {
+                rigidBody.AddForce(new Vector2(1000, 0), ForceMode2D.Impulse);
+            }
         }
         else if (velocity.x < 0)
         {
-            rigidBody.AddForce(new Vector2(-1000, 0), ForceMode2D.Impulse);
+            if (isFrozen)
+            {
+                rigidBody.AddForce(new Vector2(-200, 0), ForceMode2D.Impulse);
+            }
+            else
+            {
+                rigidBody.AddForce(new Vector2(-1000, 0), ForceMode2D.Impulse);
+            }
         }
     }
 
@@ -182,6 +220,16 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         isCloned = false;
         isCloned = false;
         burning = false;
+    }
+
+    public bool IsFrozen()
+    {
+        return isFrozen;
+    }
+
+    public bool IsBurning()
+    {
+        return burning;
     }
 
 }

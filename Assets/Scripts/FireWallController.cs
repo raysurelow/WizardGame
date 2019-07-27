@@ -6,7 +6,7 @@ public class FireWallController : AbstractSwitchable, IFreezable, IBurnable{
 
     public float frozenDuration;
     private float frozenElapsedTime;
-    private bool isFrozen;
+    public bool isFrozen;
     public bool startHidden = false;
     private Animator animator;
     private BoxCollider2D boxCollider;
@@ -27,6 +27,7 @@ public class FireWallController : AbstractSwitchable, IFreezable, IBurnable{
             if (frozenElapsedTime > frozenDuration)
             {
                 isFrozen = false;
+                boxCollider.enabled = false;
                 frozenElapsedTime = 0;
             }
         }

@@ -8,8 +8,11 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     public float frozenDuration = 5.0f;
     public float thawingDuration = 5.0f;
     public Transform groundCheck;
+    public Transform wizardGroundCheck;
     public bool isCloneable;
     private bool canJump;
+    private bool wizardCanJump;
+    private bool boxCanJump;
     private Rigidbody2D rigidBody;
 
     private Animator animator;
@@ -40,6 +43,8 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     private PhysicsMaterial2D boxMaterial;
 
     private bool burning;
+    private bool wizardOnTop;
+    private bool timeScaleWas0;
    
 
 
@@ -59,7 +64,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         {
             jumpSpeed = wizard.GetComponent<WizardController>().jumpSpeed;
             moveSpeed = wizard.GetComponent<WizardController>().moveSpeed;
-            groundCheck = wizard.GetComponent<WizardController>().groundCheck;
+            wizardGroundCheck = wizard.GetComponent<WizardController>().groundCheck;
             groundCheckRadius = wizard.GetComponent<WizardController>().groundCheckRadius;
             jumpableLayerMask = wizard.GetComponent<WizardController>().jumpableLayerMask;
             wizardMaterial = wizard.GetComponent<BoxCollider2D>().sharedMaterial;
@@ -113,6 +118,88 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
 
     private void ClonedMovements()
     {
+        if (Time.timeScale == 0)
+        {
+            timeScaleWas0 = true;
+            return;
+        }
+        Vector3 wizardVelocity = wizard.GetComponent<Rigidbody2D>().velocity;
+        Vector3 targetVelocity = new Vector3();
+        wizardCanJump = Physics2D.OverlapCircle(wizardGroundCheck.position, groundCheckRadius, jumpableLayerMask);
+        boxCanJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
+        if (wizardOnTop)
+        {
+            if (wizardCanJump && boxCanJump)
+            {
+                canJump = true;
+            }
+            else
+            {
+                canJump = false;
+            }
+        }
+        else
+        {
+            canJump = wizardCanJump;
+        }
+
+        float horizontalMovement = player.GetAxis("Move Horizontal");
+        float horizontalMovementRaw = player.GetAxisRaw("Move Horizontal");
+
+        //want the y velocity from the wizard for jumping but want the box to fall via gravity like normal 
+        //when wizard is still on platform and box isn't
+
+        if (!wizard.GetComponent<WizardController>().gusted)
+        {
+            if (player.GetButtonDown("Jump") && canJump)
+            {
+                //don't shoot spell when coming out of pause or paused
+                if (Time.timeScale > 0 && timeScaleWas0)
+                {
+                    timeScaleWas0 = false;
+                }
+                else
+                {
+                    targetVelocity.y = jumpSpeed;
+                }
+                
+            }
+            else
+            {
+                targetVelocity.y = rigidBody.velocity.y;
+            }
+        }
+
+        //handle situation where wizard is walking against a wall but box should walk free
+        if(wizardVelocity.x == 0 && horizontalMovementRaw != 0)
+        {
+            if (horizontalMovementRaw == 1 || horizontalMovement > .6)
+            {
+                targetVelocity.x = moveSpeed;
+                transform.localScale = new Vector3(1, transform.localScale.y);
+            }
+            else if (horizontalMovementRaw == -1 || horizontalMovement < -.6)
+            {
+                targetVelocity.x = -moveSpeed;
+                transform.localScale = new Vector3(-1, transform.localScale.y);
+            }
+        }
+        else
+        {
+            if (wizard.GetComponent<WizardController>().gusted)
+            {
+                targetVelocity.x = 0f;
+            }
+            else
+            {
+                targetVelocity.x = wizardVelocity.x;
+            }
+        }
+
+        rigidBody.velocity = targetVelocity;
+        
+
+        /*
         canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask);
         // Handle movement inputs
         if (player.GetAxisRaw("Move Horizontal") > 0f)
@@ -131,10 +218,8 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         }
 
         // Handle jumping input
-        if (player.GetButtonDown("Jump") && canJump)
-        {
-            rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
-        }
+        
+        */
     }
 
     public void Freeze()
@@ -198,6 +283,19 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         {
             ResetBox();
         }
+
+        if(col.gameObject.tag == "Player")
+        {
+            wizardOnTop = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            wizardOnTop = false;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -220,7 +318,6 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     {
         if (collision.gameObject.tag == "MovingPlatform")
         {
-            print("collision exit");
             transform.parent = null;
         }
     }

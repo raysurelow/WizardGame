@@ -14,8 +14,11 @@ public class LevelManagerController : MonoBehaviour {
     public GameObject cloneButton;
     public GameObject gustButton;
     public GameObject spellChooser;
+    public GameObject restartScreen;
+    public GameObject yesButton;
     public static Vector3 PlayerLoadPosition { get; set; }
     public static bool CheckpointReached { get; set; }
+    private PauseMenuController pauseMenu;
     
 
     //rewired parametres
@@ -27,6 +30,7 @@ public class LevelManagerController : MonoBehaviour {
         spellChooser.SetActive(false);
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
+        pauseMenu = FindObjectOfType<PauseMenuController>();
     }
 	
 	// Update is called once per frame
@@ -38,9 +42,7 @@ public class LevelManagerController : MonoBehaviour {
 
         if (player.GetButtonDown("Restart Scene"))
         {
-            //Restart level
-            Scene scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.name);
+            PromptRestartScene();
         }
 
         if (Time.timeScale != 0)
@@ -84,7 +86,7 @@ public class LevelManagerController : MonoBehaviour {
                 activeSpellButton = gustButton;
                 break;
             case "Clone":
-                activeSpellText.text = "Clone";
+                activeSpellText.text = "Mimic";
                 activeSpellText.color = Color.green;
                 activeSpellButton = cloneButton;
                 break;
@@ -96,4 +98,32 @@ public class LevelManagerController : MonoBehaviour {
         SceneManager.LoadScene(levelToLoad);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelToLoad));
     }
+
+    private void PromptRestartScene()
+    {
+        pauseMenu.gamePaused = true;
+        Time.timeScale = 0f;
+        restartScreen.SetActive(true);
+        EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+        es.SetSelectedGameObject(null);
+        es.SetSelectedGameObject(yesButton);
+    }
+
+    public void No()
+    {
+        Time.timeScale = 1f;
+        restartScreen.SetActive(false);
+        EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+        es.SetSelectedGameObject(null);
+        pauseMenu.gamePaused = false;
+    }
+
+    public void Yes()
+    {
+        Time.timeScale = 1f;
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
+    }
+
+
 }

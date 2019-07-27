@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4199628018984368}
   - component: {fileID: 68090870141405262}
   - component: {fileID: 251551210478632678}
+  - component: {fileID: 61438514396367728}
   m_Layer: 14
   m_Name: LadderTop
   m_TagString: Untagged
@@ -66,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1836883906101584}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.85, y: 2.37, z: 0}
+  m_LocalPosition: {x: 15.692544, y: 8.943452, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4199628018984368}
@@ -98,6 +99,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!61 &61438514396367728
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1167578650517504}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.41521692}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.16956615}
+  m_EdgeRadius: 0
 --- !u!68 &68090870141405262
 EdgeCollider2D:
   m_ObjectHideFlags: 1
@@ -126,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb1ef75e688cce478011994e881fd11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
 --- !u!212 &212613827912821476
 SpriteRenderer:
   m_ObjectHideFlags: 1

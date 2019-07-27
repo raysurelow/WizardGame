@@ -8,7 +8,17 @@ public class SceneLoadData : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         string scene = SceneManager.GetActiveScene().name;
-        if(scene == "Level 3")
+        GameObject[] checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+        //enable all checkpoints up to the latest checkpoint reached on load
+        foreach (GameObject checkpoint in checkpoints)
+        {            
+            if(checkpoint.GetComponent<CheckpointController>().checkpointNumber <= CrossSceneInformation.CheckpointReached)
+            {
+                checkpoint.GetComponent<CheckpointController>().CheckpointReached();
+            }
+        }
+
+        if (scene == "Level 3")
         {
             if (CrossSceneInformation.CheckpointReached > 0)
             {
@@ -18,7 +28,7 @@ public class SceneLoadData : MonoBehaviour {
 
         if(scene == "Level 4")
         {
-            if (CrossSceneInformation.CheckpointReached > 0)
+            if (CrossSceneInformation.CheckpointReached == 4)
             {
                 SetStartingPosition("Box_1", new Vector3(-2.12f, -1.2f));
                 GameObject iceWall = GameObject.Find("Ice Wall");
@@ -32,13 +42,23 @@ public class SceneLoadData : MonoBehaviour {
 
         if(scene == "Level 5")
         {
-            if(CrossSceneInformation.CheckpointReached > 0)
+            if (CrossSceneInformation.CheckpointReached > 0)
             {
+
                 if (CrossSceneInformation.Level5EnemyCheckpointHit)
                 {
                     SetStartingPosition("Enemy_1", new Vector3(6f, -11f));
                 }
-                SetStartingPosition("Box_1", new Vector3(-6f, -4f));
+
+                if (CrossSceneInformation.CheckpointReached == 3)
+                {
+                    SetStartingPosition("Box_1", new Vector3(-6f, -4f));
+                }
+                else if (CrossSceneInformation.CheckpointReached == 4)
+                {
+                    SetStartingPosition("Box_1", new Vector3(7.68f, -14.28f));
+                }
+
             }
         }
         
