@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using Rewired;
+using System;
 
 public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable, IGustable {
 
@@ -86,6 +87,14 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
             return;
         }
 
+        if (gusted)
+        {
+            if(Math.Abs(rigidBody.velocity.x) < Math.Abs(moveSpeed))
+            {
+                gusted = false;
+            }
+        }
+
         if (!pauseMenu.gamePaused && !isFrozen && !burning)
         {
             // Check if grounded
@@ -96,26 +105,68 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
             // Handle non-ladder movement inputs
             if (!climbInitiated)
             {
-                if (horizontalMovementRaw.x == 1 || horizontalMovement.x > .6)
+                //Handle movement input when there is no Gusted velocity
+                if (!gusted)
                 {
-                    gusted = false;
-                    rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
-                    transform.localScale = new Vector3(1, transform.localScale.y);
+                    if (horizontalMovementRaw.x == 1 || horizontalMovement.x > .6)
+                    {
+                        rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
+                        transform.localScale = new Vector3(1, transform.localScale.y);
+                    }
+                    else if (horizontalMovementRaw.x == -1 || horizontalMovement.x < -.6)
+                    {
+                        rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
+                        transform.localScale = new Vector3(-1, transform.localScale.y);
+                    }
+                    else
+                    {
+                        //if no input for movement is pressed and no gusted velocity is present x velicoty should be zero (so you don't slide to a stop)
+                        rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y);
+                    }
                 }
-                else if (horizontalMovementRaw.x == -1 || horizontalMovement.x < -.6)
-                {
-                    gusted = false;
-                    rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
-                    transform.localScale = new Vector3(-1, transform.localScale.y);
-                }
-                else if (gusted)
-                {
-                    rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
-                }
+                //handle movement input while Gusting velocity is still present
                 else
                 {
-                    rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y);
+                     // handle positive x input while gusted
+                     if (horizontalMovementRaw.x == 1 || horizontalMovement.x > .6)
+                    {
+                        if(rigidBody.velocity.x > moveSpeed)
+                        {
+                            rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
+                        }
+                        else if(rigidBody.velocity.x < -.5 * moveSpeed)
+                        {
+                            rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
+                        }
+                        else
+                        {
+                            gusted = false;
+                            rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
+                            transform.localScale = new Vector3(1, transform.localScale.y);
+                        }
+                        
+                    }
+                    //handle negative x input while gusted
+                    else if (horizontalMovementRaw.x == -1 || horizontalMovement.x < -.6)
+                    {
+                        if (rigidBody.velocity.x < -moveSpeed)
+                        {
+                            rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
+                          
+                        }
+                        else if(rigidBody.velocity.x > .5 * moveSpeed)
+                        {
+                            rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
+                        }
+                        else
+                        {
+                            gusted = false;
+                            rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
+                            transform.localScale = new Vector3(-1, transform.localScale.y);
+                        }
+                    }
                 }
+                
 
                 // Handle jumping input
                 if (player.GetButtonDown("Jump") && canJump)
