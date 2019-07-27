@@ -86,7 +86,7 @@ public class LevelManagerController : MonoBehaviour {
                 activeSpellButton = gustButton;
                 break;
             case "Clone":
-                activeSpellText.text = "Clone";
+                activeSpellText.text = "Mimic";
                 activeSpellText.color = Color.green;
                 activeSpellButton = cloneButton;
                 break;

@@ -733,7 +733,7 @@ Prefab:
     - target: {fileID: 114069783358694574, guid: 6984201d466f8a1448b3c53b1eb4a2d7,
         type: 2}
       propertyPath: dialogue.sentences.Array.data[1]
-      value: In front of you is a cloneable box.
+      value: In front of you is a mimicable box.
       objectReference: {fileID: 0}
     - target: {fileID: 114069783358694574, guid: 6984201d466f8a1448b3c53b1eb4a2d7,
         type: 2}
@@ -744,7 +744,7 @@ Prefab:
         type: 2}
       propertyPath: dialogue.sentences.Array.data[3]
       value: if you are tired of dragging this box in a delicate dance of synchronized
-        beauty hit Q or L1 to quit all active clones
+        beauty hit Q or L1 to quit all active mimics
       objectReference: {fileID: 0}
     - target: {fileID: 114069783358694574, guid: 6984201d466f8a1448b3c53b1eb4a2d7,
         type: 2}
