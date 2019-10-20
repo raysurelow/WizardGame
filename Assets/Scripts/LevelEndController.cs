@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelEndController : MonoBehaviour {
 
     private LevelManagerController levelManager;
+    private GameManagerController gameManager;
     public string levelToLoad;
 
 	// Use this for initialization
 	void Start () {
         levelManager = FindObjectOfType<LevelManagerController>();
+        gameManager = FindObjectOfType<GameManagerController>();
     }
 	
 	// Update is called once per frame
@@ -23,7 +26,14 @@ public class LevelEndController : MonoBehaviour {
         {
             CrossSceneInformation.CheckpointReached = 0;
             CrossSceneInformation.Level5EnemyCheckpointHit = false;
-            CrossSceneInformation.dialogueTriggered = 0;
+            CrossSceneInformation.DialogueTriggered = 0;
+            if(CrossSceneInformation.CompletedLevels == null)
+            {
+                CrossSceneInformation.CompletedLevels = new List<string>();
+            }
+            CrossSceneInformation.CompletedLevels.Add(SceneManager.GetActiveScene().name);
+            Debug.Log("calling save game");
+            gameManager.SaveGame();
             levelManager.LoadLevel(levelToLoad);
         }
         

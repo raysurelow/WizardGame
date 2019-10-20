@@ -22,14 +22,14 @@ public class DialogueTrigger : MonoBehaviour {
         {
             
 
-            if (CrossSceneInformation.dialogueTriggered < triggerNumber)
+            if (CrossSceneInformation.DialogueTriggered < triggerNumber)
             {
                 TriggerDialogue();
                 canvas.enabled = true;
                 EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
                 es.SetSelectedGameObject(continueButton.gameObject);
                 Time.timeScale = 0f;
-                CrossSceneInformation.dialogueTriggered = triggerNumber;
+                CrossSceneInformation.DialogueTriggered = triggerNumber;
             }
         }
     }

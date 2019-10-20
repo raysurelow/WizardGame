@@ -125,5 +125,4 @@ public class LevelManagerController : MonoBehaviour {
         SceneManager.LoadScene(scene.name);
     }
 
-
 }

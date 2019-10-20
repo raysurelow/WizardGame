@@ -10,8 +10,7 @@ public class CheckpointController : MonoBehaviour {
 
     private SpriteRenderer spriteRenderer;
 
-	// Use this for initialization
-	void Start () {
+	void Awake () {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = checkpointDisabled;
 	}

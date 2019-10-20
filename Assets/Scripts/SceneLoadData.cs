@@ -44,7 +44,6 @@ public class SceneLoadData : MonoBehaviour {
         {
             if (CrossSceneInformation.CheckpointReached > 0)
             {
-
                 if (CrossSceneInformation.Level5EnemyCheckpointHit)
                 {
                     SetStartingPosition("Enemy_1", new Vector3(6f, -11f));
