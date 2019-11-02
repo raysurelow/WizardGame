@@ -5,8 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoadData : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    private Dictionary<int, Vector3> Level3Box1;
+    private Dictionary<int, Vector3> Level4Box1;
+
+    // Use this for initialization
+    void Start () {
+        Level3Box1 = new Dictionary<int, Vector3>()
+        {
+            { 0, new Vector3(-20.32f, -4.2f) },
+            { 1, new Vector3(-15.81f, -4.2f) } 
+        };
+
+        Level4Box1 = new Dictionary<int, Vector3>()
+        {
+            { 0, new Vector3(-20.32f, -4.2f) },
+            { 1, new Vector3(-15.81f, -4.2f) },
+            { 2, new Vector3(-15.81f, -4.2f) },
+            { 3, new Vector3(-6f, -4f) },
+            { 4, new Vector3(-2.12f, -1.2f) }
+        };
+
         string scene = SceneManager.GetActiveScene().name;
         GameObject[] checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
         //enable all checkpoints up to the latest checkpoint reached on load
@@ -28,7 +46,11 @@ public class SceneLoadData : MonoBehaviour {
 
         if(scene == "Level 4")
         {
-            if (CrossSceneInformation.CheckpointReached == 4)
+            if(CrossSceneInformation.CheckpointReached == 3)
+            {
+                SetStartingPosition("Box_1", new Vector3(-6f, -4f));
+            }
+            else if (CrossSceneInformation.CheckpointReached == 4)
             {
                 SetStartingPosition("Box_1", new Vector3(-2.12f, -1.2f));
                 GameObject iceWall = GameObject.Find("Ice Wall");

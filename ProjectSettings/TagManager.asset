@@ -34,9 +34,9 @@ TagManager:
   - PlatformTop
   - Switch
   - DialogueTrigger
-  - EnemyTrigger
   - EnemyEndpoint
-  - 
+  - Enemy
+  - EnemyTrigger
   - 
   - 
   - 
