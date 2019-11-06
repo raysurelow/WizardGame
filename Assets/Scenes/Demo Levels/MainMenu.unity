@@ -380,7 +380,7 @@ Prefab:
     - target: {fileID: 114869469182836810, guid: 416b1bfc67157a743a8b94b319cf7e43,
         type: 2}
       propertyPath: LevelName
-      value: Level 9
+      value: Level_9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 416b1bfc67157a743a8b94b319cf7e43, type: 2}
@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 323744975}
   - component: {fileID: 323744974}
   m_Layer: 5
-  m_Name: Level 9
+  m_Name: Level_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -696,7 +696,7 @@ GameObject:
   - component: {fileID: 377825447}
   - component: {fileID: 377825446}
   m_Layer: 5
-  m_Name: Level 8
+  m_Name: Level_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -968,7 +968,7 @@ GameObject:
   - component: {fileID: 467162148}
   - component: {fileID: 467162147}
   m_Layer: 5
-  m_Name: Level 5
+  m_Name: Level_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1333,7 +1333,7 @@ Prefab:
     - target: {fileID: 114869469182836810, guid: 416b1bfc67157a743a8b94b319cf7e43,
         type: 2}
       propertyPath: LevelName
-      value: Level 4
+      value: Level_4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 416b1bfc67157a743a8b94b319cf7e43, type: 2}
@@ -1355,7 +1355,7 @@ GameObject:
   - component: {fileID: 638041140}
   - component: {fileID: 638041139}
   m_Layer: 5
-  m_Name: Level 1
+  m_Name: Level_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1545,7 +1545,7 @@ GameObject:
   - component: {fileID: 774469801}
   - component: {fileID: 774469800}
   m_Layer: 5
-  m_Name: Level 4
+  m_Name: Level_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1709,7 +1709,7 @@ GameObject:
   - component: {fileID: 972129407}
   - component: {fileID: 972129406}
   m_Layer: 5
-  m_Name: Level 2
+  m_Name: Level_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1938,7 +1938,7 @@ Prefab:
     - target: {fileID: 114869469182836810, guid: 416b1bfc67157a743a8b94b319cf7e43,
         type: 2}
       propertyPath: LevelName
-      value: Level 7
+      value: Level_7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 416b1bfc67157a743a8b94b319cf7e43, type: 2}
@@ -1960,7 +1960,7 @@ GameObject:
   - component: {fileID: 1219775482}
   - component: {fileID: 1219775481}
   m_Layer: 5
-  m_Name: Level 7
+  m_Name: Level_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2082,7 +2082,7 @@ GameObject:
   - component: {fileID: 1222946639}
   - component: {fileID: 1222946638}
   m_Layer: 5
-  m_Name: Level 3
+  m_Name: Level_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2339,7 +2339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc17ef8a8746e354db02351e646a16ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelName: Level 1
+  LevelName: Level_1
   LevelSelectImage: {fileID: 1229865349}
 --- !u!1001 &1254717708
 Prefab:
@@ -2460,7 +2460,7 @@ Prefab:
     - target: {fileID: 114869469182836810, guid: 416b1bfc67157a743a8b94b319cf7e43,
         type: 2}
       propertyPath: LevelName
-      value: Level 6
+      value: Level_6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 416b1bfc67157a743a8b94b319cf7e43, type: 2}
@@ -2663,7 +2663,7 @@ Prefab:
     - target: {fileID: 114869469182836810, guid: 416b1bfc67157a743a8b94b319cf7e43,
         type: 2}
       propertyPath: LevelName
-      value: Level 10
+      value: Level_10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 416b1bfc67157a743a8b94b319cf7e43, type: 2}
@@ -2918,7 +2918,7 @@ Prefab:
     - target: {fileID: 114869469182836810, guid: 416b1bfc67157a743a8b94b319cf7e43,
         type: 2}
       propertyPath: LevelName
-      value: Level 2
+      value: Level_2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 416b1bfc67157a743a8b94b319cf7e43, type: 2}
@@ -3047,7 +3047,7 @@ Prefab:
     - target: {fileID: 114869469182836810, guid: 416b1bfc67157a743a8b94b319cf7e43,
         type: 2}
       propertyPath: LevelName
-      value: Level 3
+      value: Level_3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 416b1bfc67157a743a8b94b319cf7e43, type: 2}
@@ -3069,7 +3069,7 @@ GameObject:
   - component: {fileID: 1550845930}
   - component: {fileID: 1550845929}
   m_Layer: 5
-  m_Name: Level 6
+  m_Name: Level_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3494,7 +3494,7 @@ Prefab:
     - target: {fileID: 114869469182836810, guid: 416b1bfc67157a743a8b94b319cf7e43,
         type: 2}
       propertyPath: LevelName
-      value: Level 5
+      value: Level_5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 416b1bfc67157a743a8b94b319cf7e43, type: 2}
@@ -3664,7 +3664,7 @@ GameObject:
   - component: {fileID: 1963449090}
   - component: {fileID: 1963449089}
   m_Layer: 5
-  m_Name: Level 10
+  m_Name: Level_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3893,7 +3893,7 @@ Prefab:
     - target: {fileID: 114869469182836810, guid: 416b1bfc67157a743a8b94b319cf7e43,
         type: 2}
       propertyPath: LevelName
-      value: Level 8
+      value: Level_8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 416b1bfc67157a743a8b94b319cf7e43, type: 2}

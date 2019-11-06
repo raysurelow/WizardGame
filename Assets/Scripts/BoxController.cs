@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+using UnityEngine.SceneManagement;
 
 public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, IGustable {
 
@@ -45,6 +46,8 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     private bool burning;
     private bool wizardOnTop;
     private bool timeScaleWas0;
+    private SceneLoadData sceneLoadData;
+
    
 
 
@@ -54,6 +57,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
         animator.SetBool("Cloneable", isCloneable);
         rigidBody = GetComponent<Rigidbody2D>();
         boxEdgeCollider = GetComponent<EdgeCollider2D>();
+        sceneLoadData = FindObjectOfType<SceneLoadData>();
         startingPosition = rigidBody.transform.position;
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
@@ -326,10 +330,18 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     {
         rigidBody.velocity = Vector2.zero;
         rigidBody.angularVelocity = 0f;
-        transform.position = startingPosition;
         isCloned = false;
         isFrozen = false;
         burning = false;
         boxEdgeCollider.sharedMaterial = boxMaterial;
+        Vector3? position = sceneLoadData.FindCurrentReloadPosition(SceneManager.GetActiveScene().name, gameObject.name);
+        if(position == null)
+        {
+            transform.position = startingPosition;
+        }
+        else
+        {
+            transform.position = (Vector3) position;
+        }
     }
 }

@@ -112,11 +112,6 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         {
             if (layersToIgnore.IndexOf(col.gameObject.layer) == -1)
             {
-                if (gameObject.name == "Enemy (2)")
-                {
-                    print("flipping");
-                }
-                
                 Flip();              
             }
         }

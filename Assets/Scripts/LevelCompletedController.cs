@@ -9,9 +9,9 @@ public class LevelCompletedController : MonoBehaviour {
     public Image LevelSelectImage;
     // Use this for initialization
     void Start () {
-		if((CrossSceneInformation.CompletedLevels != null) && (!CrossSceneInformation.CompletedLevels.Contains(LevelName)))
+		if((CrossSceneInformation.CompletedLevels != null) && (CrossSceneInformation.CompletedLevels.Contains(LevelName)))
         {
-            LevelSelectImage.enabled = false;
+            LevelSelectImage.enabled = true;
         }
 	}
 	
