@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 95206878909064574}
   - component: {fileID: 114074692288600220}
   - component: {fileID: 70725963164437920}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -266,8 +266,10 @@ MonoBehaviour:
   horizontal: 1
   isCloneable: 0
   limitedPacing: 0
+  frozenElapsedTime: 0
   frozenDuration: 2
   thawingDuration: 2
+  burning: 0
   frozenMaterial: {fileID: 6200000, guid: 30d37c0eeddff4849ae01fe8e5f48a43, type: 2}
 --- !u!212 &212949186796983118
 SpriteRenderer:

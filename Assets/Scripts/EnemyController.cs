@@ -108,13 +108,11 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        
         if (!inAir && !gusted && !isFrozen)
         {
             if (layersToIgnore.IndexOf(col.gameObject.layer) == -1)
             {
-                Flip();
-                
+                Flip();              
             }
         }
     }

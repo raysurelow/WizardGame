@@ -2508,7 +2508,7 @@ Prefab:
     - target: {fileID: 114071652673502272, guid: bdb25cc16841d03428c526e123c9ff03,
         type: 2}
       propertyPath: levelToLoad
-      value: Level 3
+      value: Level_3
       objectReference: {fileID: 0}
     - target: {fileID: 4709648630056572, guid: bdb25cc16841d03428c526e123c9ff03, type: 2}
       propertyPath: m_LocalPosition.x

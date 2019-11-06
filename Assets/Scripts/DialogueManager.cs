@@ -15,8 +15,6 @@ public class DialogueManager : MonoBehaviour {
 
     public void StartDialogue(Dialogue dialogue)
     {
-        Debug.Log("Starting conversation");
-
         sentences.Clear();
 
         foreach (string sentence in dialogue.sentences)
@@ -43,7 +41,6 @@ public class DialogueManager : MonoBehaviour {
     {
         canvas.enabled = false;
         Time.timeScale = 1f;
-        Debug.Log("End of Conversation");
     }
 
 

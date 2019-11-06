@@ -18,34 +18,34 @@ EditorBuildSettings:
     path: Assets/Scenes/testing.unity
     guid: 068339e45a308bd41bc2d4927ca30d8a
   - enabled: 1
-    path: Assets/Scenes/Demo Levels/Level 1.unity
+    path: Assets/Scenes/Demo Levels/Level_1.unity
     guid: d06e5ff9305c8b6438d9879cd454d172
   - enabled: 1
-    path: Assets/Scenes/Demo Levels/Level 2.unity
+    path: Assets/Scenes/Demo Levels/Level_2.unity
     guid: 926514c6c4aab2642bc2053307a329af
   - enabled: 1
-    path: Assets/Scenes/Demo Levels/Level 3.unity
+    path: Assets/Scenes/Demo Levels/Level_3.unity
     guid: b497116355cd992429af7593b0dfe1c7
   - enabled: 1
-    path: Assets/Scenes/Demo Levels/Level 4.unity
+    path: Assets/Scenes/Demo Levels/Level_4.unity
     guid: 527216706b484164a8cd2f859cf9a192
   - enabled: 1
-    path: Assets/Scenes/Demo Levels/Level 5.unity
+    path: Assets/Scenes/Demo Levels/Level_5.unity
     guid: 2648c2eb78731264ca0554bac2d0ce9a
   - enabled: 1
-    path: Assets/Scenes/Demo Levels/Level 6.unity
+    path: Assets/Scenes/Demo Levels/Level_6.unity
     guid: 8731107e7f942204f82c0d7a1b8498b2
   - enabled: 1
-    path: Assets/Scenes/Demo Levels/Level 7.unity
+    path: Assets/Scenes/Demo Levels/Level_7.unity
     guid: 71f45fb8ebe30e34e998178133b8434e
   - enabled: 1
-    path: Assets/Scenes/Demo Levels/Level 8.unity
+    path: Assets/Scenes/Demo Levels/Level_8.unity
     guid: 8a58ffc22a860ec4995e0db28e0e333f
   - enabled: 1
-    path: Assets/Scenes/Demo Levels/Level 9.unity
+    path: Assets/Scenes/Demo Levels/Level_9.unity
     guid: 0eea82a0f96f955408fc539a55d6b51f
   - enabled: 1
-    path: Assets/Scenes/Demo Levels/Level 10.unity
+    path: Assets/Scenes/Demo Levels/Level_10.unity
     guid: eef5393a57a85914aa9d269a7d6e0848
   - enabled: 1
     path: Assets/Scenes/Demo Levels/MainMenu.unity
