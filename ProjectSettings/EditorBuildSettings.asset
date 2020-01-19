@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/testing.unity
     guid: 068339e45a308bd41bc2d4927ca30d8a
   - enabled: 1
+    path: Assets/Scenes/Demo Levels/MainMenu.unity
+    guid: f27c07a55820d744b9d695882fd1ef31
+  - enabled: 1
     path: Assets/Scenes/Demo Levels/Level_1.unity
     guid: d06e5ff9305c8b6438d9879cd454d172
   - enabled: 1
@@ -47,7 +50,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Demo Levels/Level_10.unity
     guid: eef5393a57a85914aa9d269a7d6e0848
-  - enabled: 1
-    path: Assets/Scenes/Demo Levels/MainMenu.unity
-    guid: f27c07a55820d744b9d695882fd1ef31
   m_configObjects: {}
