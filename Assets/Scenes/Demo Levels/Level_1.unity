@@ -1287,7 +1287,7 @@ Prefab:
     - target: {fileID: 114069783358694574, guid: 6984201d466f8a1448b3c53b1eb4a2d7,
         type: 2}
       propertyPath: dialogue.sentences.Array.data[1]
-      value: 'You''re goal is to find all the black checkered flags
+      value: 'Your goal is to find all the black checkered flags
 
         (I know... a more motivating goal is a WIP)'
       objectReference: {fileID: 0}
