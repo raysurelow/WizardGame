@@ -38,6 +38,7 @@ public class PauseMenuController : MonoBehaviour {
 
     public void PauseGame()
     {
+        levelManager.DeactivateSpellChooser();
         Time.timeScale = 0f;
         thePauseScreen.SetActive(true);
         gamePaused = true;

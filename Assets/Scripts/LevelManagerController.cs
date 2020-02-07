@@ -49,19 +49,12 @@ public class LevelManagerController : MonoBehaviour {
         {
             if (player.GetButtonDown("Open Spell Chooser"))
             {
-                spellChooser.SetActive(true);
-                EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
-                es.SetSelectedGameObject(null);
-                es.SetSelectedGameObject(activeSpellButton);
-                Time.timeScale = .01F;
+                ActivateSpellChooser();
             }
 
             if (player.GetButtonUp("Open Spell Chooser"))
             {
-                EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
-                es.SetSelectedGameObject(null);
-                spellChooser.SetActive(false);
-                Time.timeScale = 1F;
+                DeactivateSpellChooser();
             }
         }
     }
@@ -123,6 +116,26 @@ public class LevelManagerController : MonoBehaviour {
         Time.timeScale = 1f;
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
+    }
+
+    public void ActivateSpellChooser()
+    {
+        spellChooser.SetActive(true);
+        EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+        es.SetSelectedGameObject(null);
+        es.SetSelectedGameObject(activeSpellButton);
+        Time.timeScale = .01F;
+    }
+
+    public void DeactivateSpellChooser()
+    {
+        if(spellChooser.activeInHierarchy == true)
+        {
+            EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+            es.SetSelectedGameObject(null);
+            spellChooser.SetActive(false);
+            Time.timeScale = 1F;
+        }
     }
 
 }

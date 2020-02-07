@@ -28,6 +28,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
     private bool isStuck;
     public bool burning;
     private bool gusted;
+    public float frozenGustSpeed;
 
     private Vector3 startingPointPosition;
     private Vector3 endingPointPosition;
@@ -189,7 +190,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         {
             if (isFrozen)
             {
-                rigidBody.AddForce(new Vector2(200, 0), ForceMode2D.Impulse);
+                rigidBody.AddForce(new Vector2(frozenGustSpeed, 0), ForceMode2D.Impulse);
             }
             else
             {
@@ -200,7 +201,7 @@ public class EnemyController : MonoBehaviour, IFreezable, IBurnable, ICloneable,
         {
             if (isFrozen)
             {
-                rigidBody.AddForce(new Vector2(-200, 0), ForceMode2D.Impulse);
+                rigidBody.AddForce(new Vector2(-frozenGustSpeed, 0), ForceMode2D.Impulse);
             }
             else
             {
