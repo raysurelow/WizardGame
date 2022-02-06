@@ -53,12 +53,6 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
 
     // Use this for initialization
     void Start () {
-        if(CrossSceneInformation.CheckpointReached == 0)
-        {
-            CrossSceneInformation.LoadPosition = transform.position;
-        }
-
-        transform.position = CrossSceneInformation.LoadPosition;
         burning = false;
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -83,203 +77,38 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         //don't call input for wizard when game is paused
         if (Time.timeScale == 0)
         {
-            timeScaleWas0 = true;
             return;
         }
-
-        if (gusted)
-        {
-            if(Math.Abs(rigidBody.velocity.x) < Math.Abs(moveSpeed))
-            {
-                gusted = false;
-            }
-        }
-
-        if (!pauseMenu.gamePaused && !isFrozen && !burning)
+        HandleGust();
+        if (MovementAllowed())
         {
             // Check if grounded
             canJump = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, jumpableLayerMask) || Physics2D.OverlapCircle(groundCheck2.position, groundCheckRadius, jumpableLayerMask);
             horizontalMovement.x = player.GetAxis("Move Horizontal");
             horizontalMovementRaw.x = player.GetAxisRaw("Move Horizontal");
 
-            // Handle non-ladder movement inputs
             if (!climbInitiated)
             {
-                //Handle movement input when there is no Gusted velocity
                 if (!gusted)
                 {
-                    if (horizontalMovementRaw.x == 1 || horizontalMovement.x > .6)
-                    {
-                        rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
-                        transform.localScale = new Vector3(1, transform.localScale.y);
-                    }
-                    else if (horizontalMovementRaw.x == -1 || horizontalMovement.x < -.6)
-                    {
-                        rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
-                        transform.localScale = new Vector3(-1, transform.localScale.y);
-                    }
-                    else
-                    {
-                        //if no input for movement is pressed and no gusted velocity is present x velicoty should be zero (so you don't slide to a stop)
-                        rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y);
-                    }
+                    HandleNonGustedMovement();                    
                 }
                 //handle movement input while Gusting velocity is still present
                 else
                 {
-                     // handle positive x input while gusted
-                     if (horizontalMovementRaw.x == 1 || horizontalMovement.x > .6)
-                    {
-                        if(rigidBody.velocity.x > moveSpeed)
-                        {
-                            rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
-                        }
-                        else if(rigidBody.velocity.x < -.5 * moveSpeed)
-                        {
-                            rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
-                        }
-                        else
-                        {
-                            gusted = false;
-                            rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
-                            transform.localScale = new Vector3(1, transform.localScale.y);
-                        }
-                        
-                    }
-                    //handle negative x input while gusted
-                    else if (horizontalMovementRaw.x == -1 || horizontalMovement.x < -.6)
-                    {
-                        if (rigidBody.velocity.x < -moveSpeed)
-                        {
-                            rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
-                          
-                        }
-                        else if(rigidBody.velocity.x > .5 * moveSpeed)
-                        {
-                            rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
-                        }
-                        else
-                        {
-                            gusted = false;
-                            rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
-                            transform.localScale = new Vector3(-1, transform.localScale.y);
-                        }
-                    }
+                    HandleGustedMovement();
                 }
-                
-
-                // Handle jumping input
-                if (player.GetButtonDown("Jump") && canJump)
-                {
-                    //don't jump when coming out of pause or paused
-                    if (Time.timeScale > 0 && timeScaleWas0)
-                    {
-                        timeScaleWas0 = false;
-                        return;
-                    }
-                    rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
-                }
+                HandleJump();
             }
-
-            //Handle onLadder climbing
-            if (onLadder)
-            {
-                if (!climbInitiated)
-                {
-                    //dont want to cancel gravity until climbing is initiated by hitting up or down
-                    if (Mathf.Abs(player.GetAxisRaw("Climb Ladder")) == 1)
-                    {
-                        climbInitiated = true;
-                    }
-                }
-
-                if (climbInitiated)
-                {
-                    rigidBody.gravityScale = 0;
-                    rigidBody.velocity = new Vector3(moveSpeed * horizontalMovement.x, climbSpeed * player.GetAxisRaw("Climb Ladder"));
-                    if (horizontalMovement.x > 0.5f)
-                    {
-                        transform.localScale = new Vector3(1, transform.localScale.y);
-                    }
-                    else if (horizontalMovement.x < -0.5f)
-                    {
-                        transform.localScale = new Vector3(-1, transform.localScale.y);
-                    }
-                }
-
-                //Jumping cancels climbing so gravity is restored 
-                if (player.GetButtonDown("Jump") && climbInitiated)
-                {
-                    climbInitiated = false;
-                    rigidBody.gravityScale = gravityStore;
-                    rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbJumpSpeed);
-                }
-
-                animator.SetFloat("ClimbingSpeed", Mathf.Abs(rigidBody.velocity.y));
-
-            }
-            else
-            {
-                climbInitiated = false;
-                rigidBody.gravityScale = gravityStore;
-            }
-            animator.SetBool("IsClimbing", climbInitiated);
-
-
-            // Handle change spell input
-            if (player.GetButtonDown("Rotate Spell"))
-            {
-
-                activeSpellPosition = (activeSpellPosition + 1) % availableSpells.Length;
-                activeSpell = availableSpells[activeSpellPosition];
-                levelManager.UpdateActiveSpellText(activeSpell);
-                SendAnimatorActiveSpell(activeSpell.spellName);
-            }
-
-
+            HandleClimbing();
+            HandleChangeSpell();
             // Handle aiming input
             UpdateActiveTransform();
-
-            // Handle shooting spell input
-            if (player.GetButtonDown("Fire"))
-            {
-                //don't shoot spell when coming out of pause or paused
-                if (Time.timeScale > 0 && timeScaleWas0)
-                { 
-                    timeScaleWas0 = false;
-                    return;
-                }
-
-                /*if (!(climbInitiated && (Mathf.Abs(rigidBody.velocity.y) > .3)))
-                {
-                    animator.SetTrigger(string.Format("Shoot{0}Spell", activeSpell.spellName));
-                } */
-
-                animator.SetTrigger(string.Format("Shoot{0}Spell", activeSpell.spellName));
-            }
-
+            HandleShootSpell();
             animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
         }else if (isFrozen)
         {
-            if (isFrozen && !isThawing)
-            {
-                frozenElapsedTime += Time.deltaTime;
-                if (frozenElapsedTime > frozenDuration)
-                {
-                    IsFrozen(false);
-                    frozenElapsedTime = 0;
-                }
-            }
-            else if (isFrozen && isThawing)
-            {
-                thawingElapsedTime += Time.deltaTime;
-                if (thawingElapsedTime > thawingDuration)
-                {
-                    IsFrozen(false);
-                    thawingElapsedTime = 0;
-                    isThawing = false;
-                }
-            }
+            UpdateFreezeDurations();
         }
     }
 
@@ -300,6 +129,201 @@ public class WizardController : MonoBehaviour, IBurnable, IFreezable, ICloneable
         {
             activeSpellTransform = horizontalSpellTransform;
             animator.SetInteger("VerticalPosition", 0);
+        }
+    }
+
+    private bool MovementAllowed()
+    {
+        return !pauseMenu.gamePaused && !isFrozen && !burning;
+    }
+
+    private void HandleGust()
+    {
+        if (gusted)
+        {
+            if (Math.Abs(rigidBody.velocity.x) < Math.Abs(moveSpeed))
+            {
+                gusted = false;
+            }
+        }
+    }
+
+    private void HandleNonGustedMovement()
+    {
+        if (horizontalMovementRaw.x == 1 || horizontalMovement.x > .6)
+        {
+            rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
+            transform.localScale = new Vector3(1, transform.localScale.y);
+        }
+        else if (horizontalMovementRaw.x == -1 || horizontalMovement.x < -.6)
+        {
+            rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
+            transform.localScale = new Vector3(-1, transform.localScale.y);
+        }
+        else
+        {
+            //if no input for movement is pressed and no gusted velocity is present x velicoty should be zero (so you don't slide to a stop)
+            rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y);
+        }
+    }
+
+    private void HandleGustedMovement() {
+        // handle positive x input while gusted
+        if (horizontalMovementRaw.x == 1 || horizontalMovement.x > .6)
+        {
+            if (rigidBody.velocity.x > moveSpeed)
+            {
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
+            }
+            else if (rigidBody.velocity.x < -.5 * moveSpeed)
+            {
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
+            }
+            else
+            {
+                gusted = false;
+                rigidBody.velocity = new Vector3(moveSpeed, rigidBody.velocity.y);
+                transform.localScale = new Vector3(1, transform.localScale.y);
+            }
+
+        }
+        //handle negative x input while gusted
+        else if (horizontalMovementRaw.x == -1 || horizontalMovement.x < -.6)
+        {
+            if (rigidBody.velocity.x < -moveSpeed)
+            {
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
+
+            }
+            else if (rigidBody.velocity.x > .5 * moveSpeed)
+            {
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y);
+            }
+            else
+            {
+                gusted = false;
+                rigidBody.velocity = new Vector3(-moveSpeed, rigidBody.velocity.y);
+                transform.localScale = new Vector3(-1, transform.localScale.y);
+            }
+        }
+    }
+
+    private void HandleJump()
+    {
+        // Handle jumping input
+        if (player.GetButtonDown("Jump") && canJump)
+        {
+            //don't jump when coming out of pause or paused
+            if (Time.timeScale > 0 && timeScaleWas0)
+            {
+                timeScaleWas0 = false;
+                return;
+            }
+            rigidBody.velocity = new Vector3(rigidBody.velocity.x, jumpSpeed);
+        }
+    }
+
+    private void HandleClimbing()
+    {
+        if (onLadder)
+        {
+            CheckForClimbInitialization();
+            if (climbInitiated)
+            {
+                if (player.GetButtonDown("Jump"))
+                {
+                    StopClimbing();
+                }
+                ClimbLadder();
+            }
+            animator.SetFloat("ClimbingSpeed", Mathf.Abs(rigidBody.velocity.y));
+
+        }
+        else
+        {
+            climbInitiated = false;
+            rigidBody.gravityScale = gravityStore;
+        }
+        animator.SetBool("IsClimbing", climbInitiated);
+    }
+
+    private void CheckForClimbInitialization()
+    {
+        if (!climbInitiated)
+        {
+            //dont want to cancel gravity until climbing is initiated by hitting up or down
+            if (Mathf.Abs(player.GetAxisRaw("Climb Ladder")) == 1)
+            {
+                climbInitiated = true;
+            }
+        }
+    }
+
+    private void StopClimbing()
+    {
+        climbInitiated = false;
+        rigidBody.gravityScale = gravityStore;
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, climbJumpSpeed);
+    }
+
+    private void ClimbLadder()
+    {
+        rigidBody.gravityScale = 0;
+        rigidBody.velocity = new Vector3(moveSpeed * horizontalMovement.x, climbSpeed * player.GetAxisRaw("Climb Ladder"));
+        if (horizontalMovement.x > 0.5f)
+        {
+            transform.localScale = new Vector3(1, transform.localScale.y);
+        }
+        else if (horizontalMovement.x < -0.5f)
+        {
+            transform.localScale = new Vector3(-1, transform.localScale.y);
+        }
+    }
+
+    private void HandleChangeSpell()
+    {
+        if (player.GetButtonDown("Rotate Spell"))
+        {
+            activeSpellPosition = (activeSpellPosition + 1) % availableSpells.Length;
+            activeSpell = availableSpells[activeSpellPosition];
+            levelManager.UpdateActiveSpellText(activeSpell);
+            SendAnimatorActiveSpell(activeSpell.spellName);
+        }
+    }
+
+    private void HandleShootSpell()
+    {
+        if (player.GetButtonDown("Fire"))
+        {
+            /*if (!(climbInitiated && (Mathf.Abs(rigidBody.velocity.y) > .3)))
+            {
+                animator.SetTrigger(string.Format("Shoot{0}Spell", activeSpell.spellName));
+            } */
+
+            animator.SetTrigger(string.Format("Shoot{0}Spell", activeSpell.spellName));
+        }
+    }
+
+    private void UpdateFreezeDurations()
+    {
+        if (!isThawing)
+        {
+            frozenElapsedTime += Time.deltaTime;
+            if (frozenElapsedTime > frozenDuration)
+            {
+                IsFrozen(false);
+                frozenElapsedTime = 0;
+            }
+        }
+        else if (isThawing)
+        {
+            thawingElapsedTime += Time.deltaTime;
+            if (thawingElapsedTime > thawingDuration)
+            {
+                IsFrozen(false);
+                thawingElapsedTime = 0;
+                isThawing = false;
+            }
         }
     }
 

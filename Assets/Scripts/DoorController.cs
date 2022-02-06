@@ -27,9 +27,9 @@ public class DoorController : AbstractSwitchable, IBurnable, IFreezable, IGustab
 	protected override void Update () {
         //  door.SetActive(!AllSwitchesAreOn());
         animator.SetBool("IsFrozen", isFrozen);
-        if (switches.Length > 0)
+        if (!isFrozen && switches.Length > 0)
         {
-            if (AllSwitchesAreOn() && !isFrozen)
+            if (AllSwitchesAreOn())
             {
                 if (startHidden)
                 {

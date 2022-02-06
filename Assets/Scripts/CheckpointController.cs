@@ -1,19 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CheckpointController : MonoBehaviour {
 
     public Sprite checkpointDisabled;
     public Sprite checkpointEnabled;
     public int checkpointNumber;
+    private string scene;
 
     private SpriteRenderer spriteRenderer;
 
 	void Awake () {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = checkpointDisabled;
-	}
+        scene = SceneManager.GetActiveScene().name;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -32,10 +35,13 @@ public class CheckpointController : MonoBehaviour {
     public void CheckpointReached()
     {
         spriteRenderer.sprite = checkpointEnabled;
-        if (CrossSceneInformation.CheckpointReached < checkpointNumber)
+        if (CrossSceneInformation.CheckpointData.ContainsKey(scene))
         {
-            CrossSceneInformation.LoadPosition = transform.position;
-            CrossSceneInformation.CheckpointReached = checkpointNumber;
+            if(CrossSceneInformation.CheckpointData[scene].CheckpointReached < checkpointNumber)
+            {
+                CrossSceneInformation.CheckpointData[scene].CheckpointReached = checkpointNumber;
+                CrossSceneInformation.CheckpointData[scene].CheckpointLocation = transform.position;
+            }
         }
     }
 }

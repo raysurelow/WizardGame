@@ -10,7 +10,6 @@ public class GameManagerController : MonoBehaviour {
     public void SaveGame()
     {
         SaveFile save = CreateSaveFileObject();
-        Debug.Log(save.completedLevels.Count);
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/WizardingGameSave.save");
         bf.Serialize(file, save);
@@ -26,7 +25,10 @@ public class GameManagerController : MonoBehaviour {
             FileStream file = File.Open(GetSavePath(), FileMode.Open);
             SaveFile save = (SaveFile)bf.Deserialize(file);
             file.Close();
-            CrossSceneInformation.CompletedLevels = save.completedLevels;
+            CrossSceneInformation.Level5EnemyCheckpointHit = save.Level5EnemyCheckpointHit;
+            CrossSceneInformation.DialogueTriggered = save.DialogueTriggered;
+            CrossSceneInformation.CompletedLevels = save.CompletedLevels;
+            CrossSceneInformation.CheckpointData = save.CheckpointData;
         }
     }
 
@@ -34,7 +36,10 @@ public class GameManagerController : MonoBehaviour {
     {
         SaveFile save = new SaveFile
         {
-            completedLevels = CrossSceneInformation.CompletedLevels
+            Level5EnemyCheckpointHit = CrossSceneInformation.Level5EnemyCheckpointHit,
+            DialogueTriggered = CrossSceneInformation.DialogueTriggered,
+            CompletedLevels = CrossSceneInformation.CompletedLevels,
+            CheckpointData = CrossSceneInformation.CheckpointData
         };
 
         return save;

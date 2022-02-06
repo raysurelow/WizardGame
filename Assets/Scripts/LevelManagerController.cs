@@ -45,7 +45,7 @@ public class LevelManagerController : MonoBehaviour {
             PromptRestartScene();
         }
 
-        if (Time.timeScale != 0)
+        if (!pauseMenu.gamePaused)
         {
             if (player.GetButtonDown("Open Spell Chooser"))
             {
@@ -124,7 +124,7 @@ public class LevelManagerController : MonoBehaviour {
         EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         es.SetSelectedGameObject(null);
         es.SetSelectedGameObject(activeSpellButton);
-        Time.timeScale = .01F;
+        Time.timeScale = 0F;
     }
 
     public void DeactivateSpellChooser()

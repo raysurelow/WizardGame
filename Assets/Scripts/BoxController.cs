@@ -11,6 +11,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     public Transform groundCheck;
     public Transform wizardGroundCheck;
     public bool isCloneable;
+    public bool regenerates;
     private bool canJump;
     private bool wizardCanJump;
     private bool boxCanJump;
@@ -98,6 +99,7 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
             {
                 isFrozen = false;
                 thawingElapsedTime = 0;
+                isThawing = false;
             }
         }
         animator.SetBool("IsFrozen", isFrozen);
@@ -124,7 +126,6 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
     {
         if (Time.timeScale == 0)
         {
-            timeScaleWas0 = true;
             return;
         }
         Vector3 wizardVelocity = wizard.GetComponent<Rigidbody2D>().velocity;
@@ -328,20 +329,28 @@ public class BoxController : MonoBehaviour, IFreezable, ICloneable, IBurnable, I
 
     public void ResetBox()
     {
-        rigidBody.velocity = Vector2.zero;
-        rigidBody.angularVelocity = 0f;
-        isCloned = false;
-        isFrozen = false;
-        burning = false;
-        boxEdgeCollider.sharedMaterial = boxMaterial;
-        Vector3? position = sceneLoadData.FindCurrentReloadPosition(SceneManager.GetActiveScene().name, gameObject.name);
-        if(position == null)
+        if (regenerates)
         {
-            transform.position = startingPosition;
+            rigidBody.velocity = Vector2.zero;
+            rigidBody.angularVelocity = 0f;
+            isCloned = false;
+            isFrozen = false;
+            burning = false;
+            isThawing = false;
+            boxEdgeCollider.sharedMaterial = boxMaterial;
+            Vector3? position = sceneLoadData.FindCurrentReloadPosition(SceneManager.GetActiveScene().name, gameObject.name);
+            if (position == null)
+            {
+                transform.position = startingPosition;
+            }
+            else
+            {
+                transform.position = (Vector3)position;
+            }
         }
         else
         {
-            transform.position = (Vector3) position;
+            Destroy(gameObject);
         }
     }
 }
