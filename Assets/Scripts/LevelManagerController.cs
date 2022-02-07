@@ -89,7 +89,7 @@ public class LevelManagerController : MonoBehaviour {
     public void LoadLevel(string levelToLoad)
     {
         SceneManager.LoadScene(levelToLoad);
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelToLoad));
+       // SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelToLoad));
     }
 
     private void PromptRestartScene()
