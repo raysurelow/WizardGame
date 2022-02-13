@@ -38,7 +38,7 @@ public class CheckpointController : MonoBehaviour {
         spriteRenderer.sprite = checkpointEnabled;
         if (CrossSceneInformation.CheckpointData.ContainsKey(scene))
         {
-            if(CrossSceneInformation.CheckpointData[scene].CheckpointReached < checkpointNumber)
+            if (CrossSceneInformation.CheckpointData[scene].CheckpointReached < checkpointNumber && CrossSceneInformation.CheckpointData[scene].ProgressText != "Complete")
             {
                 CheckpointMapping sceneCheckpoint = CrossSceneInformation.CheckpointData[scene];
                 sceneCheckpoint.CheckpointReached = checkpointNumber;
