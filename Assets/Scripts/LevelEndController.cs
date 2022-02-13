@@ -27,6 +27,7 @@ public class LevelEndController : MonoBehaviour {
             string scene = SceneManager.GetActiveScene().name;
             CrossSceneInformation.CheckpointData[scene].CheckpointReached = 0;
             CrossSceneInformation.CheckpointData[scene].CheckpointLocation = null;
+            CrossSceneInformation.CheckpointData[scene].ProgressText = "Complete";
             CrossSceneInformation.Level5EnemyCheckpointHit = false;
             CrossSceneInformation.DialogueTriggered = 0;
             if(CrossSceneInformation.CompletedLevels == null)

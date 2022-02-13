@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 
 public class LevelManagerController : MonoBehaviour {
     public Text activeSpellText;
+    public Text progressText;
     private GameObject activeSpellButton;
     public GameObject fireButton;
     public GameObject iceButton;
@@ -26,11 +27,17 @@ public class LevelManagerController : MonoBehaviour {
     private Player player; // The Rewired Player
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         spellChooser.SetActive(false);
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
         pauseMenu = FindObjectOfType<PauseMenuController>();
+        string scene = SceneManager.GetActiveScene().name;
+        if (CrossSceneInformation.CheckpointData.ContainsKey(scene))
+        {
+            progressText.text = CrossSceneInformation.CheckpointData[scene].ProgressText;
+        }
     }
 	
 	// Update is called once per frame
@@ -136,6 +143,11 @@ public class LevelManagerController : MonoBehaviour {
             spellChooser.SetActive(false);
             Time.timeScale = 1F;
         }
+    }
+
+    public void UpdateProgressText(string text)
+    {
+        progressText.text = text;
     }
 
 }

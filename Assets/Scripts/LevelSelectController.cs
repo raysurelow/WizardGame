@@ -12,7 +12,6 @@ public class LevelSelectController : MonoBehaviour {
     void Awake()
     {
         gameManager = FindObjectOfType<GameManagerController>();
-        gameManager.LoadGame();
     }
 
     // Use this for initialization

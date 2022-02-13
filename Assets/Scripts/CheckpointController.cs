@@ -9,13 +9,14 @@ public class CheckpointController : MonoBehaviour {
     public Sprite checkpointEnabled;
     public int checkpointNumber;
     private string scene;
-
+    private LevelManagerController levelManager;
     private SpriteRenderer spriteRenderer;
 
 	void Awake () {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = checkpointDisabled;
         scene = SceneManager.GetActiveScene().name;
+        levelManager = FindObjectOfType<LevelManagerController>();
     }
 	
 	// Update is called once per frame
@@ -39,8 +40,12 @@ public class CheckpointController : MonoBehaviour {
         {
             if(CrossSceneInformation.CheckpointData[scene].CheckpointReached < checkpointNumber)
             {
-                CrossSceneInformation.CheckpointData[scene].CheckpointReached = checkpointNumber;
-                CrossSceneInformation.CheckpointData[scene].CheckpointLocation = transform.position;
+                CheckpointMapping sceneCheckpoint = CrossSceneInformation.CheckpointData[scene];
+                sceneCheckpoint.CheckpointReached = checkpointNumber;
+                sceneCheckpoint.CheckpointLocation = transform.position;
+                sceneCheckpoint.ProgressText = checkpointNumber + "/" + sceneCheckpoint.TotalCheckpointsInScene + " Checkpoints Reached";
+                levelManager.UpdateProgressText(sceneCheckpoint.ProgressText);
+                CrossSceneInformation.CheckpointData[scene] = sceneCheckpoint;
             }
         }
     }
