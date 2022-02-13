@@ -231,7 +231,9 @@ MonoBehaviour:
   frozenDuration: 5
   thawingDuration: 5
   groundCheck: {fileID: 4232735968615954}
+  wizardGroundCheck: {fileID: 0}
   isCloneable: 1
+  regenerates: 1
   playerId: 0
 --- !u!212 &212659874785584992
 SpriteRenderer:

@@ -2,59 +2,61 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class GameManagerController : MonoBehaviour {
+public class GameManagerController : MonoBehaviour
+{
+    public void Start()
+    {
 
-    private readonly string SavePath;
+    }
 
     public void SaveGame()
     {
-        SaveFile save = CreateSaveFileObject();
-        Debug.Log(save.completedLevels.Count);
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/WizardingGameSave.save");
-        bf.Serialize(file, save);
-        file.Close();
-        Debug.Log("Game Saved");
+        if (!string.IsNullOrEmpty(CrossSceneInformation.SavePath)) { 
+            Debug.Log("Saving to: " + CrossSceneInformation.SavePath);
+            SaveFile save = CreateSaveFileObject();
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Create(CrossSceneInformation.SavePath);
+            bf.Serialize(file, save);
+            file.Close();
+            Debug.Log("Game Saved");
+        }
     }
 
     public void LoadGame()
     {
-        if (File.Exists(GetSavePath()))
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(GetSavePath(), FileMode.Open);
-            SaveFile save = (SaveFile)bf.Deserialize(file);
-            file.Close();
-            CrossSceneInformation.CompletedLevels = save.completedLevels;
-        }
+        Debug.Log("Loading file: " + CrossSceneInformation.SavePath);
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(CrossSceneInformation.SavePath, FileMode.Open);
+        SaveFile save = (SaveFile)bf.Deserialize(file);
+        file.Close();
+        CrossSceneInformation.Level5EnemyCheckpointHit = save.Level5EnemyCheckpointHit;
+        CrossSceneInformation.DialogueTriggered = save.DialogueTriggered;
+        CrossSceneInformation.CompletedLevels = save.CompletedLevels;
+        CrossSceneInformation.CheckpointData = save.CheckpointData;
     }
 
     private SaveFile CreateSaveFileObject()
     {
         SaveFile save = new SaveFile
         {
-            completedLevels = CrossSceneInformation.CompletedLevels
+            Level5EnemyCheckpointHit = CrossSceneInformation.Level5EnemyCheckpointHit,
+            DialogueTriggered = CrossSceneInformation.DialogueTriggered,
+            CompletedLevels = CrossSceneInformation.CompletedLevels,
+            CheckpointData = CrossSceneInformation.CheckpointData
         };
 
         return save;
-    } 
-
-    private string GetSavePath()
-    {
-        return Application.persistentDataPath + "/WizardingGameSave.save";
     }
 
-    public void NewGame()
+    private void SetSavePath(string userId)
     {
-        File.Delete(Application.persistentDataPath + "/WizardingGameSave.save");
-        SceneManager.LoadScene("Level_1");
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Level_1"));
+       CrossSceneInformation.SavePath = Application.persistentDataPath + "/" + userId + "WizardingGameSave.save";
     }
 
-    public void LoadGameFromTitle()
+    public bool SaveFileExists()
     {
-        SceneManager.LoadScene("MainMenu");
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainMenu"));
+        return File.Exists(CrossSceneInformation.SavePath);
     }
 }

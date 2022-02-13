@@ -4,8 +4,8 @@ using UnityEngine;
 
 [System.Serializable]
 public class SaveFile {
-
-    public List<string> completedLevels;
-
-
+    public bool Level5EnemyCheckpointHit;
+    public int DialogueTriggered;
+    public List<string> CompletedLevels;
+    public Dictionary<string, CheckpointMapping> CheckpointData;
 }

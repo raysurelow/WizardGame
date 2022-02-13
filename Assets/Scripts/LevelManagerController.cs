@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 
 public class LevelManagerController : MonoBehaviour {
     public Text activeSpellText;
+    public Text progressText;
     private GameObject activeSpellButton;
     public GameObject fireButton;
     public GameObject iceButton;
@@ -26,11 +27,17 @@ public class LevelManagerController : MonoBehaviour {
     private Player player; // The Rewired Player
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         spellChooser.SetActive(false);
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
         pauseMenu = FindObjectOfType<PauseMenuController>();
+        string scene = SceneManager.GetActiveScene().name;
+        if (CrossSceneInformation.CheckpointData.ContainsKey(scene))
+        {
+            progressText.text = CrossSceneInformation.CheckpointData[scene].ProgressText;
+        }
     }
 	
 	// Update is called once per frame
@@ -45,7 +52,7 @@ public class LevelManagerController : MonoBehaviour {
             PromptRestartScene();
         }
 
-        if (Time.timeScale != 0)
+        if (!pauseMenu.gamePaused)
         {
             if (player.GetButtonDown("Open Spell Chooser"))
             {
@@ -89,7 +96,7 @@ public class LevelManagerController : MonoBehaviour {
     public void LoadLevel(string levelToLoad)
     {
         SceneManager.LoadScene(levelToLoad);
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelToLoad));
+       // SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelToLoad));
     }
 
     private void PromptRestartScene()
@@ -124,7 +131,7 @@ public class LevelManagerController : MonoBehaviour {
         EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         es.SetSelectedGameObject(null);
         es.SetSelectedGameObject(activeSpellButton);
-        Time.timeScale = .01F;
+        Time.timeScale = 0F;
     }
 
     public void DeactivateSpellChooser()
@@ -136,6 +143,11 @@ public class LevelManagerController : MonoBehaviour {
             spellChooser.SetActive(false);
             Time.timeScale = 1F;
         }
+    }
+
+    public void UpdateProgressText(string text)
+    {
+        progressText.text = text;
     }
 
 }

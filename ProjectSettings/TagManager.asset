@@ -10,6 +10,7 @@ TagManager:
   - Checkpoint
   - MovingPlatform
   - Enemy
+  - OutOfBoundsEnemyTrigger
   layers:
   - Default
   - TransparentFX

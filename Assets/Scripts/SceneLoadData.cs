@@ -6,56 +6,64 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoadData : MonoBehaviour {
 
-    private Dictionary<int, Vector3> Level3Box1;
-    private Dictionary<int, Vector3> Level4Box1;
-    private Dictionary<int, Vector3> Level5Box1;
-    private Dictionary<bool, Vector3> Level5Enemy1;
-    private Dictionary<int, Vector3> Level9Box2;
+ //   private Dictionary<int, Vector3> Level3Box1;
+ //   private Dictionary<int, Vector3> Level4Box1;
+    private Dictionary<int, Vector3> Level9Box1;
+    private Dictionary<bool, Vector3> Level9Enemy1;
+    //   private Dictionary<int, Vector3> Level9Box2;
+    private string scene;
 
     // Use this for initialization
     void Start () {
-        Level4Box1 = new Dictionary<int, Vector3>()
+        /*Level4Box1 = new Dictionary<int, Vector3>()
         {
             { 0, new Vector3(0.23f, -1.16f) },
             { 1, new Vector3(0.23f, -1.16f) },
             { 2, new Vector3(0.23f, -1.16f) },
             { 3, new Vector3(0.23f, -1.16f) },
             { 4, new Vector3(-2.12f, -1.2f) }
-        };
+        };*/
 
-        Level5Box1 = new Dictionary<int, Vector3>()
+        Level9Box1 = new Dictionary<int, Vector3>()
         {
             { 0, new Vector3(-1.76f,-0.23f) },
             { 1, new Vector3(-1.76f,-0.23f) },
             { 2, new Vector3(-1.76f,-0.23f) },
-            { 3, new Vector3(-6f, -4f) },
-            { 4, new Vector3(7.68f, -14.28f) }
+            { 3, new Vector3(-6f, -4.2f) },
+            { 4, new Vector3(3.5f, -14.28f) }
         };
 
-        Level5Enemy1 = new Dictionary<bool, Vector3>()
+        Level9Enemy1 = new Dictionary<bool, Vector3>()
         {
             { false, new Vector3(2.44f, -3.87f) },
             { true, new Vector3(6f, -11f) },
         };
 
-        Level9Box2 = new Dictionary<int, Vector3>()
-        {
-            { 0, new Vector3(-10.51f, -6.21f) },
-            { 1, new Vector3(0f, -6.2f) }
-        };
 
-        string scene = SceneManager.GetActiveScene().name;
+
+        scene = SceneManager.GetActiveScene().name;
         GameObject[] checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
         //enable all checkpoints up to the latest checkpoint reached on load
-        foreach (GameObject checkpoint in checkpoints)
+        if (CrossSceneInformation.CheckpointData.ContainsKey(scene))
         {
-            if (checkpoint.GetComponent<CheckpointController>().checkpointNumber <= CrossSceneInformation.CheckpointReached)
+            foreach (GameObject checkpoint in checkpoints)
             {
-                checkpoint.GetComponent<CheckpointController>().CheckpointReached();
+                if (checkpoint.GetComponent<CheckpointController>().checkpointNumber <= CrossSceneInformation.CheckpointData[scene].CheckpointReached)
+                {
+                    checkpoint.GetComponent<CheckpointController>().CheckpointReached();
+                }
+            }
+
+            var wizard = GameObject.FindGameObjectWithTag("Player");
+            if (CrossSceneInformation.CheckpointData[scene].CheckpointReached > 0 && wizard != null)
+            {
+                if (CrossSceneInformation.CheckpointData[scene].CheckpointLocation != null)
+                {
+                    wizard.transform.position = (Vector3)CrossSceneInformation.CheckpointData[scene].CheckpointLocation;
+                }
             }
         }
-
-        if(scene == "Level_4")
+        /*if(scene == "Level_4")
         {
             SetStartingPosition(scene, "Box_1");
             if (CrossSceneInformation.CheckpointReached == 4)
@@ -73,12 +81,13 @@ public class SceneLoadData : MonoBehaviour {
         {
             SetStartingPosition(scene, "Enemy_1");
             SetStartingPosition(scene, "Box_1");
-        }
-        
-        
-        if(scene == "Level_9")
+        }*/
+
+
+        if (scene == "Level_9")
         {
-            SetStartingPosition(scene, "Box_2");
+            SetStartingPosition(scene, "Box_1");
+            SetStartingPosition(scene, "Enemy_1");
         }
 	}
 	
@@ -112,16 +121,10 @@ public class SceneLoadData : MonoBehaviour {
     {
         string reloadDictionary = scene + objectName;
         switch (reloadDictionary){
-            case ("Level_3Box_1"):
-                return GetLocationFromDictionary(Level3Box1);
-            case ("Level_4Box_1"):
-                return GetLocationFromDictionary(Level4Box1);
-            case ("Level_5Box_1"):
-                return GetLocationFromDictionary(Level5Box1);
-            case ("Level_5Enemy_1"):
-                return GetLocationFromDictionary(Level5Enemy1);
-            case ("Level_9Box_2"):
-                return GetLocationFromDictionary(Level9Box2);
+            case ("Level_9Enemy_1"):
+                return GetLocationFromDictionary(Level9Enemy1);
+            case ("Level_9Box_1"):
+                return GetLocationFromDictionary(Level9Box1);
             default:
                 return null;
         }
@@ -129,14 +132,14 @@ public class SceneLoadData : MonoBehaviour {
 
     private Vector3 GetLocationFromDictionary(Dictionary<int, Vector3> dictionary)
     {
-        if (dictionary.ContainsKey(CrossSceneInformation.CheckpointReached))
+        if (CrossSceneInformation.CheckpointData.ContainsKey(scene))
         {
-            return dictionary[CrossSceneInformation.CheckpointReached];
+            if (dictionary.ContainsKey(CrossSceneInformation.CheckpointData[scene].CheckpointReached))
+            {
+                return dictionary[CrossSceneInformation.CheckpointData[scene].CheckpointReached];
+            }
         }
-        else
-        {
-            return dictionary[dictionary.Keys.Max()];
-        }
+        return dictionary[dictionary.Keys.Min()];
     }
 
     private Vector3 GetLocationFromDictionary(Dictionary<bool, Vector3> dictionary)
