@@ -35,8 +35,8 @@ public class LevelEndController : MonoBehaviour {
                 CrossSceneInformation.CompletedLevels = new List<string>();
             }
             CrossSceneInformation.CompletedLevels.Add(SceneManager.GetActiveScene().name);
-            Debug.Log("calling save game");
-            gameManager.SaveGame();
+          //  Debug.Log("calling save game");
+          //  gameManager.SaveGame();
             levelManager.LoadLevel(levelToLoad);
         }
         

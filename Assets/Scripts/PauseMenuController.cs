@@ -49,7 +49,7 @@ public class PauseMenuController : MonoBehaviour {
 
     public void ResumeGame()
     {
-        FindObjectOfType<GameManagerController>().SaveGame();
+ //       FindObjectOfType<GameManagerController>().SaveGame();
         Time.timeScale = 1f;
         thePauseScreen.SetActive(false);
         EventSystem es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
@@ -73,7 +73,7 @@ public class PauseMenuController : MonoBehaviour {
 
     public void QuitGame()
     {
-        FindObjectOfType<GameManagerController>().SaveGame();
+//        FindObjectOfType<GameManagerController>().SaveGame();
         Application.Quit();
     }
 

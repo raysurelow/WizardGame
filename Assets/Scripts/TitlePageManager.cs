@@ -7,27 +7,22 @@ using UnityEngine.UI;
 public class TitlePageManager : MonoBehaviour
 {
 
-    public InputField mainInputField;
+ //   public InputField mainInputField;
     private string userId;
     public Text errorText;
     public Button newGameButton;
-    public Button loadGameButton;
+ //   public Button loadGameButton;
     private GameManagerController gameManager;
 
     public void Start()
     {
-        newGameButton.interactable = false;
-        loadGameButton.interactable = false;
-        gameManager = FindObjectOfType<GameManagerController>();
-        if(gameManager != null)
-        {
-            print(gameManager.SaveFileExists());
-        }
-        mainInputField.onValueChanged.AddListener(delegate { SetUserId(mainInputField.text); });
+ //       newGameButton.interactable = false;
+ //       loadGameButton.interactable = false;
+ //       mainInputField.onValueChanged.AddListener(delegate { SetUserId(mainInputField.text); });
         gameManager = FindObjectOfType<GameManagerController>();
     }
 
-    private void SetUserId(string inputId)
+ /*   private void SetUserId(string inputId)
     {
         userId = inputId;
         if (string.IsNullOrEmpty(userId))
@@ -42,7 +37,7 @@ public class TitlePageManager : MonoBehaviour
             SetSavePath(userId);
         }
 
-    }
+    } 
 
     public void LoadGame()
     {
@@ -61,21 +56,22 @@ public class TitlePageManager : MonoBehaviour
     private void SetSavePath(string userId)
     {
         CrossSceneInformation.SavePath = Application.persistentDataPath + "/" + userId + "WizardingGameSave.save";
-    }
+    } */
 
     public void NewGame()
     {
-        if (gameManager.SaveFileExists())
-        {
-            errorText.text = "Save file with this name already exists, please click load game or change names.";
-            return;
-        }
-        else
-        {
-            print("saving to: " + CrossSceneInformation.SavePath);
-            gameManager.SaveGame();
-            gameManager.LoadGame();
-            SceneManager.LoadScene("MainMenu");
-        }
+        SceneManager.LoadScene("MainMenu");
+        /* if (gameManager.SaveFileExists())
+         {
+             errorText.text = "Save file with this name already exists, please click load game or change names.";
+             return;
+         }
+         else
+         {
+             print("saving to: " + CrossSceneInformation.SavePath);
+             gameManager.SaveGame();
+             gameManager.LoadGame();
+             SceneManager.LoadScene("MainMenu");
+         }*/
     }
 }
